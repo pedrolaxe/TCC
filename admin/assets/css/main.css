@@ -1,0 +1,58 @@
+body {
+  background-color: #DEF2F1;
+  font-family: 'Open Sans', sans-serif;
+  cursor: default;
+  user-select: none;
+  font-size: 130%;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+header {
+  background-color: #88BDBC;
+  height: 10vh;
+}
+
+a {
+	text-decoration: none !important;
+	color: black;
+}
+
+a:hover {
+	color: #DEF2F1;
+	
+}
+
+/*li {
+	font-weight: bold;
+}*/
+
+.btn-lg {
+	border: 2px solid;
+	font-weight: bold !important;
+	background-color: #DEF2F1;
+}
+
+.btn-primary {
+	background-color: #88BDBC;
+}
+
+.btn-primary:hover {
+	background-color: #6E6658;
+	border: 1px solid #88BDBC;
+}
+
+/* Mudar Brilho do Input quando está on focus */
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem #88BDBC;
+}
+
+.btn-primary:hover {
+	border:0;
+}
+
+hr.style-one {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
