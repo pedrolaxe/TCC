@@ -1,3 +1,3 @@
-# SpaceAdmin
-## Version: 2.2.1
+# TCC Admin
+## Based on SpaceAdmin 2.2.1
 
