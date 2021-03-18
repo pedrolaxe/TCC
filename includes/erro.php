@@ -34,7 +34,7 @@ h1 { font-size: 64px }
 <div class='container'>
 <div class="vertical-center">
 
-<h2 class="my-0 fw-bold"><i>Aconteceu Algo de Errado, Contacte o Administrador!</i></h2>
+<h2 class="my-0 fw-bold"><i>Aconteceu Algo de Errado, Contate o Administrador!</i></h2>
 <br><br>
 <button class="btn-lg btn-primary" onclick="goBack()">Voltar</button>
 </div>

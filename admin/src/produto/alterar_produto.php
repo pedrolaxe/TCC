@@ -2,18 +2,17 @@
 
 session_start();
 
-include "../../includes/functions.php";
-include "../../../includes/db.php";
+include "../../../includes/functions.php";
 
 // autorizacao();
 autorizacao_super();
 
 if (isset($_POST['submit'])) {
 
-  $id    = $_POST['id'];
-  $nome  = $_POST['nome_produto'];
-  $tipo  = $_POST['tipo'];
-  $preco = $_POST['preco'];
+  $id    = anti_injection($_POST['id']);
+  $nome  = anti_injection($_POST['nome_produto']);
+  $tipo  = anti_injection($_POST['tipo']);
+  $preco = anti_injection($_POST['preco']);
   
   alterar_produto($id, $nome, $tipo, $preco);
 
@@ -50,7 +49,7 @@ if (isset($_GET['id_produto'])) {
     <?php include '../../../includes/head.php'; ?>
 
   <!-- Custom styles for this template -->
-  <link href="../../../assets/css/form.css" rel="stylesheet">
+  <link href="<?=LINK_SITE;?>assets/css/form.css" rel="stylesheet">
 
 <style>
 
@@ -127,8 +126,8 @@ select.minimal:focus {
   
 </body>
 
-<script type="text/javascript" src="/assets/js/jquery.js"></script>
-<script type="text/javascript" src="/assets/js/maskmoney.js"></script>
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/jquery.js"></script>
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/maskmoney.js"></script>
 
 <script type="text/javascript">
 $(function() {
