@@ -1,23 +1,19 @@
 <?php
-
 session_start();
 
+//include "../includes/db.php";
 include "../includes/functions.php";
-include "../includes/db.php";
 
 autorizacao_super();
-
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Mesas</title>
-  <link rel="icon" href="assets/img/logo.jpg">
-  
   <?php include '../includes/head.php' ?>
 
-	<link rel="stylesheet" type="text/css" href="assets/css/index.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<?=LINK_SITE;?>assets/css/index.css" media="screen" />
 
 </head>
 <body>

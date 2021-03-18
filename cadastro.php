@@ -8,7 +8,7 @@ $result = mysqli_query($con, $query);
 
 // SE HOUVER ADMINISTRADOR REDIRECIONAR PARA O INDEX
 if($result && mysqli_num_rows($result)) {
-  header("Location: index.php");
+  header("Location: ".LINK_SITE."index.php");
 } 
 
 
@@ -28,7 +28,7 @@ if(isset($_POST['submit'])) {
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.80.0">
-    <title>Signin Template · Bootstrap v5.0</title>
+    <title>Sistema Restaurante</title>
 
     <?php include 'includes/head.php' ?>
 

@@ -17,19 +17,19 @@ echo
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 
 <!-- Font Awesome (Verificar quais dos links abaixo são necessários) -->
-<link rel="stylesheet" href="/assets/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="/assets/fontawesome/css/brands.min.css">
-<link rel="stylesheet" href="/assets/fontawesome/css/solid.min.css">
-<link rel="stylesheet" href="/assets/fontawesome/css/regular.min.css">
+<link rel="stylesheet" href="'.LINK_SITE.'assets/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="'.LINK_SITE.'assets/fontawesome/css/brands.min.css">
+<link rel="stylesheet" href="'.LINK_SITE.'assets/fontawesome/css/solid.min.css">
+<link rel="stylesheet" href="'.LINK_SITE.'assets/fontawesome/css/regular.min.css">
 
 <!-- Bootstrap core CSS -->
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="'.LINK_SITE.'assets/css/bootstrap.min.css" media="screen" />
 
 <!-- Bootstrap core JS -->
-<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="'.LINK_SITE.'assets/js/bootstrap.min.js"></script>
 
 <!-- Main CSS -->
-<link rel="stylesheet" type="text/css" href="/assets/css/main.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="'.LINK_SITE.'assets/css/main.css" media="screen" />
 
 ';
 

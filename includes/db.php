@@ -1,16 +1,17 @@
 <?php
-
 $host      = 'localhost';
 $username  = 'root';
 $password  = '';
-$database  = 'tcc';
+$database  = 'dedal';
 
 $con = mysqli_connect( $host, $username, $password, $database );
+
+define('LINK_SITE','http://localhost/TCC/');
 
 if($con) {
   // echo "We are connected";
 } else {
-  header('Location: erro.php');
+  header('Location: '.LINK_SITE.'erro.php');
   die( "Database connection failed" );
 }
 

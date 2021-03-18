@@ -172,7 +172,7 @@ cut();
 //
 ////////////////////////////////////////////////////////////////
 
-header('Location: /admin/mesas.php');
+header('Location: '.LINK_SITE.'admin/mesas.php');
 
 ?>
 
