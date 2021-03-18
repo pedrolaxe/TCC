@@ -14,15 +14,17 @@ if (isset($_GET['delete_funcionario'])) {
   $id = $_GET['delete_funcionario'];
 
   // CRIAR FUNCAO
-  //delete_funcionario($id);
+  delete_funcionario($id);
+  echo '<script>alert('.ID_userisadmin($id).')</script>';
 }
 
-if (isset($_GET['alterar_funcionario'])) {
+if (isset($_GET['edit_funcionario'])) {
 
-  $id = $_GET['alterar_funcionario'];
+  $id = $_GET['edit_funcionario'];
 
   // CRIAR FUNCAO
   //alterar_funcionario($id);
+  echo '<script>alert('.ID_userisadmin($id).')</script>';
 }
 
 ?>
@@ -37,7 +39,7 @@ if (isset($_GET['alterar_funcionario'])) {
 
   <?php include '../../../includes/head.php'; ?>
 
-  <link href="../../../assets/css/produtos.css" rel="stylesheet">
+  <link href="<?=LINK_SITE;?>assets/css/produtos.css" rel="stylesheet">
 
 </head>
 
@@ -81,9 +83,9 @@ if (isset($_GET['alterar_funcionario'])) {
             ?>
               <tr>
                 <td><?php echo $nome_produto ?></td>
-                <td style="text-align: right; padding-left: 0"><a href="alterar_produto.php?id_produto=<?php echo $id; ?>"><button class="btn btn-outline-dark"><i class="far fa-edit"></i></button></a></td>
+                <td style="text-align: right; padding-left: 0"><a href="edit_funcionario.php?id_funcionario=<?=$id;?>"><button class="btn btn-outline-dark"><i class="far fa-edit"></i></button></a></td>
 
-                <td style="text-align: right; padding-left: 0"><a href="produtos.php?delete_produto=<?php echo $id; ?>"><button class="btn btn-outline-dark"><i class="fas fa-trash"></i></button></a></td>
+                <td style="text-align: right; padding-left: 0"><a href="funcionarios.php?delete_funcionario=<?=$id;?>"><button class="btn btn-outline-dark"><i class="fas fa-trash"></i></button></a></td>
               </tr>
 
             <?php } ?>

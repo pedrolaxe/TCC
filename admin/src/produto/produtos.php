@@ -11,14 +11,14 @@ autorizacao_super();
 
 if (isset($_GET['delete_produto'])) {
 
-  $id = $_GET['delete_produto'];
+  $id = anti_injection($_GET['delete_produto']);
 
   delete_produto($id);
 }
 
 if (isset($_GET['alterar_produto'])) {
 
-  $id = $_GET['alterar_produto'];
+  $id = anti_injection($_GET['alterar_produto']);
 
   alterar_produto($id);
 }
@@ -31,11 +31,11 @@ if (isset($_GET['alterar_produto'])) {
 
 <head>
   <title>Produtos</title>
-  <link rel="icon" href="<?=LINK_SITE;?>assets/img/logo.jpg">
+  <link rel="icon" href="<?= LINK_SITE; ?>assets/img/logo.jpg">
 
   <?php include '../../../includes/head.php'; ?>
 
-  <link href="<?=LINK_SITE;?>assets/css/produtos.css" rel="stylesheet">
+  <link href="<?= LINK_SITE; ?>assets/css/produtos.css" rel="stylesheet">
 
 </head>
 
