@@ -6,8 +6,6 @@ session_start();
 $_SESSION['auth'] = false;
 $_SESSION['auth_super'] = false;
 
-echo "oi";
-
 $query  = "SELECT * FROM USUARIO";
 $result = mysqli_query($con, $query);
 
