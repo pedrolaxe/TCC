@@ -12,7 +12,7 @@ $result = mysqli_query($con, $query);
 
 // SE NÃO HOUVER ADMINISTRADOR REDIRECIONAR PARA O CADASTRO
 if ($result && mysqli_num_rows($result)) {
-  // SE HOUVER ADMIN CONTINUA NA PAGINA
+// SE HOUVER ADMIN CONTINUA NA PAGINA
 
 } else {
   header("Location: ".LINK_SITE."cadastro.php");
