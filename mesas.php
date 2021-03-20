@@ -5,8 +5,6 @@ include "includes/functions.php";
 
 autorizacao();
 
-echo $_SESSION['auth'];
-
 if (isset($_POST['submit'])) {
   insert_mesa();
 } else { }
@@ -15,7 +13,6 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Mesas</title>
   <link rel="icon" href="assets/img/logo.jpg">
@@ -95,13 +92,11 @@ if (isset($_POST['submit'])) {
                   $result2 = mysqli_query($con, $query2);
 
                   while ($row = mysqli_fetch_array($result2)) {
-
-                    // $id_mesa e $id representam a mesma id mas por buscas diferentes para comparar uma com a outra na hora de
-                    // mostrar os produtos para cada mesa corretamente
                     $id_mesa      = $row['id_mesa'];
                     $qtd          = $row['quantidade'];
                     $nome_produto = $row['nome_produto'];
 
+                    # VERIFICAR SE A MESA DA PRIMEIRA BUSCA É IGUAL A DA SEGUNDA PARA ADICIONAR OS PRODUTOS NA MESA CORRETA
                     if ($id == $id_mesa) {
                       echo '<li><b>' . $qtd . ' x </b>' . $nome_produto . '</li>';
                     }
@@ -120,5 +115,4 @@ if (isset($_POST['submit'])) {
     </div>
   </div>
 </body>
-
 </html>

@@ -1,23 +1,19 @@
 <?php
 
-session_start();
 date_default_timezone_set('America/Sao_Paulo');
 
+session_start();
 include "../../../includes/functions.php";
 
 autorizacao_super();
 
 if (isset($_GET['delete_produto'])) {
-
   $id = anti_injection($_GET['delete_produto']);
-
   delete_produto($id);
 }
 
 if (isset($_GET['alterar_produto'])) {
-
   $id = anti_injection($_GET['alterar_produto']);
-
   alterar_produto($id);
 }
 
@@ -25,7 +21,6 @@ if (isset($_GET['alterar_produto'])) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Produtos</title>
   <link rel="icon" href="<?= LINK_SITE; ?>assets/img/logo.jpg">
@@ -33,6 +28,7 @@ if (isset($_GET['alterar_produto'])) {
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../../includes/head.php'; ?>
 
+  <!-- CSS -->
   <link href="<?= LINK_SITE; ?>assets/css/produtos.css" rel="stylesheet">
 </head>
 
@@ -45,7 +41,6 @@ if (isset($_GET['alterar_produto'])) {
 
     <div class="row">
       <div class="col-4">
-
         <h1>Bar</h1>
         <br>
         <table class="styled-table">
@@ -89,7 +84,6 @@ if (isset($_GET['alterar_produto'])) {
 
 
       <div class="col-4">
-
         <h1>Porções</h1>
         <br>
         <table class="styled-table">
@@ -137,7 +131,6 @@ if (isset($_GET['alterar_produto'])) {
       </div>
 
       <div class="col-4">
-
         <h1>Refeições</h1>
         <br>
         <table class="styled-table">
@@ -188,7 +181,6 @@ if (isset($_GET['alterar_produto'])) {
     <br>
 
     <div class="row">
-
       <div class="col-4">
 
         <h1>Lanches</h1>
@@ -238,7 +230,6 @@ if (isset($_GET['alterar_produto'])) {
       </div>
 
       <div class="col-4">
-
         <h1>Caldos</h1>
         <br>
         <table class="styled-table">

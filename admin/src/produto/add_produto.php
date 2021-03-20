@@ -6,7 +6,6 @@ include "../../../includes/functions.php";
 autorizacao_super();
 
 if (isset($_POST['submit'])) {
-
   insert_produto();
 }
 
@@ -14,7 +13,6 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Add Produto</title>
   <link rel="icon" href="assets/img/logo.jpg">
@@ -60,7 +58,6 @@ if (isset($_POST['submit'])) {
       outline: 0;
     }
   </style>
-
 </head>
 
 <body class="text-center">

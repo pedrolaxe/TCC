@@ -1,21 +1,18 @@
 <?php
 
 session_start();
-
 include "../../includes/functions.php";
 include "../../includes/db.php";
 
 autorizacao();
 
 if (isset($_GET['id'])) {
-
   $id = $_GET['id'];
 
   $query  = "SELECT * FROM MESA WHERE id_mesa = $id";
   $result = mysqli_query($con, $query);
 
   while($row = mysqli_fetch_array($result)) { 
-
     $registro = true;
     $id     = $row['id_mesa'];
     $numero = $row['numero'];
@@ -25,12 +22,10 @@ if (isset($_GET['id'])) {
     }
 
     $status = $row['status'];
-
   }
 }
 
 if (isset($_GET['delete_consumo'])) {
-
   $id_consumo = $_GET['delete_consumo'];
   $id_mesa = $_GET['id_mesa'];
 
@@ -38,14 +33,12 @@ if (isset($_GET['delete_consumo'])) {
 }
 
 if (isset($_GET['deletar_mesa'])) {
-
   $id = $_GET['deletar_mesa'];
 
   delete_mesa($id);
 }
 
 if (isset($_POST['submit'])) {
-
   $id = $_POST['fechar_mesa'];
   $total = $_POST['total'];
   $numero = $_POST['numero'];
@@ -53,21 +46,18 @@ if (isset($_POST['submit'])) {
   fechar_mesa($id, $total);
 }
 
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Mesa</title>
-    <link rel="icon" href="assets/img/logo.jpg">
+<head>
+  <title>Mesa</title>
+  <link rel="icon" href="assets/img/logo.jpg">
    
-    <?php include '../../includes/head.php' ?>
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
+  <?php include '../../includes/head.php' ?>
 
-
-    <style>
+<style>
 
 .pricing-header {
   max-width: 30vw;
@@ -107,12 +97,11 @@ a:hover i.fa-arrow-left {
 }*/
 
 </style>
-
-  
 </head>
+
 <body>
     
-<!-- Header and Nav Content -->
+<!-- HEADER AND NAV -->
 <?php include '../../includes/header.php'; ?>
 
 <main class="container-fluid">
@@ -143,7 +132,6 @@ a:hover i.fa-arrow-left {
       $result2 = mysqli_query($con, $query2);
 
       while($row = mysqli_fetch_array($result2)) { 
-
         $id_mesa      = $row['id_mesa'];
         $id_consumo   = $row['id_consumo'];
         $qtd          = $row['quantidade'];
@@ -161,22 +149,14 @@ a:hover i.fa-arrow-left {
         }
       }
 
-
-      // echo '<br>';
-
       echo '<hr class="style-one">';
 
       echo '<br>';
-
-
-      
 
       echo 
 
       '
      
-
-
       <form action="mesa.php" method="POST">
       
       <input name="fechar_mesa" value="'.$id.'" hidden>
@@ -220,9 +200,6 @@ a:hover i.fa-arrow-left {
   </div>
 
 
-
-
-
 <!-- CONFIRMAÇÂO PARA DELETAR MESA -->
 
 <!-- Modal -->
@@ -245,14 +222,11 @@ a:hover i.fa-arrow-left {
 </div>
 
 
-
-
-
 </main>   
 </body>
 
 <script type="text/javascript">
-  
+
   function calcularDezPorcento(total) {
     let checkBox = document.querySelector("#flexSwitchCheckDefault");
     let totalInput = document.querySelector("#total");
@@ -261,20 +235,12 @@ a:hover i.fa-arrow-left {
 
     console.log("total: ", total);
 
-    if(checkBox.checked == true) {
-      
+    if(checkBox.checked == true) {  
       totalInput.textContent = (total + dezPorcento).toFixed(2);
-
     } else {
-      
       totalInput.textContent = total.toFixed(2);
-
     }
   }
 
-
-
 </script>
-
-
 </html>

@@ -1,21 +1,24 @@
 <?php
-session_start();
 
-//include "../includes/db.php";
+session_start();
 include "../includes/functions.php";
 
 autorizacao_super();
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Mesas</title>
+
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../includes/head.php' ?>
 
+  <!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="<?=LINK_SITE;?>assets/css/index.css" media="screen" />
-
 </head>
+
 <body>
 
 <!-- Header and Nav Content -->
@@ -38,7 +41,6 @@ autorizacao_super();
 
   	<!-- <button class="btn-lg btn-outline-success">Criar Tipo de Produto</button><br><br> -->
   	
-
   	</div>
 
   	<div class="col-4">

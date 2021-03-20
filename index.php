@@ -71,7 +71,6 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Sistema Restaurante</title>
 

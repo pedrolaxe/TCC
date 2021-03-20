@@ -1,8 +1,7 @@
 <?php
 
 session_start();
-
-include "../../includes/functions.php";
+include "../../../includes/functions.php";
 
 autorizacao_super();
 
@@ -27,20 +26,20 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
   <title>Add Mesa</title>
   <link rel="icon" href="assets/img/logo.jpg">
 
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../../includes/head.php'; ?>
 
-  <!-- Custom styles for this template -->
-  <link href="../../assets/css/form.css" rel="stylesheet">
+  <!-- CSS -->
+  <link href="../../../assets/css/form.css" rel="stylesheet">
+</head>
 
-  </head>
-  <body class="text-center">
+<body class="text-center">
 
-  <?php include '../../../includes/header.php'; ?>
+<?php include '../../../includes/header_admin.php'; ?>
     
 <main class="form-signin">
   <form action='trocar_mesa.php' method='post'>
@@ -54,8 +53,5 @@ if (isset($_POST['submit'])) {
     <br><br>
   </form>
 </main>
-
-
-    
-  </body>
+</body>
 </html>

@@ -1,15 +1,12 @@
 <?php
 
 session_start();
-
 include "../../includes/functions.php";
 
 autorizacao();
 
 if (isset($_POST['submit'])) {
-
   insert_mesa();
-
 } else { }
 
 ?>
@@ -18,10 +15,14 @@ if (isset($_POST['submit'])) {
 <html>
 
 <head>
-<title>Add Mesa</title>
-<link rel="icon" href="assets/img/logo.jpg">
-<?php include '../../includes/head.php'; ?>
-<link href="../../assets/css/form.css" rel="stylesheet">
+  <title>Add Mesa</title>
+  <link rel="icon" href="assets/img/logo.jpg">
+
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
+  <?php include '../../includes/head.php'; ?>
+
+  <!-- CSS -->
+  <link href="../../assets/css/form.css" rel="stylesheet">
 </head>
 
 <body class="text-center">
@@ -38,6 +39,5 @@ if (isset($_POST['submit'])) {
     <br><br>
   </form>
 </main> 
-
 </body>
 </html>

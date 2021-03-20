@@ -15,8 +15,8 @@ autorizacao();
   
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include 'includes/head.php' ?>
-
 </head>
+
 <body>
 
 <!-- HEADER AND NAV CONTENT -->
@@ -24,9 +24,7 @@ autorizacao();
 
 <div class='container'>
   <div class="row">
-
     <div class="col-4">
-
       <h1>Pedido</h1>
       <hr>
     
@@ -59,7 +57,6 @@ autorizacao();
 
         <input name="submit" type="submit" value="Procurar">
       </form>
-
     </div>
   </div>
 </div>

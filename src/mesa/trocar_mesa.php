@@ -7,53 +7,40 @@ include "../../includes/functions.php";
 autorizacao();
 
 if (isset($_GET['id'])) {
-
   $id = $_GET['id']; 
-
 }
 
 if (isset($_GET['changed'])) {
-
   $changed = $_GET['changed'];
   if($changed) {
     // MELHORAR MENSAGEM
     echo "NÃO PODE MUDAR PARA A MESMA MESA";
   } 
-
 }
 
-
-// if (isset($_POST['id'])) {
-
-//   $id = $_POST['id']; 
-
-// } 
-
 if (isset($_POST['submit'])) {
-
   trocar_mesa();
-
 } 
-
-
 
 ?>
 
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
   <title>Add Mesa</title>
   <link rel="icon" href="assets/img/logo.jpg">
 
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../includes/head.php'; ?>
 
-  <!-- Custom styles for this template -->
+  <!-- CSS -->
   <link href="../../assets/css/form.css" rel="stylesheet">
+</head>
 
-  </head>
-  <body class="text-center">
+<body class="text-center">
 
-  <?php include '../../includes/header.php'; ?>
+<!-- HEADER AND NAV -->
+<?php include '../../includes/header.php'; ?>
     
 <main class="form-signin">
   <form action='trocar_mesa.php' method='post'>
@@ -67,8 +54,5 @@ if (isset($_POST['submit'])) {
     <br><br>
   </form>
 </main>
-
-
-    
-  </body>
+</body>
 </html>

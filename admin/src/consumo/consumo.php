@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-
 include "../../../includes/functions.php";
 
 autorizacao_super();
@@ -28,7 +27,6 @@ while ($row = mysqli_fetch_array($result_mesa)) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Consumo</title>
   <link rel="icon" href="<?=LINK_SITE;?>assets/img/logo.jpg">
@@ -36,6 +34,7 @@ while ($row = mysqli_fetch_array($result_mesa)) {
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../../includes/head.php'; ?>
 
+  <!-- CSS -->
   <link href="<?=LINK_SITE;?>assets/css/produtos.css" rel="stylesheet">
 
   <style type="text/css">
@@ -64,21 +63,17 @@ while ($row = mysqli_fetch_array($result_mesa)) {
 
 <body>
 
+  <!-- HEADER AND NAV -->
   <?php include '../../../includes/header_admin.php'; ?>
 
   <div class='container-fluid'>
-
     <!-- <h1>Mesa <?php echo $numero_mesa; ?></h1> -->
-
     <form action="add_consumo.php" method="POST">
 
       <br>
 
       <div class="row">
-
         <div class="col-4">
-
-
           <h1>Bar</h1>
           <br>
           <table class="styled-table">
@@ -86,8 +81,6 @@ while ($row = mysqli_fetch_array($result_mesa)) {
               <tr>
                 <th>Qtd</th>
                 <th>Nome</th>
-                <!-- <th>Preço</th> -->
-                <!-- <th></th> -->
               </tr>
             </thead>
             <tbody>
@@ -112,25 +105,20 @@ while ($row = mysqli_fetch_array($result_mesa)) {
                 <tr>
                   <td><input name="qtd_bar<?php echo $count ?>" type="number" value="0" min="0" style="width:3em"></td>
                   <td><?php echo $nome_produto ?></td>
-                  <!-- <td><?php echo $preco ?></td> -->
-                  <!-- <td style="text-align: right; padding-right: 1vw;"> -->
                   <input name="id_produto_bar<?php echo $count ?>" value="<?php echo $id_produto ?>" hidden>
-                  <!-- <input type="submit" value="+"></td> -->
                 </tr>
-                <!-- </form> -->
 
-              <?php
+                <?php
 
                 $count += 1;
+
               } ?>
 
             </tbody>
           </table>
         </div>
 
-
         <div class="col-4">
-
           <h1>Porções</h1>
           <br>
           <table class="styled-table">
@@ -138,8 +126,6 @@ while ($row = mysqli_fetch_array($result_mesa)) {
               <tr>
                 <th>Qtd</th>
                 <th>Nome</th>
-                <!-- <th>Preço</th> -->
-                <!-- <th></th> -->
               </tr>
             </thead>
             <tbody>
@@ -160,20 +146,17 @@ while ($row = mysqli_fetch_array($result_mesa)) {
                 $preco = $row['preco'];
 
               ?>
-                <!-- <form action="add_consumo.php" method="POST"> -->
+
                 <tr>
                   <td><input name="qtd_porcao<?php echo $count ?>" type="number" value="0" min="0" style="width:3em"></td>
                   <td><?php echo $nome_produto ?></td>
-                  <!-- <td><?php echo $preco ?></td> -->
-                  <!-- <td style="text-align: right; padding-right: 1vw;"> -->
                   <input name="id_produto_porcao<?php echo $count ?>" value="<?php echo $id_produto ?>" hidden>
-                  <!-- <input type="submit" value="+"></td> -->
                 </tr>
-                <!-- </form> -->
 
-              <?php
+                <?php
 
                 $count += 1;
+
               } ?>
 
             </tbody>
@@ -189,8 +172,6 @@ while ($row = mysqli_fetch_array($result_mesa)) {
               <tr>
                 <th>Qtd</th>
                 <th>Nome</th>
-                <!-- <th>Preço</th> -->
-                <!-- <th></th> -->
               </tr>
             </thead>
             <tbody>
@@ -211,20 +192,16 @@ while ($row = mysqli_fetch_array($result_mesa)) {
                 $preco = $row['preco'];
 
               ?>
-                <!-- <form action="add_consumo.php" method="POST"> -->
                 <tr>
                   <td><input name="qtd_refeicao<?php echo $count ?>" type="number" value="0" min="0" style="width:3em"></td>
                   <td><?php echo $nome_produto ?></td>
-                  <!-- <td><?php echo $preco ?></td> -->
-                  <!-- <td style="text-align: right; padding-right: 1vw;"> -->
                   <input name="id_produto_refeicao<?php echo $count ?>" value="<?php echo $id_produto ?>" hidden>
-                  <!-- <input type="submit" value="+"></td> -->
                 </tr>
-                <!-- </form> -->
 
-              <?php
+                <?php
 
                 $count += 1;
+
               } ?>
 
             </tbody>
@@ -235,9 +212,7 @@ while ($row = mysqli_fetch_array($result_mesa)) {
       <br>
 
       <div class="row">
-
         <div class="col-4">
-
           <h1>Lanches</h1>
           <br>
           <table class="styled-table">
@@ -245,8 +220,6 @@ while ($row = mysqli_fetch_array($result_mesa)) {
               <tr>
                 <th>Qtd</th>
                 <th>Nome</th>
-                <!-- <th>Preço</th> -->
-                <!-- <th></th> -->
               </tr>
             </thead>
             <tbody>
@@ -267,20 +240,16 @@ while ($row = mysqli_fetch_array($result_mesa)) {
                 $preco = $row['preco'];
 
               ?>
-                <!-- <form action="add_consumo.php" method="POST"> -->
                 <tr>
                   <td><input name="qtd_lanche<?php echo $count ?>" type="number" value="0" min="0" style="width:3em"></td>
                   <td><?php echo $nome_produto ?></td>
-                  <!-- <td><?php echo $preco ?></td> -->
-                  <!-- <td style="text-align: right; padding-right: 1vw;"> -->
                   <input name="id_produto_lanche<?php echo $count ?>" value="<?php echo $id_produto ?>" hidden>
-                  <!-- <input type="submit" value="+"></td> -->
                 </tr>
-                <!-- </form> -->
 
-              <?php
+                <?php
 
                 $count += 1;
+
               } ?>
 
             </tbody>
@@ -289,7 +258,6 @@ while ($row = mysqli_fetch_array($result_mesa)) {
 
 
         <div class="col-4">
-
           <h1>Caldos</h1>
           <br>
           <table class="styled-table">
@@ -297,8 +265,6 @@ while ($row = mysqli_fetch_array($result_mesa)) {
               <tr>
                 <th>Qtd</th>
                 <th>Nome</th>
-                <!-- <th>Preço</th> -->
-                <!-- <th></th> -->
               </tr>
             </thead>
             <tbody>
@@ -319,29 +285,22 @@ while ($row = mysqli_fetch_array($result_mesa)) {
                 $preco = $row['preco'];
 
               ?>
-                <!-- <form action="add_consumo.php" method="POST"> -->
                 <tr>
                   <td><input name="qtd_caldo<?php echo $count ?>" type="number" value="0" min="0" style="width:3em"></td>
                   <td><?php echo $nome_produto ?></td>
-                  <!-- <td><?php echo $preco ?></td> -->
-                  <!-- <td style="text-align: right; padding-right: 1vw;"> -->
                   <input name="id_produto_caldo<?php echo $count ?>" value="<?php echo $id_produto ?>" hidden>
-                  <!-- <input type="submit" value="+"></td> -->
                 </tr>
-                <!-- </form> -->
 
-              <?php
+                <?php
 
                 $count += 1;
+
               } ?>
 
             </tbody>
           </table>
         </div>
-
-
         </table>
-
       </div>
   </div>
 
@@ -362,5 +321,4 @@ while ($row = mysqli_fetch_array($result_mesa)) {
   <br><br><br>
 
 </body>
-
 </html>

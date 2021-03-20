@@ -5,8 +5,6 @@ include "../includes/functions.php";
 
 autorizacao_super();
 
-echo $_SESSION['auth_super'];
-
 if (isset($_POST['submit'])) {
   insert_mesa();
 }
@@ -14,7 +12,6 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Mesas</title>
   <link rel="icon" href="<?= LINK_SITE; ?>assets/img/logo.jpg">
@@ -22,6 +19,7 @@ if (isset($_POST['submit'])) {
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../includes/head.php' ?>
 
+  <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="<?= LINK_SITE; ?>assets/css/index.css" media="screen" />
 </head>
 
@@ -50,7 +48,7 @@ if (isset($_POST['submit'])) {
         }
 
         # NAO ESTÁ SENDO USADO AINDA
-        $status = $row['status'];
+        // $status = $row['status'];
 
       ?>
 
@@ -75,7 +73,6 @@ if (isset($_POST['submit'])) {
                 <details>
                   <summary>Consumo</summary>
 
-
                   <?php
 
                   # VALOR TOTAL DA CONTA 
@@ -91,17 +88,14 @@ if (isset($_POST['submit'])) {
                   
                   ";
 
-
                   $result2 = mysqli_query($con, $query2);
 
                   while ($row = mysqli_fetch_array($result2)) {
-
-                    // $id_mesa e $id representam a mesma id mas por buscas diferentes para comparar uma com a outra na hora de
-                    // mostrar os produtos para cada mesa corretamente
                     $id_mesa      = $row['id_mesa'];
                     $qtd          = $row['quantidade'];
                     $nome_produto = $row['nome_produto'];
 
+                    # VERIFICAR SE A MESA DA PRIMEIRA BUSCA É IGUAL A DA SEGUNDA PARA ADICIONAR OS PRODUTOS NA MESA CORRETA
                     if ($id == $id_mesa) {
                       echo '<li><b>' . $qtd . ' x </b>' . $nome_produto . '</li>';
                     }
