@@ -4,7 +4,6 @@ session_start();
 
 include "../../../includes/functions.php";
 
-// autorizacao();
 autorizacao_super();
 
 if (isset($_GET['id'])) {
@@ -53,10 +52,7 @@ if (isset($_POST['submit'])) {
   fechar_mesa($id, $total);
 }
 
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -65,6 +61,7 @@ if (isset($_POST['submit'])) {
   <title>Mesa</title>
   <link rel="icon" href="assets/img/logo.jpg">
 
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../../includes/head.php' ?>
 
 
@@ -101,18 +98,12 @@ if (isset($_POST['submit'])) {
       color: #DEF2F1 !important;
     }
 
-    /*.voltar:hover {
-  color: white !important;
-  background-color: #88BDBC !important;
-}*/
   </style>
-
-
 </head>
 
 <body>
 
-  <!-- Header and Nav Content -->
+  <!-- HEADER AND NAV -->
   <?php include '../../../includes/header_admin.php'; ?>
 
   <main class="container-fluid">
@@ -132,13 +123,13 @@ if (isset($_POST['submit'])) {
 
           $query2  = "
 
-      SELECT * FROM CONSUMO 
-      INNER JOIN PRODUTO ON 
-      CONSUMO.id_produto = PRODUTO.id_produto 
-      INNER JOIN MESA ON 
-      CONSUMO.id_mesa = MESA.id_mesa
+          SELECT * FROM CONSUMO 
+          INNER JOIN PRODUTO ON 
+          CONSUMO.id_produto = PRODUTO.id_produto 
+          INNER JOIN MESA ON 
+          CONSUMO.id_mesa = MESA.id_mesa
 
-      ";
+          ";
 
           $result2 = mysqli_query($con, $query2);
 
@@ -155,28 +146,19 @@ if (isset($_POST['submit'])) {
 
               echo
               '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, '.', ',') . '
-          <a href="mesa.php?delete_consumo=' . $id_consumo . '&id_mesa=' . $id_mesa . '"><i class="fas fa-trash" style="padding-left:0.3em"></i></a></b></li>';
+              <a href="mesa.php?delete_consumo=' . $id_consumo . '&id_mesa=' . $id_mesa . '"><i class="fas fa-trash" style="padding-left:0.3em"></i></a></b></li>';
 
               $total += $qtd * $preco;
             }
           }
 
-
-          // echo '<br>';
-
           echo '<hr class="style-one">';
-
           echo '<br>';
-
-
-
 
           echo
 
           '
      
-
-
       <form action="mesa.php" method="POST">
       
       <input name="fechar_mesa" value="' . $id . '" hidden>
@@ -189,9 +171,7 @@ if (isset($_POST['submit'])) {
         </label>
         <input onclick="calcularDezPorcento(' . $total . ')" name="dezPorcento" style="float:right;margin-top:5px" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
 
-
         <br><br>
-
 
         <h2 style="float:right; font-style: italic; font-weight: bold">
 
@@ -199,9 +179,7 @@ if (isset($_POST['submit'])) {
 
         </h2>
 
-
       </div><button style="float:left" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
-
 
         </form>
 
@@ -210,15 +188,9 @@ if (isset($_POST['submit'])) {
         <button style="margin-left:4px" class="btn-lg btn-outline-success">Trocar Mesa</button>
       </a>
 
-
-      
       <button style="margin-top:5px" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Deletar Mesa</button>
 
-
       <button style="display:inline; width: 7.3em" type="button" class="btn-lg btn-outline-dark">Desconto</button>
-
-
-
 
       ';
 
@@ -227,7 +199,6 @@ if (isset($_POST['submit'])) {
         </ul>
       </div>
     </div>
-
 
 
     <!-- CONFIRMAÇÂO PARA DELETAR MESA -->
@@ -250,8 +221,6 @@ if (isset($_POST['submit'])) {
         </div>
       </div>
     </div>
-
-
 
   </main>
 </body>
@@ -276,6 +245,4 @@ if (isset($_POST['submit'])) {
     }
   }
 </script>
-
-
 </html>

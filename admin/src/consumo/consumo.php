@@ -3,9 +3,7 @@
 session_start();
 
 include "../../../includes/functions.php";
-include "../../../includes/db.php";
 
-// autorizacao();
 autorizacao_super();
 
 // PEGAR INFORMAÇÕES DO USUARIO NO BANCO DE DADOS
@@ -34,6 +32,8 @@ while ($row = mysqli_fetch_array($result_mesa)) {
 <head>
   <title>Consumo</title>
   <link rel="icon" href="<?=LINK_SITE;?>assets/img/logo.jpg">
+
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../../includes/head.php'; ?>
 
   <link href="<?=LINK_SITE;?>assets/css/produtos.css" rel="stylesheet">
@@ -60,7 +60,6 @@ while ($row = mysqli_fetch_array($result_mesa)) {
 
     }
   </style>
-
 </head>
 
 <body>

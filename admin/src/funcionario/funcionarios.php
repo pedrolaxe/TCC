@@ -29,7 +29,6 @@ if (isset($_GET['edit_funcionario'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html>
 
@@ -37,10 +36,11 @@ if (isset($_GET['edit_funcionario'])) {
   <title>Produtos</title>
   <link rel="icon" href="<?=LINK_SITE;?>assets/img/logo.jpg">
 
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../../includes/head.php'; ?>
 
+  <!-- CSS -->
   <link href="<?=LINK_SITE;?>assets/css/produtos.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -95,16 +95,12 @@ if (isset($_GET['edit_funcionario'])) {
       </div>
 
 
-
-
     </div>
 
     <br>
 
     <a href="../../config.php"><button class="w-10 btn btn-lg btn-outline-secondary">Voltar</button></a>
 
-
   </div>
 </body>
-
 </html>

@@ -1,4 +1,5 @@
 <?php
+
 include '../../../includes/functions.php';
 
 if (isset($_POST['submit'])) {
@@ -8,59 +9,29 @@ if (isset($_POST['submit'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Hugo 0.80.0">
   <title>Sistema Restaurante</title>
 
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../../includes/head.php' ?>
+
   <!-- Bootstrap core CSS -->
   <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <!-- Custom styles for this template -->
+  <!-- CSS -->
   <link href="<?=LINK_SITE;?>assets/css/signin.css" rel="stylesheet">
-
   <link rel="stylesheet" type="text/css" href="<?=LINK_SITE;?>assets/css/main.css" media="screen" />
-
-
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
-
 </head>
 
 <body class="text-center">
 
-  <?php include '../../../includes/head.php' ?>
-
   <main class="form-signin">
     <form action="add_funcionario.php" method="POST">
 
-      <h1 style="font-size: 2.5em">Cadastro Funcionário</h1>
+      <h1>Cadastro Funcionário</h1>
 
-      <br>
-
-      <!-- <i class="fas fa-10x fa-user-lock" style="color:#88BDBC"></i> -->
-
-      <!-- <br><br> -->
-      <!-- <h1 class="h3 mb-3 fw-normal">Please sign in</h1> -->
       <label for="inputEmail" class="visually-hidden">Login</label>
       <input type="text" id="inputEmail" class="form-control" name="login" placeholder="Login" required autofocus>
       <label for="inputPassword" class="visually-hidden">Senha</label>
@@ -73,10 +44,9 @@ if (isset($_POST['submit'])) {
 
       <br>
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit" name="submit">Criar</button>
+      <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name="submit">Criar</button>
       <!-- <p class="mt-5 mb-3 text-muted">&copy; 2021</p> -->
     </form>
-    <br>
     <a href="../../config.php"><button class="w-100 btn btn-lg btn-outline-secondary">Voltar</button></a>
   </main>
 

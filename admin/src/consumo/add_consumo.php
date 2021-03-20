@@ -6,11 +6,9 @@ include "../../includes/functions.php";
 include "../../includes/db.php";
 include "../../../impressao.php";
 
-// autorizacao();
 autorizacao_super();
 
 $numero_mesa = $_POST['numero_mesa'];
-
 
 if (isset($_POST['tipo'])) {
 

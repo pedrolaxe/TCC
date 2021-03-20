@@ -5,6 +5,8 @@ include "includes/functions.php";
 
 autorizacao();
 
+echo $_SESSION['auth'];
+
 if (isset($_POST['submit'])) {
   insert_mesa();
 } else { }

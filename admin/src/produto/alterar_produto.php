@@ -4,7 +4,6 @@ session_start();
 
 include "../../../includes/functions.php";
 
-// autorizacao();
 autorizacao_super();
 
 if (isset($_POST['submit'])) {
@@ -36,16 +35,16 @@ if (isset($_GET['id_produto'])) {
   }
 }
 
-
 ?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <title>Add Produto</title>
     <link rel="icon" href="assets/img/logo.jpg">
     
+    <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
     <?php include '../../../includes/head.php'; ?>
 
   <!-- Custom styles for this template -->

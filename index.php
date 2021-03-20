@@ -21,7 +21,50 @@ if ($result && mysqli_num_rows($result)) {
 
 # TENTATIVA DE LOGIN PARA A PAGINA DO ADMIN OU FUNCIONARIO
 if (isset($_POST['submit'])) {
-  logar();
+  $db_login = '';
+
+  # LOGIN E SENHA
+  $login = mysqli_real_escape_string($con, $_POST['login']);
+  $senha = mysqli_real_escape_string($con, $_POST['senha']);
+
+  # MELHORAR A SEGURANÇA ?
+  $senha = md5($senha);
+
+  $query = "SELECT * FROM usuario WHERE login = '{$login}'";
+  $result = mysqli_query($con, $query);
+
+  if (!$result) {
+    die("Query Failed");
+  } else {
+
+    # MOSTRAR TODAS AS COLUNAS DE TODA A TABELA
+    while ($row = mysqli_fetch_array($result)) {
+
+      $db_login = $row['login'];
+      $db_senha = $row['senha'];
+      $tipo     = $row['tipo'];
+    }
+
+    # VERIFICANDO SE LOGIN E SENHA ESTÃO IGUAIS AS DO DB
+    if ($login !== $db_login || $senha !== $db_senha) {
+      echo '
+      <div class="alert alert-primary" role="alert">
+        Usuário ou senha Incorreto!
+      </div>';
+
+    # DANDO PERMISSÃO E REDIRECIONANDO O USUÁRIO
+    } else {
+
+      $_SESSION['login'] = $db_login;
+      if ($tipo == 'administrador') {
+        $_SESSION['auth_super'] = true;
+        header("location: ".LINK_SITE."admin/mesas.php");
+      } else {
+        $_SESSION['auth'] = true;
+        header("location: ".LINK_SITE."mesas.php");
+      }
+    }
+  }
 }
 
 ?>
