@@ -1,15 +1,13 @@
 <?php
+
 session_start();
-include "includes/db.php";
 include "includes/functions.php";
 
 autorizacao();
 
 if (isset($_POST['submit'])) {
-
   insert_mesa();
-} else {
-}
+} else { }
 
 ?>
 
@@ -20,15 +18,16 @@ if (isset($_POST['submit'])) {
   <title>Mesas</title>
   <link rel="icon" href="assets/img/logo.jpg">
 
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include 'includes/head.php' ?>
 
+  <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="assets/css/index.css" media="screen" />
-
 </head>
 
 <body>
 
-  <!-- Header and Nav Content -->
+  <!-- HEADER AND NAV -->
   <?php include 'includes/header.php'; ?>
 
   <div class='container-fluid'>
@@ -44,14 +43,13 @@ if (isset($_POST['submit'])) {
         $id      = $row['id_mesa'];
         $numero  = $row['numero'];
 
-
         // PARA APARECER MESA '09' EM VEZ DE '9' //
         if (strlen($numero) == 1) {
           $numero = str_pad($numero, 2, '0', STR_PAD_LEFT);
         }
 
         // NAO ESTÁ SENDO USADO AINDA //
-        $status = $row['status'];
+        // $status = $row['status'];
 
       ?>
 
@@ -62,8 +60,9 @@ if (isset($_POST['submit'])) {
 
                 <?php
 
-                echo '<h2><a href="src/mesa/mesa.php?id=' . $id . '">Mesa ' . $numero . '</a>
-              <a href="src/consumo/consumo.php?id=' . $id . '" style="float:right">+</a></h2>';
+                echo '
+                <h2><a href="src/mesa/mesa.php?id=' . $id . '">Mesa ' . $numero . '</a>
+                <a href="src/consumo/consumo.php?id=' . $id . '" style="float:right">+</a></h2>';
 
                 ?>
 
@@ -76,7 +75,6 @@ if (isset($_POST['submit'])) {
                 <details>
                   <summary>Consumo</summary>
 
-
                   <?php
 
                   // VALOR TOTAL DA CONTA //
@@ -84,14 +82,13 @@ if (isset($_POST['submit'])) {
 
                   $query2  = "
 
-              SELECT * FROM CONSUMO 
-              INNER JOIN PRODUTO ON 
-              CONSUMO.id_produto = PRODUTO.id_produto 
-              INNER JOIN MESA ON 
-              CONSUMO.id_mesa = MESA.id_mesa
-              
-              ";
-
+                  SELECT * FROM CONSUMO 
+                  INNER JOIN PRODUTO ON 
+                  CONSUMO.id_produto = PRODUTO.id_produto 
+                  INNER JOIN MESA ON 
+                  CONSUMO.id_mesa = MESA.id_mesa
+                  
+                  ";
 
                   $result2 = mysqli_query($con, $query2);
 
@@ -102,27 +99,11 @@ if (isset($_POST['submit'])) {
                     $id_mesa      = $row['id_mesa'];
                     $qtd          = $row['quantidade'];
                     $nome_produto = $row['nome_produto'];
-                    // $preco        = $row['preco'];
 
                     if ($id == $id_mesa) {
-
-                      // PRECO DO PRODUTO //
-                      // echo '<li><b>'.$qtd.' x </b>'.$nome_produto.'<b style="float:right">'.number_format($qtd*$preco, 2, '.', ',').'</b></li>';
-
                       echo '<li><b>' . $qtd . ' x </b>' . $nome_produto . '</li>';
-
-
-                      // $soma += $qtd*$preco;
-
                     }
                   }
-
-
-                  // SOMA DOS PRODUTOS //
-                  // echo '<br>';
-                  // if($soma != 0) {
-                  //   echo '<h3 style="float:right; font-style: italic; font-weight: bold">'.number_format($soma, 2, '.', ',').'</h3>';
-                  // }
 
                   ?>
 
