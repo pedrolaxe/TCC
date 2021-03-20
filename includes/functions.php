@@ -200,7 +200,13 @@ function trocar_mesa() {
 }
 
 function fechar_mesa($id, $total) {
+  global $con;
+
+  # ESSE FUNCIONA PARA O ADMIN MAS NAO PARA O FUNCIONARIO
   include "../../../impressao.php";
+
+  # ESSE FUNCIONA PARA O FUNCIONARIO
+  // include "../../impressao.php";
 
   if (isset($_POST['dezPorcento'])) {
     $dezPorcento = $_POST['dezPorcento'];
