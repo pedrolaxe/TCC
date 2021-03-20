@@ -1,12 +1,10 @@
 <?php
 
 session_start();
-
 date_default_timezone_set('America/Sao_Paulo');
 
 include "../../../includes/functions.php";
 
-// autorizacao();
 autorizacao_super();
 
 if (isset($_GET['delete_produto'])) {
@@ -25,7 +23,6 @@ if (isset($_GET['alterar_produto'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html>
 
@@ -33,10 +30,10 @@ if (isset($_GET['alterar_produto'])) {
   <title>Produtos</title>
   <link rel="icon" href="<?= LINK_SITE; ?>assets/img/logo.jpg">
 
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../../includes/head.php'; ?>
 
   <link href="<?= LINK_SITE; ?>assets/css/produtos.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -44,11 +41,9 @@ if (isset($_GET['alterar_produto'])) {
   <?php include '../../../includes/header_admin.php'; ?>
 
   <div class='container-fluid'>
-
     <br>
 
     <div class="row">
-
       <div class="col-4">
 
         <h1>Bar</h1>
@@ -289,8 +284,6 @@ if (isset($_GET['alterar_produto'])) {
           </tbody>
         </table>
       </div>
-
-
     </div>
 </body>
 

@@ -7,9 +7,7 @@ include "../../includes/functions.php";
 autorizacao_super();
 
 if (isset($_GET['id'])) {
-
   $id = $_GET['id']; 
-
 }
 
 if (isset($_GET['changed'])) {
@@ -19,15 +17,11 @@ if (isset($_GET['changed'])) {
     // MELHORAR MENSAGEM
     echo "NÃO PODE MUDAR PARA A MESMA MESA";
   } 
-
 }
 
 if (isset($_POST['submit'])) {
-
   trocar_mesa();
-
 } 
-
 
 ?>
 
@@ -37,6 +31,7 @@ if (isset($_POST['submit'])) {
   <title>Add Mesa</title>
   <link rel="icon" href="assets/img/logo.jpg">
 
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../../includes/head.php'; ?>
 
   <!-- Custom styles for this template -->

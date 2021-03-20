@@ -1,28 +1,22 @@
 .col-3 {
-	padding:0;
+  padding:0;
 }
 
 .mesa {
-	min-height: 27vh;
-	height: auto;
-	/*border: 1px solid #6E6658;*/
-	/*border-top: 1px solid #6E6658;*/
-	/*margin: 0.5em 0.5em 0 0.5em;*/
-	/*padding: 0 0.7em 0.7em 0.7em;*/
-	background-color: #DEF2F1;
-	
-
+  min-height: 27vh;
+  height: auto;
+  background-color: #DEF2F1;
 }
 
 input {
-    width: 400px;
-    padding: 0 20px;
+  width: 400px;
+  padding: 0 20px;
 }
 
 input,
 input::-webkit-input-placeholder {
-    font-size: 22px;
-    line-height: 3;
+  font-size: 22px;
+  line-height: 3;
 }
 
 .card-header {
