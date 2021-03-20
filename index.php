@@ -17,7 +17,6 @@ if ($result && mysqli_num_rows($result)) {
   header("Location: ".LINK_SITE."cadastro.php");
 }
 
-
 if (isset($_POST['submit'])) {
 
   $db_login = '';
