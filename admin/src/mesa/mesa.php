@@ -1,20 +1,17 @@
 <?php
 
 session_start();
-
 include "../../../includes/functions.php";
 
 autorizacao_super();
 
 if (isset($_GET['id'])) {
-
   $id = $_GET['id'];
 
   $query  = "SELECT * FROM MESA WHERE id_mesa = $id";
   $result = mysqli_query($con, $query);
 
   while ($row = mysqli_fetch_array($result)) {
-
     $registro = true;
     $id     = $row['id_mesa'];
     $numero = $row['numero'];
@@ -28,7 +25,6 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_GET['delete_consumo'])) {
-
   $id_consumo = $_GET['delete_consumo'];
   $id_mesa = $_GET['id_mesa'];
 
@@ -37,14 +33,11 @@ if (isset($_GET['delete_consumo'])) {
 
 
 if (isset($_GET['deletar_mesa'])) {
-
   $id = $_GET['deletar_mesa'];
-
   delete_mesa($id);
 }
 
 if (isset($_POST['submit'])) {
-
   $id = $_POST['fechar_mesa'];
   $total = $_POST['total'];
   $numero = $_POST['numero'];
@@ -56,14 +49,12 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Mesa</title>
   <link rel="icon" href="assets/img/logo.jpg">
 
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../../../includes/head.php' ?>
-
 
   <style>
     .pricing-header {
@@ -97,7 +88,6 @@ if (isset($_POST['submit'])) {
     a:hover i.fa-arrow-left {
       color: #DEF2F1 !important;
     }
-
   </style>
 </head>
 

@@ -7,47 +7,41 @@ include "../../../includes/functions.php";
 autorizacao_super();
 
 if (isset($_POST['submit'])) {
-
   $id    = anti_injection($_POST['id']);
   $nome  = anti_injection($_POST['nome_produto']);
   $tipo  = anti_injection($_POST['tipo']);
   $preco = anti_injection($_POST['preco']);
   
   alterar_produto($id, $nome, $tipo, $preco);
-
 } else { }
 
-// SELECIONAR PRODUTO PARA SER ALTERADO
+# SELECIONAR PRODUTO PARA SER ALTERADO
 if (isset($_GET['id_produto'])) {
-
   $id_produto = $_GET['id_produto'];
 
   $query  = "SELECT * FROM PRODUTO WHERE id_produto = $id_produto";
   $result = mysqli_query($con, $query);
 
   while($row = mysqli_fetch_array($result)) { 
-
     $id    = $row['id_produto'];
     $nome  = $row['nome_produto'];
     $tipo  = $row['tipo'];
     $preco = $row['preco'];
-
   }
 }
 
 ?>
 
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Add Produto</title>
-    <link rel="icon" href="assets/img/logo.jpg">
+<head>
+  <title>Add Produto</title>
+  <link rel="icon" href="assets/img/logo.jpg">
     
-    <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
-    <?php include '../../../includes/head.php'; ?>
+  <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
+  <?php include '../../../includes/head.php'; ?>
 
-  <!-- Custom styles for this template -->
+  <!-- CSS -->
   <link href="<?=LINK_SITE;?>assets/css/form.css" rel="stylesheet">
 
 <style>
@@ -87,8 +81,8 @@ select.minimal:focus {
 }
 
 </style>
-
 </head>
+
 <body class="text-center">
 
 <?php include '../../../includes/header_admin.php'; ?>

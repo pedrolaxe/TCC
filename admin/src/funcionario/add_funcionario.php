@@ -10,7 +10,6 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Sistema Restaurante</title>
 
@@ -26,7 +25,6 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body class="text-center">
-
   <main class="form-signin">
     <form action="add_funcionario.php" method="POST">
 
@@ -45,13 +43,8 @@ if (isset($_POST['submit'])) {
       <br>
 
       <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name="submit">Criar</button>
-      <!-- <p class="mt-5 mb-3 text-muted">&copy; 2021</p> -->
     </form>
     <a href="../../config.php"><button class="w-100 btn btn-lg btn-outline-secondary">Voltar</button></a>
   </main>
-
-
-
 </body>
-
 </html>
