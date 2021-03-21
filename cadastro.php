@@ -46,7 +46,6 @@ if(isset($_POST['submit'])) {
 </head>
 
 <body class="text-center">
-    
   <main class="form-signin">
     <form action="cadastro.php" method="POST">
 
