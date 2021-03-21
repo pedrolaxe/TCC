@@ -1,6 +1,5 @@
 <?php
 
-
 if(basename($_SERVER['PHP_SELF']) == 'mesas.php') {
   $add_mesa = 
   '

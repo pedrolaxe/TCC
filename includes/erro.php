@@ -6,7 +6,6 @@
   
   <?php include '../includes/head.php' ?>
 
-	<!-- <link rel="stylesheet" type="text/css" href="assets/css/index.css" media="screen" /> -->
 <style>
 .container {
   height: 200px;
@@ -22,14 +21,13 @@
 }
 
 h1 { font-size: 64px }
-
 </style>
 </head>
+
 <body>
 
 <!-- Header and Nav Content -->
 <?php include 'header.php'; ?>
-
 
 <div class='container'>
 <div class="vertical-center">
