@@ -8,14 +8,12 @@ $_SESSION['auth'] = false;
 $_SESSION['auth_super'] = false;
 
 # SELECIONANDO USUARIOS PARA SABER SE EXISTE ALGUM ADMINISTRADOR
-$query  = "SELECT * FROM USUARIO";
+$query  = "SELECT * FROM USUARIO WHERE tipo = 'administrador'";
 $result = mysqli_query($con, $query);
 
 # SE NÃO HOUVER ADMINISTRADOR REDIRECIONAR PARA O CADASTRO
-if ($result && mysqli_num_rows($result)) {
-
-# SE HOUVER ADMIN CONTINUA NA PAGINA
-} else {
+if ($result && mysqli_num_rows($result)) { } 
+else {
   header("Location: ".LINK_SITE."cadastro.php");
 }
 
@@ -39,7 +37,6 @@ if (isset($_POST['submit'])) {
 
     # MOSTRAR TODAS AS COLUNAS DE TODA A TABELA
     while ($row = mysqli_fetch_array($result)) {
-
       $user_id  = $row['id_usuario'];
       $db_login = $row['login'];
       $db_senha = $row['senha'];
@@ -71,7 +68,6 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Sistema Restaurante</title>
 

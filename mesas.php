@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-
+  
   <!-- HEADER AND NAV -->
   <?php include 'includes/header.php'; ?>
 
