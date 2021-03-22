@@ -24,19 +24,6 @@ if (isset($_GET['id'])) {
   }
 }
 
-if (isset($_GET['delete_consumo'])) {
-  $id_consumo = $_GET['delete_consumo'];
-  $id_mesa = $_GET['id_mesa'];
-
-  delete_consumo($id_consumo, $id_mesa);
-}
-
-if (isset($_GET['deletar_mesa'])) {
-  $id = $_GET['deletar_mesa'];
-
-  delete_mesa($id);
-}
-
 if (isset($_POST['submit'])) {
   $id = $_POST['fechar_mesa'];
   $total = $_POST['total'];
@@ -82,12 +69,12 @@ i {
   color:black;
 }
 
-a:hover i.fas {
+a:hover i.fa-trash {
   color:red !important;
 }
 
 a:hover i.fa-arrow-left {
-  color: #DEF2F1 !important;
+  color: #DEF2F1;
 }
 
 /*.voltar:hover {
@@ -142,7 +129,7 @@ a:hover i.fa-arrow-left {
 
           echo
           '<li style="margin-bottom: 0.8em">'.$qtd.' x '.$nome_produto.'<b style="float:right">'.number_format($qtd*$preco, 2, '.', ',').'
-          <a href="mesa.php?delete_consumo='.$id_consumo.'&id_mesa='.$id_mesa.'"><i class="fas fa-trash" style="padding-left:0.3em"></i></a></b></li>';
+          </b></li>';
 
           $total += $qtd*$preco;
         }
@@ -197,29 +184,6 @@ a:hover i.fa-arrow-left {
       </ul>
     </div>
   </div>
-
-
-<!-- CONFIRMAÇÂO PARA DELETAR MESA -->
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Deletar Mesa</h5>
-        <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Tem certeza disso?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-lg btn-secondary" data-bs-dismiss="modal">Não</button>
-        <a href="mesa.php?deletar_mesa='<?php echo $id ?>'"><button type="button" class="btn-lg btn-primary">Sim</button></a>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 </main>   
 </body>

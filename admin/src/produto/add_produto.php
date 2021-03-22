@@ -9,6 +9,7 @@ if (isset($_POST['submit'])) {
   insert_produto();
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +63,15 @@ if (isset($_POST['submit'])) {
 
 <body class="text-center">
 
-  <?php include '../../../includes/header_admin.php'; ?>
+  <?php include '../../../includes/header_admin.php'; 
+
+    if (isset($_GET['produto_criado'])) {
+      if ($_GET['produto_criado']) {
+        echo '<div style="width:15em; margin:0 auto; margin-top:50px;" class="alert alert-primary" role="alert">Produto Criado</div>';
+      }
+    }
+
+  ?>
 
   <main class="form-signin">
     <form action='add_produto.php' method='post'>

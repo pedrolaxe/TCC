@@ -31,7 +31,7 @@ function insert_mesa() {
 
   # ALERTA
   if ($result && mysqli_num_rows($result)) {
-    echo '<div class="alert alert-danger" role="alert">A Mesa Já Existe!</div>';
+    echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Mesa Já Existe!</center></div>';
   } else {
     $query  = "INSERT INTO MESA (numero, status) ";
     $query .= "VALUES ('$numero', '$status')";
@@ -182,7 +182,14 @@ function trocar_mesa() {
     }
 
     delete_mesa($id_mesa1);
-    header('Location: ' . LINK_SITE . 'admin/mesas.php');
+
+    $userIsAdmin = ID_userisadmin($_SESSION['user_id']);
+
+    if ($userIsAdmin) {
+      header('Location: ' . LINK_SITE . 'admin/mesas.php');
+    } else {
+      header('Location: ' . LINK_SITE . 'mesas.php');
+    }
   }
 
   # SE A MESA NÃO EXISTIR...
@@ -317,7 +324,7 @@ function cadastro_usuario() {
   if ($senha != $confirmacao_senha) {
 
     # MELHORAR MENSAGEM
-    echo '<div style="width:15em; margin:0 auto" class="alert alert-danger" role="alert">Senhas Diferentes!</div>';
+    echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert">Senhas Diferentes!</div>';
   } else {
 
     $senha = md5($senha);
@@ -400,13 +407,12 @@ function insert_produto() {
   $tipo  = $_POST['tipo'];
   $preco = $_POST['preco'];
 
-
   $query  = "INSERT INTO PRODUTO (nome_produto, tipo, preco) ";
   $query .= "VALUES ('$nome', '$tipo', '$preco')";
 
   $result = mysqli_query($con, $query);
 
-  header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
+  header('Location: ' . LINK_SITE . 'admin/src/produto/add_produto.php?produto_criado=true');
 }
 
 function alterar_produto($id, $nome, $tipo, $preco) {
@@ -414,6 +420,7 @@ function alterar_produto($id, $nome, $tipo, $preco) {
 
   $query = "UPDATE produto SET nome_produto = '$nome', tipo = '$tipo', preco = '$preco' WHERE id_produto = $id";
   $result = mysqli_query($con, $query);
+
   header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
 }
 
