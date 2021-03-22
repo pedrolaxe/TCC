@@ -40,6 +40,7 @@ if (isset($_POST['submit'])) {
     # MOSTRAR TODAS AS COLUNAS DE TODA A TABELA
     while ($row = mysqli_fetch_array($result)) {
 
+      $user_id  = $row['id_usuario'];
       $db_login = $row['login'];
       $db_senha = $row['senha'];
       $tipo     = $row['tipo'];
@@ -54,14 +55,13 @@ if (isset($_POST['submit'])) {
 
     # DANDO PERMISSÃO E REDIRECIONANDO O USUÁRIO
     } else {
-
       $_SESSION['login'] = $db_login;
       if ($tipo == 'administrador') {
         $_SESSION['auth_super'] = true;
-        header("location: ".LINK_SITE."admin/mesas.php");
+        header("location: ".LINK_SITE."admin/mesas.php?user_id=".$user_id);
       } else {
         $_SESSION['auth'] = true;
-        header("location: ".LINK_SITE."mesas.php");
+        header("location: ".LINK_SITE."mesas.php?user_id=".$user_id);
       }
     }
   }

@@ -5,6 +5,10 @@ include "includes/functions.php";
 
 autorizacao();
 
+if (isset($_GET['user_id'])) {
+  $_SESSION['user_id'] = $_GET['user_id'];
+} else { }
+
 if (isset($_POST['submit'])) {
   insert_mesa();
 } else { }
