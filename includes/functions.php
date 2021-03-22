@@ -454,3 +454,51 @@ function delete_consumo($id_consumo, $id_mesa) {
 
 #####################################################
 
+function Send_recover($email,$codigo){
+	//Set Infos
+	$nmsender = "Webmaster";
+	$emsender = "sis@dedal.com.br";
+	$rtsender = "sis@dedal.com.br";
+  
+	$linksite = LINK_SITE;
+	$mensagem = "Ol&aacute; <br>";
+	$mensagem .= 'Clique <a href="'.$linksite.'/changepass.php?code='.$codigo.'">aqui</a> para mudar sua senha.<br>';
+	$mensagem .= '<br><br>';
+	$mensagem .= 'Dedal';
+	$assunto = "Alterar Senha - Dedal";
+  
+	$headers =  "Content-Type:text/html; charset=UTF-8\n";
+	$headers .= "From:  ".$nmsender." <".$emsender.">\n";
+	$headers .= "X-Sender:  <".$emsender.">\n";
+	$headers .= "X-Mailer: PHP  v".phpversion()."\n";
+	$headers .= "X-IP:  ".$_SERVER['REMOTE_ADDR']."\n";
+	$headers .= "Return-Path:  <".$rtsender.">\n";
+	$headers .= "MIME-Version: 1.0\n";
+		if($email !="" && $codigo !=""){
+			mail($email, $assunto, $mensagem, $headers);
+	  }
+  }
+
+function Expira_code($codigo){
+	global $con;
+	if(!empty($codigo)){
+		$sql = $con->query("UPDATE usuario SET codexp='1' WHERE codigo='$codigo'");
+		if($sql){
+			return true;
+		}else{
+			return false;
+		}
+	}
+}
+function Verify_code($codigo){
+	global $con;
+	if(!empty($codigo)){
+		$sqlcode = $con->query("SELECT codexp FROM zn_users WHERE codigo='$codigo'");
+		$lista = $sqlcode->fetch_assoc();
+		if($lista['codexp']==1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+}

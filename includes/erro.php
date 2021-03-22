@@ -2,9 +2,7 @@
 <html>
 <head>
 	<title>Erro</title>
-  <link rel="icon" href="assets/img/logo.jpg">
   
-  <?php include '../includes/head.php' ?>
 
 <style>
 .container {
@@ -34,7 +32,7 @@ h1 { font-size: 64px }
 
 <h2 class="my-0 fw-bold"><i>Aconteceu Algo de Errado, Contate o Administrador!</i></h2>
 <br><br>
-<button class="btn-lg btn-primary" onclick="goBack()">Voltar</button>
+<a class="btn-lg btn-primary" href="../index.php">Voltar</a>
 </div>
 
 

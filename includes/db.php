@@ -9,7 +9,7 @@ $con = mysqli_connect( $host, $username, $password, $database );
 define('LINK_SITE','/');
 
 if(!$con) {
-  header('Location: '.LINK_SITE.'erro.php');
+  header('Location: '.LINK_SITE.'includes/erro.php');
   die( "Database connection failed" );
 }
 
