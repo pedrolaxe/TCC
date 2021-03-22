@@ -5,9 +5,11 @@ include "includes/functions.php";
 
 autorizacao();
 
+# ARMAZENAR USER ID PARA CONTROLE DE ACESSO
 if (isset($_GET['user_id'])) {
   $_SESSION['user_id'] = $_GET['user_id'];
 } else { }
+
 
 if (isset($_POST['submit'])) {
   insert_mesa();
@@ -29,7 +31,7 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-  
+
   <!-- HEADER AND NAV -->
   <?php include 'includes/header.php'; ?>
 

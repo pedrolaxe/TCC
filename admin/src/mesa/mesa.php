@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
       color: black;
     }
 
-    a:hover i.fa-trash {
+    i.fa-trash:hover {
       color: red !important;
     }
 
@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
 
               echo
               '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, '.', ',') . '
-              <a href="mesa.php?delete_consumo=' . $id_consumo . '&id_mesa=' . $id_mesa . '"><i class="fas fa-trash" style="padding-left:0.3em"></i></a></b></li>';
+              <i data-bs-toggle="modal" data-bs-target="#exampleModal2" class="fas fa-trash" style="padding-left:0.3em"></i></b></li>';
 
               $total += $qtd * $preco;
             }
@@ -212,6 +212,28 @@ if (isset($_POST['submit'])) {
       </div>
     </div>
 
+
+    <!-- CONFIRMAÇÂO PARA DELETAR PEDIDO -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #DEF2F1;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Deletar Produto</h5>
+            <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Tem certeza disso?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
+            <a href="mesa.php?delete_consumo='<?php echo $id_consumo ?>'&id_mesa='<?php echo $id_mesa ?>'"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 </body>
 
@@ -222,16 +244,10 @@ if (isset($_POST['submit'])) {
 
     dezPorcento = total * 0.1;
 
-    console.log("total: ", total);
-
     if (checkBox.checked == true) {
-
       totalInput.textContent = (total + dezPorcento).toFixed(2);
-
     } else {
-
       totalInput.textContent = total.toFixed(2);
-
     }
   }
 </script>

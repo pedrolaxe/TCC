@@ -1,9 +1,9 @@
 .form-signin {
   width: 100%;
-  max-width: 330px;
-  padding: 15px;
+  max-width: 500px;
+  /*padding: 15px;*/
   margin: auto;
-  margin-top: 20vh;
+  margin-top: 5vh;
 }
 .form-signin .checkbox {
   font-weight: 400;
@@ -18,13 +18,16 @@
 .form-signin .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+h1 {
+  font-size: 64px;
+  margin-bottom: 20px;
 }
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+
+input {
+  height: 3em !important;
+}
+
+.alert {
+  margin: 0 auto;
+  width: 25vw;
 }
