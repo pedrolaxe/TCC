@@ -86,7 +86,6 @@ function trocar_mesa() {
     echo "Mesa Existe!<br>";
 
 
-
     $query  = "
   
   SELECT * FROM CONSUMO 
@@ -202,11 +201,14 @@ function trocar_mesa() {
 function fechar_mesa($id, $total) {
   global $con;
 
-  # ESSE FUNCIONA PARA O ADMIN MAS NAO PARA O FUNCIONARIO
-  include "../../../impressao.php";
+  # VERIFICAR SE USUARIO É ADMIN PARA DIRECIONAR PARA O CAMINHO CERTO
+  $userIsAdmin = ID_userisadmin($_SESSION['user_id']);
 
-  # ESSE FUNCIONA PARA O FUNCIONARIO
-  // include "../../impressao.php";
+  if ($userIsAdmin) {
+    include "../../../impressao.php";
+  } else {
+    include "../../impressao.php";
+  }
 
   if (isset($_POST['dezPorcento'])) {
     $dezPorcento = $_POST['dezPorcento'];
@@ -214,7 +216,7 @@ function fechar_mesa($id, $total) {
     $dezPorcento = 'off';
   }
 
-  echo $dezPorcento;
+  // echo $dezPorcento;
 
   $query  = "SELECT * FROM MESA WHERE id_mesa = $id";
   $result = mysqli_query($con, $query);
@@ -278,7 +280,12 @@ function fechar_mesa($id, $total) {
   imprimir_conta($soma, $qtd_array, $nome_array, $qtdPreco_array, $numero);
   cut();
 
-  header('Location: ' . LINK_SITE . 'admin/mesas.php');
+  if ($userIsAdmin) {
+    header('Location: ' . LINK_SITE . 'admin/mesas.php');
+  } else {
+    header('Location: ' . LINK_SITE . 'mesas.php');
+  }
+
 }
 
 function delete_mesa($id) {
@@ -308,6 +315,7 @@ function cadastro_usuario() {
   $tipo              = anti_injection($_POST['tipo']);
 
   if ($senha != $confirmacao_senha) {
+
     # MELHORAR MENSAGEM
     echo '<div style="width:15em; margin:0 auto" class="alert alert-danger" role="alert">Senhas Diferentes!</div>';
   } else {
@@ -370,11 +378,11 @@ function autorizacao_super() {
 
 function ID_userisadmin($id) {
   global $con;
-  $sql = $con->query("SELECT id_usuario FROM usuario WHERE id_usuario='$id' AND tipo='administrador'");
+  $sql = $con->query("SELECT * FROM usuario WHERE id_usuario='$id' AND tipo='administrador'");
   while($listar = $sql->fetch_assoc()) {
     if($listar['tipo']=="administrador") {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
