@@ -98,7 +98,9 @@ while($count < $id_array_size) {
           
             # IMPRIMIR NOTA DA COZINHA
         	  $impressora = imprimir_cozinha($nome_produto, $qtd);
-          }
+
+            # PARA NÃO GERAR ERRO DE "IMPRESSORA NAO CONFIGURADA"
+          } else { $impressora = true; }
 
         	$qtd += $produto_qtd;
 
@@ -138,7 +140,9 @@ while($count < $id_array_size) {
 
         # IMPRIMIR NOTA DA COZINHA
 	      $impressora = imprimir_cozinha($nome, $qtd);
-      }
+
+        # PARA NÃO GERAR ERRO DE "IMPRESSORA NAO CONFIGURADA"
+      } else { $impressora = true; }
 	  }
 
 
