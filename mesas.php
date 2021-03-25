@@ -10,6 +10,11 @@ if (isset($_GET['user_id'])) {
   $_SESSION['user_id'] = $_GET['user_id'];
 } else { }
 
+if (isset($_GET['impressora'])) {
+  if($_GET['impressora'] ==  false) {
+    echo '<div margin:0 auto;" class="alert alert-danger" role="alert"><center>A Impressora Não Está Configurada</center></div>';
+  }
+}
 
 if (isset($_POST['submit'])) {
   insert_mesa();

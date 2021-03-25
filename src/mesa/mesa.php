@@ -13,8 +13,9 @@ if (isset($_GET['id'])) {
 
   while($row = mysqli_fetch_array($result)) { 
     $registro = true;
-    $id     = $row['id_mesa'];
-    $numero = $row['numero'];
+    $id       = $row['id_mesa'];
+    $numero   = $row['numero'];
+    $desconto = $row['desconto'];
 
     if(strlen($numero) == 1) {
       $numero = str_pad($numero, 2, '0', STR_PAD_LEFT);
@@ -25,8 +26,8 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_POST['submit'])) {
-  $id = $_POST['fechar_mesa'];
-  $total = $_POST['total'];
+  $id     = $_POST['fechar_mesa'];
+  $total  = $_POST['total'];
   $numero = $_POST['numero'];
 
   fechar_mesa($id, $total);
@@ -144,6 +145,11 @@ a:hover i.fa-arrow-left {
       '
      
       <form action="mesa.php" method="POST">
+
+      <label>Desconto: </label>
+      <input name="desconto" style="width:26%; border:0" value="R$ ' . $desconto . '" disabled>
+
+      <br><br>
       
       <input name="fechar_mesa" value="'.$id.'" hidden>
       <input name="total" value="'.$total.'" hidden>
@@ -166,7 +172,9 @@ a:hover i.fa-arrow-left {
         </h2>
 
 
-      </div><button style="float:left" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
+      </div>
+
+      <button style="float:left" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
 
 
         </form>

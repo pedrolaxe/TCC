@@ -90,7 +90,7 @@ while($count < $id_array_size) {
           	}
 
             # IMPRIMIR NOTA DA COZINHA
-        	  imprimir_cozinha($nome_produto, $qtd);
+        	  $impressora = imprimir_cozinha($nome_produto, $qtd);
           }
 
         	$qtd += $produto_qtd;
@@ -127,7 +127,7 @@ while($count < $id_array_size) {
         }
 
         # IMPRIMIR NOTA DA COZINHA
-	      imprimir_cozinha($nome, $qtd);
+	      $impressora = imprimir_cozinha($nome, $qtd);
       }
 	  }
 
@@ -164,7 +164,7 @@ if($impressao) {
 //
 ////////////////////////////////////////////////////////////////
 
-header('Location: /mesas.php');
+header('Location: /mesas.php?impressora='.$impressora);
 
 ?>
 

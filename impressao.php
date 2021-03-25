@@ -34,12 +34,14 @@ function imprimir_cozinha($nome, $qtd) {
     
     # FECHAR IMPRESSORA
     $printer -> close();
+
+    return true;
   } catch (Exception $e) {
-    echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
+    return false;
   }
 }
 
-function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $numero) {
+function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $numero, $desconto) {
   try {
     $connector = new WindowsPrintConnector("Bematech");
     $printer   = new Printer($connector);
@@ -87,14 +89,37 @@ function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $numer
 
     $printer -> text("\n------------------------------------------------\n\n");
 
-    # TOTAL DA CONTA
     $printer -> setJustification(Printer::JUSTIFY_RIGHT);
-    $printer -> text("TOTAL: R$ " . number_format($total, 2, ',', '.') . "\n");
+
+    # DESCONTO
+    if($desconto != 0) {
+      $printer -> text("DESCONTO: R$ " . number_format($desconto, 2, ',', '.') . "\n\n");
+
+      $total -= $desconto;
+    }
+
+    # SUBTOTAL DA CONTA
+    $printer -> text("SUBTOTAL: R$ " . number_format($total, 2, ',', '.') . "\n");
+
+    $dezPorcento = $total * 0.1;
+
+    # 10%
+    $printer -> text("SERVIÇO: R$ " . number_format($dezPorcento, 2, ',', '.') . "\n\n");
+
+    $total *= 1.1;
+
+    # TOTAL DA CONTA
+    $printer -> text("TOTAL: R$ " . number_format($total, 2, ',', '.') . "\n\n\n");
+
+
+    $printer -> setJustification(Printer::JUSTIFY_CENTER);
+    $printer -> text("SERVIÇO É OPCIONAL\n");
     
     # FECHAR IMPRESSORA
     $printer -> close();
-  } catch (Exception $e) {
-      echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
+    return true;
+  } catch (Exception $e) { 
+    return false;
   }
 }
 
