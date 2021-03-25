@@ -13,8 +13,9 @@ if (isset($_GET['id'])) {
 
   while ($row = mysqli_fetch_array($result)) {
     $registro = true;
-    $id     = $row['id_mesa'];
-    $numero = $row['numero'];
+    $id       = $row['id_mesa'];
+    $numero   = $row['numero'];
+    $desconto = $row['desconto'];
 
     if (strlen($numero) == 1) {
       $numero = str_pad($numero, 2, '0', STR_PAD_LEFT);
@@ -26,7 +27,7 @@ if (isset($_GET['id'])) {
 
 if (isset($_GET['delete_consumo'])) {
   $id_consumo = $_GET['delete_consumo'];
-  $id_mesa = $_GET['id_mesa'];
+  $id_mesa    = $_GET['id_mesa'];
 
   delete_consumo($id_consumo, $id_mesa);
 }
@@ -38,8 +39,8 @@ if (isset($_GET['deletar_mesa'])) {
 }
 
 if (isset($_POST['submit'])) {
-  $id = $_POST['fechar_mesa'];
-  $total = $_POST['total'];
+  $id     = $_POST['fechar_mesa'];
+  $total  = $_POST['total'];
   $numero = $_POST['numero'];
 
   fechar_mesa($id, $total);
@@ -150,17 +151,18 @@ if (isset($_POST['submit'])) {
           '
      
       <form action="mesa.php" method="POST">
+
+      <label>Desconto: </label>
+      <input name="desconto" style="width:26%; border:0" value="R$ ' . $desconto . '" disabled>
+
+      <br><br>
       
       <input name="fechar_mesa" value="' . $id . '" hidden>
       <input name="total" value="' . $total . '" hidden>
       <input name="numero" value="' . $numero . '" hidden>
 
       <div class="form-check form-switch" style="float:right;">  
-        <label style="float:left;margin-right:60px; margin-top:0px" class="form-check-label" for="flexSwitchCheckDefault">
-          <i style="">Acrescentar 10%</i>
-        </label>
-        <input onclick="calcularDezPorcento(' . $total . ')" name="dezPorcento" style="float:right;margin-top:5px" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-
+       
         <br><br>
 
         <h2 style="float:right; font-style: italic; font-weight: bold">
@@ -169,18 +171,22 @@ if (isset($_POST['submit'])) {
 
         </h2>
 
-      </div><button style="float:left" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
+      </div>
+
+      <button style="float:left;" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
 
         </form>
 
 
       <a href="trocar_mesa.php?id=' . $id . '">
-        <button style="margin-left:4px" class="btn-lg btn-outline-success">Trocar Mesa</button>
+        <button style="margin-left:6px" class="btn-lg btn-outline-success">Trocar Mesa</button>
       </a>
 
       <button style="margin-top:5px" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Deletar Mesa</button>
 
-      <button style="display:inline; width: 7.3em" type="button" class="btn-lg btn-outline-dark">Desconto</button>
+      <a href="desconto.php?id=' . $id . '">
+        <button style="display:inline; width: 7.3em" type="button" class="btn-lg btn-outline-dark">Desconto</button>
+      </a>
 
       ';
 
@@ -236,19 +242,4 @@ if (isset($_POST['submit'])) {
 
   </main>
 </body>
-
-<script type="text/javascript">
-  function calcularDezPorcento(total) {
-    let checkBox = document.querySelector("#flexSwitchCheckDefault");
-    let totalInput = document.querySelector("#total");
-
-    dezPorcento = total * 0.1;
-
-    if (checkBox.checked == true) {
-      totalInput.textContent = (total + dezPorcento).toFixed(2);
-    } else {
-      totalInput.textContent = total.toFixed(2);
-    }
-  }
-</script>
 </html>

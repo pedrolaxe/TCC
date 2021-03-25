@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
     <h1>Trocar de Mesa</h1>
     <input name="id" value="<?php echo $id ?>" hidden>
     <br>
-    <label for="inputEmail" class="visually-hidden">Nome do Cliente</label>
+    <label for="inputEmail" class="visually-hidden">Trocar Mesa</label>
     <input name="numero" type="number" class="form-control" placeholder="Trocar Para" autocomplete="off" required autofocus>
     <br>
     <button class="w-100 btn btn-lg btn-primary" type="submit" name='submit'>Trocar Mesa</button>

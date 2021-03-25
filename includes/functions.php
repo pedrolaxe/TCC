@@ -20,7 +20,8 @@ function anti_injection($sql) {
 function insert_mesa() {
   global $con;
 
-  $numero = $_POST['numero'];
+  $numero   = $_POST['numero'];
+  $desconto = 0;
 
   # NAO ESTÁ SENDO USADO AINDA
   $status = true;
@@ -33,8 +34,8 @@ function insert_mesa() {
   if ($result && mysqli_num_rows($result)) {
     echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Mesa Já Existe!</center></div>';
   } else {
-    $query  = "INSERT INTO MESA (numero, status) ";
-    $query .= "VALUES ('$numero', '$status')";
+    $query  = "INSERT INTO MESA (numero, status, desconto) ";
+    $query .= "VALUES ('$numero', '$status', '$desconto')";
     $result = mysqli_query($con, $query);
   }
 }
@@ -217,22 +218,15 @@ function fechar_mesa($id, $total) {
     include "../../impressao.php";
   }
 
-  if (isset($_POST['dezPorcento'])) {
-    $dezPorcento = $_POST['dezPorcento'];
-  } else {
-    $dezPorcento = 'off';
-  }
-
-  // echo $dezPorcento;
-
   $query  = "SELECT * FROM MESA WHERE id_mesa = $id";
   $result = mysqli_query($con, $query);
 
   while ($row = mysqli_fetch_array($result)) {
 
-    $id     = $row['id_mesa'];
-    $numero = $row['numero'];
-    $status = $row['status'];
+    $id       = $row['id_mesa'];
+    $numero   = $row['numero'];
+    $status   = $row['status'];
+    $desconto = $row['desconto'];
   }
 
   $qtd_array      = [];
@@ -272,11 +266,9 @@ function fechar_mesa($id, $total) {
     }
   }
 
-  if ($dezPorcento == 'on') {
-    $soma *= 1.1;
-  }
 
-  echo $soma;
+  # INCLUIR EM OUTRA TABELA ANTES DE DELETAR
+
 
   $query2 = "DELETE FROM CONSUMO WHERE id_mesa = $id";
   $result = mysqli_query($con, $query2);
@@ -284,15 +276,29 @@ function fechar_mesa($id, $total) {
   $query  = "DELETE FROM MESA WHERE id_mesa = $id";
   $result = mysqli_query($con, $query);
 
-  imprimir_conta($soma, $qtd_array, $nome_array, $qtdPreco_array, $numero);
-  cut();
+  try {
+    $impressora = imprimir_conta($soma, $qtd_array, $nome_array, $qtdPreco_array, $numero, $desconto);
+    cut();
+  } catch (Exception $e) { }
 
   if ($userIsAdmin) {
-    header('Location: ' . LINK_SITE . 'admin/mesas.php');
+    header('Location: ' . LINK_SITE . 'admin/mesas.php?impressora='.$impressora);
   } else {
-    header('Location: ' . LINK_SITE . 'mesas.php');
+    header('Location: ' . LINK_SITE . 'mesas.php?impressora='.$impressora);
   }
 
+}
+
+function insert_desconto() {
+  global $con;
+
+  $id_mesa  = $_POST['id'];
+  $desconto = $_POST['desconto'];
+
+  $query = "UPDATE mesa SET desconto='$desconto' WHERE id_mesa='$id_mesa'";
+  $result = mysqli_query($con, $query);
+
+  header('Location: ' . LINK_SITE . 'admin/src/mesa/mesa.php?id='.$id_mesa);
 }
 
 function delete_mesa($id) {
@@ -320,6 +326,7 @@ function cadastro_usuario() {
   $confirmacao_senha = anti_injection($_POST['conf_senha']);
   $email             = anti_injection($_POST['email']);
   $tipo              = anti_injection($_POST['tipo']);
+
 
   if ($senha != $confirmacao_senha) {
 
