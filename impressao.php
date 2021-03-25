@@ -21,10 +21,24 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
  *  del testfile
  */
 
+function get_nome_estabelecimento() {
+    # SELECT nome_estabelecimento FROM configs WHERE id = 1;
+    $nome_estabelecimento = strtoupper("dêdal café");
+
+    return $nome_estabelecimento;
+}
+
+function get_nome_impressora() {
+    # SELECT nome_impressora FROM configs WHERE id = 1;
+    $connector = new WindowsPrintConnector("Bematech");
+    $printer = new Printer($connector);
+
+    return $printer;
+}
+
 function imprimir_cozinha($nome, $qtd) {
   try {
-    $connector = new WindowsPrintConnector("Bematech");
-    $printer   = new Printer($connector);
+    $printer = get_nome_impressora();
 
     # AUMENTANDO TAMANHO DA LETRA
     $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
@@ -43,8 +57,8 @@ function imprimir_cozinha($nome, $qtd) {
 
 function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $numero, $desconto) {
   try {
-    $connector = new WindowsPrintConnector("Bematech");
-    $printer   = new Printer($connector);
+    $nome_estabelecimento = get_nome_estabelecimento();
+    $printer = get_nome_impressora();
 
     # PARA APARECER 'MESA 01' EM VEZ DE 'MESA 1'
     if(strlen($numero) == 1) {
@@ -55,7 +69,7 @@ function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $numer
     $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
     $printer -> setJustification(Printer::JUSTIFY_CENTER);
 
-    $printer -> text("DÊDAL CAFÉ\n\n");
+    $printer -> text($nome_estabelecimento."\n\n");
 
     # TAMANHO NORMAL DA LETRA E ALINHANDO TEXTO PARA A ESQUERDA
     $printer -> selectPrintMode(Printer::MODE_FONT_A);
@@ -125,8 +139,7 @@ function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $numer
 
 function numero_mesa($numero_mesa) {
   try {
-    $connector = new WindowsPrintConnector("Bematech");
-    $printer   = new Printer($connector);
+    $printer = get_nome_impressora();
 
     # AUMENTANDO TAMANHO DA LETRA E CENTRALIZANDO
     $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
@@ -159,9 +172,8 @@ function numero_mesa($numero_mesa) {
 }
 
 function cut() {
-  try {
-    $connector = new WindowsPrintConnector("Bematech");
-    $printer   = new Printer($connector);
+  try { 
+    $printer = get_nome_impressora();
 
     # PULAR LINHA (PARA DAR MARGEM) E CORTAR PAPEL
     $printer -> text("\n");
