@@ -2,6 +2,7 @@ create table mesa (
   id_mesa int(7) AUTO_INCREMENT,
   numero varchar(3) NOT NULL,
   status boolean NOT NULL,
+  desconto decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (id_mesa)
 );
 
@@ -29,5 +30,7 @@ create table usuario (
   senha varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
   tipo varchar(255) NOT NULL,
+  codigo varchar(200) NOT NULL,
+  codexp int(2) DEFAULT NULL,
   PRIMARY KEY(id_usuario)
   );

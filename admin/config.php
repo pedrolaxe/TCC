@@ -46,9 +46,9 @@ autorizacao_super();
   	<div class="col-4">
   	<i class="fas fa-4x fa-chart-pie"></i><br><br><br>
 
-  	<button class="btn-lg btn-outline-info">Estatísticas</button><br><br>
-  	<button class="btn-lg btn-outline-info">Relatórios de Vendas</button>
-
+  	<button class="btn-lg btn-outline-info">Configurações Gerais</button><br><br>
+  	<button class="btn-lg btn-outline-info">Relatórios de Vendas</button><br><br>
+    <button class="btn-lg btn-outline-info">Estatísticas</button>
   	</div>
 
   	<div class="col-4">
