@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 
                 echo '
                 <h2><a href="src/mesa/mesa.php?id=' . $id . '">Mesa ' . $numero . '</a>
-                <a href="src/consumo/consumo.php?id=' . $id . '" style="float:right">+</a></h2>';
+                <a href="src/pedido/pedido.php?id=' . $id . '" style="float:right">+</a></h2>';
 
                 ?>
 
@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
               <ul class="list-unstyled mb-2">
 
                 <details>
-                  <summary>Consumo</summary>
+                  <summary>Pedidos</summary>
 
                   <?php
 
@@ -92,11 +92,11 @@ if (isset($_POST['submit'])) {
 
                   $query2  = "
 
-                  SELECT * FROM CONSUMO 
+                  SELECT * FROM PEDIDO 
                   INNER JOIN PRODUTO ON 
-                  CONSUMO.id_produto = PRODUTO.id_produto 
+                  PEDIDO.id_produto = PRODUTO.id_produto 
                   INNER JOIN MESA ON 
-                  CONSUMO.id_mesa = MESA.id_mesa
+                  PEDIDO.id_mesa = MESA.id_mesa
                   
                   ";
 

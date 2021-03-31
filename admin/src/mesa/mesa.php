@@ -25,11 +25,11 @@ if (isset($_GET['id'])) {
   }
 }
 
-if (isset($_GET['delete_consumo'])) {
-  $id_consumo = $_GET['delete_consumo'];
+if (isset($_GET['delete_pedido'])) {
+  $id_pedido = $_GET['delete_pedido'];
   $id_mesa    = $_GET['id_mesa'];
 
-  delete_consumo($id_consumo, $id_mesa);
+  delete_pedido($id_pedido, $id_mesa);
 }
 
 
@@ -114,11 +114,11 @@ if (isset($_POST['submit'])) {
 
           $query2  = "
 
-          SELECT * FROM CONSUMO 
+          SELECT * FROM PEDIDO 
           INNER JOIN PRODUTO ON 
-          CONSUMO.id_produto = PRODUTO.id_produto 
+          PEDIDO.id_produto = PRODUTO.id_produto 
           INNER JOIN MESA ON 
-          CONSUMO.id_mesa = MESA.id_mesa
+          PEDIDO.id_mesa = MESA.id_mesa
 
           ";
 
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
           while ($row = mysqli_fetch_array($result2)) {
 
             $id_mesa      = $row['id_mesa'];
-            $id_consumo   = $row['id_consumo'];
+            $id_pedido    = $row['id_pedido'];
             $qtd          = $row['quantidade'];
             $nome_produto = $row['nome_produto'];
             $preco        = $row['preco'];
@@ -234,7 +234,7 @@ if (isset($_POST['submit'])) {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
-            <a href="mesa.php?delete_consumo='<?php echo $id_consumo ?>'&id_mesa='<?php echo $id_mesa ?>'"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
+            <a href="mesa.php?delete_pedido='<?php echo $id_pedido ?>'&id_mesa='<?php echo $id_mesa ?>'"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
           </div>
         </div>
       </div>
