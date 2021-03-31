@@ -108,11 +108,11 @@ a:hover i.fa-arrow-left {
 
       $query2  = "
 
-      SELECT * FROM CONSUMO 
+      SELECT * FROM PEDIDO 
       INNER JOIN PRODUTO ON 
-      CONSUMO.id_produto = PRODUTO.id_produto 
+      PEDIDO.id_produto = PRODUTO.id_produto 
       INNER JOIN MESA ON 
-      CONSUMO.id_mesa = MESA.id_mesa
+      PEDIDO.id_mesa = MESA.id_mesa
 
       ";
 
@@ -120,7 +120,7 @@ a:hover i.fa-arrow-left {
 
       while($row = mysqli_fetch_array($result2)) { 
         $id_mesa      = $row['id_mesa'];
-        $id_consumo   = $row['id_consumo'];
+        $id_pedido    = $row['id_pedido'];
         $qtd          = $row['quantidade'];
         $nome_produto = $row['nome_produto'];
         $preco        = $row['preco'];

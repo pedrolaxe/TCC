@@ -82,18 +82,18 @@ function trocar_mesa() {
   # SE A MESA EXISTE
   elseif (!empty($id_mesa2)) {
 
-    # SELECIONAR CONSUMO DA MESA ANTERIOR E ADICIONAR PARA OUTRA MESA
+    # SELECIONAR PEDIDO DA MESA ANTERIOR E ADICIONAR PARA OUTRA MESA
 
     echo "Mesa Existe!<br>";
 
 
     $query  = "
   
-  SELECT * FROM CONSUMO 
+  SELECT * FROM PEDIDO 
   INNER JOIN PRODUTO ON 
-  CONSUMO.id_produto = PRODUTO.id_produto 
+  PEDIDO.id_produto = PRODUTO.id_produto 
   INNER JOIN MESA ON 
-  CONSUMO.id_mesa = MESA.id_mesa
+  PEDIDO.id_mesa = MESA.id_mesa
 
   ";
 
@@ -103,7 +103,7 @@ function trocar_mesa() {
 
       $id_mesa      = $row['id_mesa'];
       $id_produto   = $row['id_produto'];
-      $id_consumo   = $row['id_consumo'];
+      $id_pedido   = $row['id_pedido'];
       $qtd          = $row['quantidade'];
       $nome_produto = $row['nome_produto'];
       $preco        = $row['preco'];
@@ -111,7 +111,7 @@ function trocar_mesa() {
       # echo "id_mesa: ".$id_mesa."<br>"."id_mesa1: ".$id_mesa1;
 
 
-      # PROCURAR CONSUMO DA mesa2
+      # PROCURAR PEDIDO DA mesa2
       if ($id_mesa2 == $id_mesa) {
 
         array_push($produtosId2_array, $id_produto);
@@ -121,11 +121,11 @@ function trocar_mesa() {
 
     $query  = "
 
-    SELECT * FROM CONSUMO 
+    SELECT * FROM PEDIDO 
     INNER JOIN PRODUTO ON 
-    CONSUMO.id_produto = PRODUTO.id_produto 
+    PEDIDO.id_produto = PRODUTO.id_produto 
     INNER JOIN MESA ON 
-    CONSUMO.id_mesa = MESA.id_mesa
+    PEDIDO.id_mesa = MESA.id_mesa
 
     ";
 
@@ -135,7 +135,7 @@ function trocar_mesa() {
 
       $id_mesa      = $row['id_mesa'];
       $id_produto   = $row['id_produto'];
-      $id_consumo   = $row['id_consumo'];
+      $id_pedido   = $row['id_pedido'];
       $qtd          = $row['quantidade'];
       $nome_produto = $row['nome_produto'];
       $preco        = $row['preco'];
@@ -143,7 +143,7 @@ function trocar_mesa() {
       # echo "id_mesa: ".$id_mesa."<br>"."id_mesa1: ".$id_mesa1;
 
 
-      # PROCURAR CONSUMO DA mesa1
+      # PROCURAR PEDIDO DA mesa1
       if ($id_mesa1 == $id_mesa) {
 
         array_push($produtosId1_array, $id_produto);
@@ -154,7 +154,7 @@ function trocar_mesa() {
     if (!$produtosId2_array) {
 
       for ($i = 0; $i < sizeof($produtosId1_array); $i++) {
-        $query  = "INSERT INTO CONSUMO (quantidade, id_mesa, id_produto)";
+        $query  = "INSERT INTO PEDIDO (quantidade, id_mesa, id_produto)";
         $query .= "VALUES ('$qtd1_array[$i]', '$id_mesa2', '$produtosId1_array[$i]')";
         $result = mysqli_query($con, $query);
       }
@@ -170,11 +170,11 @@ function trocar_mesa() {
 
             $produto_repetido = true;
             $qtd = $qtd1_array[$i] + $qtd2_array[$j];
-            $query = "UPDATE CONSUMO SET quantidade = $qtd WHERE id_produto = $produtosId2_array[$j] AND (id_mesa = $id_mesa2)";
+            $query = "UPDATE PEDIDO SET quantidade = $qtd WHERE id_produto = $produtosId2_array[$j] AND (id_mesa = $id_mesa2)";
             $result = mysqli_query($con, $query);
           } elseif (!$produto_repetido && $j == sizeof($produtosId2_array) - 1) {
 
-            $query  = "INSERT INTO CONSUMO (quantidade, id_mesa, id_produto)";
+            $query  = "INSERT INTO PEDIDO (quantidade, id_mesa, id_produto)";
             $query .= "VALUES ('$qtd1_array[$i]', '$id_mesa2', '$produtosId1_array[$i]')";
             $result = mysqli_query($con, $query);
           }
@@ -196,7 +196,7 @@ function trocar_mesa() {
   # SE A MESA NÃO EXISTIR...
   else {
 
-    # SELECIONAR CONSUMO DA MESA ANTERIOR E ADICIONAR PARA OUTRA MESA
+    # SELECIONAR PEDIDO DA MESA ANTERIOR E ADICIONAR PARA OUTRA MESA
     echo "Mesa Não Existe!<br>";
 
     $query = "UPDATE MESA SET numero = $numero WHERE id_mesa = $id_mesa1";
@@ -237,11 +237,11 @@ function fechar_mesa($id, $total) {
 
   $query2  = "
 
-    SELECT * FROM CONSUMO 
+    SELECT * FROM PEDIDO 
     INNER JOIN PRODUTO ON 
-    CONSUMO.id_produto = PRODUTO.id_produto 
+    PEDIDO.id_produto = PRODUTO.id_produto 
     INNER JOIN MESA ON 
-    CONSUMO.id_mesa = MESA.id_mesa
+    PEDIDO.id_mesa = MESA.id_mesa
 
     ";
 
@@ -250,7 +250,7 @@ function fechar_mesa($id, $total) {
   while ($row = mysqli_fetch_array($result2)) {
 
     $id_mesa      = $row['id_mesa'];
-    $id_consumo   = $row['id_consumo'];
+    $id_pedido    = $row['id_pedido'];
     $qtd          = $row['quantidade'];
     $nome_produto = $row['nome_produto'];
     $preco        = $row['preco'];
@@ -270,7 +270,7 @@ function fechar_mesa($id, $total) {
   # INCLUIR EM OUTRA TABELA ANTES DE DELETAR
 
 
-  $query2 = "DELETE FROM CONSUMO WHERE id_mesa = $id";
+  $query2 = "DELETE FROM PEDIDO WHERE id_mesa = $id";
   $result = mysqli_query($con, $query2);
 
   $query  = "DELETE FROM MESA WHERE id_mesa = $id";
@@ -304,7 +304,7 @@ function insert_desconto() {
 function delete_mesa($id) {
   global $con;
 
-  $query2 = "DELETE FROM CONSUMO WHERE id_mesa = $id";
+  $query2 = "DELETE FROM PEDIDO WHERE id_mesa = $id";
   $result = mysqli_query($con, $query2);
 
   $query  = "DELETE FROM MESA WHERE id_mesa = $id";
@@ -447,12 +447,12 @@ function delete_produto($id) {
 #####################################################
 
 
-# CONSUMO
+# PEDIDO
 
-function delete_consumo($id_consumo, $id_mesa) {
+function delete_pedido($id_pedido, $id_mesa) {
   global $con;
 
-  $query  = "DELETE FROM CONSUMO WHERE id_consumo = $id_consumo";
+  $query  = "DELETE FROM PEDIDO WHERE id_pedido = $id_pedido";
   $result = mysqli_query($con, $query);
 
   header('Location: ' . LINK_SITE . 'admin/src/mesa/mesa.php?id=' . $id_mesa);
