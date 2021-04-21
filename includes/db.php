@@ -1,12 +1,12 @@
 <?php
 $host      = 'localhost';
-$username  = 'root';
-$password  = '123456';
+$username  = 'pmauser';
+$password  = 'dread@1995';
 $database  = 'dedal';
 
 $con = mysqli_connect( $host, $username, $password, $database );
 
-define('LINK_SITE','/');
+define('LINK_SITE','/tcc/');
 
 if(!$con) {
   header('Location: '.LINK_SITE.'includes/erro.php');

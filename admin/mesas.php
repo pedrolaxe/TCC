@@ -45,10 +45,11 @@ if (isset($_POST['submit'])) {
 
       <?php
 
-      $query  = "SELECT * FROM MESA ORDER BY ABS(numero)";
-      $result = mysqli_query($con, $query);
+      $query  = "SELECT * FROM mesa ORDER BY ABS(numero)";
+      $result = $con->query($query);
+     // echo var_dump($result);
 
-      while ($row = mysqli_fetch_array($result)) {
+      while ($row = $result->fetch_assoc() ) {
 
         $id      = $row['id_mesa'];
         $numero  = $row['numero'];
@@ -100,9 +101,9 @@ if (isset($_POST['submit'])) {
                   
                   ";
 
-                  $result2 = mysqli_query($con, $query2);
+                   $result2 = $con->query($query2);
 
-                  while ($row = mysqli_fetch_array($result2)) {
+                  while ($row = $result2->fetch_assoc() ) {
                     $id_mesa      = $row['id_mesa'];
                     $qtd          = $row['quantidade'];
                     $nome_produto = $row['nome_produto'];

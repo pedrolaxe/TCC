@@ -45,10 +45,12 @@ if (isset($_POST['submit'])) {
 
       <?php
 
-      $query  = "SELECT * FROM MESA ORDER BY ABS(numero)";
-      $result = mysqli_query($con, $query);
+      $query  = "SELECT * FROM mesa ORDER BY ABS(numero)";
+      //$result = mysqli_query($con, $query);
 
-      while ($row = mysqli_fetch_array($result)) {
+      $q = $con->query($query);
+     
+      while($row = $q->fetch_assoc()) {
 
         $id      = $row['id_mesa'];
         $numero  = $row['numero'];
@@ -92,11 +94,11 @@ if (isset($_POST['submit'])) {
 
                   $query2  = "
 
-                  SELECT * FROM PEDIDO 
-                  INNER JOIN PRODUTO ON 
-                  PEDIDO.id_produto = PRODUTO.id_produto 
-                  INNER JOIN MESA ON 
-                  PEDIDO.id_mesa = MESA.id_mesa
+                  SELECT * FROM pedido 
+                  INNER JOIN produto ON 
+                  pedido.id_produto = produto.id_produto 
+                  INNER JOIN mesa ON 
+                  pedido.id_mesa = mesa.id_mesa
                   
                   ";
 
