@@ -9,9 +9,9 @@ if (isset($_GET['id'])) {
   $id = $_GET['id'];
 
   $query  = "SELECT * FROM MESA WHERE id_mesa = $id";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
-  while ($row = mysqli_fetch_array($result)) {
+  while ($row = $result->fetch_assoc() ) {
     $registro = true;
     $id       = $row['id_mesa'];
     $numero   = $row['numero'];
@@ -26,7 +26,7 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_GET['delete_pedido'])) {
-  $id_pedido = $_GET['delete_pedido'];
+  $id_pedido  = $_GET['delete_pedido'];
   $id_mesa    = $_GET['id_mesa'];
 
   delete_pedido($id_pedido, $id_mesa);
@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
     </div>
     <div class="card mb-4 shadow">
       <div class="card-header">
-        <h1 class="my-0 fw-bold"><a href='/admin/mesas.php'><i class="fas fa-arrow-left"></i></a><b style="float: right">Mesa <?php echo $numero ?></b></h1>
+        <h1 class="my-0 fw-bold"><a href='<?php echo LINK_SITE; ?>admin/mesas.php'><i class="fas fa-arrow-left"></i></a><b style="float: right">Mesa <?php echo $numero ?></b></h1>
       </div>
       <div class="card-body">
         <ul class="list-unstyled mt-3 mb-4">
@@ -122,9 +122,9 @@ if (isset($_POST['submit'])) {
 
           ";
 
-          $result2 = mysqli_query($con, $query2);
+          $result2 = $con->query($query2);
 
-          while ($row = mysqli_fetch_array($result2)) {
+          while ($row = $result2->fetch_assoc() ) {
 
             $id_mesa      = $row['id_mesa'];
             $id_pedido    = $row['id_pedido'];

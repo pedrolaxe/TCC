@@ -1,12 +1,15 @@
 <?php
 $host      = 'localhost';
-$username  = 'pmauser';
-$password  = 'dread@1995';
-$database  = 'dedal';
+$username  = 'root';
+$password  = '';
+$database  = 'dedal2';
 
-$con = mysqli_connect( $host, $username, $password, $database );
+$con = new mysqli($host, $username, $password, $database);
+$con->set_charset("utf8");
 
-define('LINK_SITE','/tcc/');
+date_default_timezone_set('America/Sao_Paulo');
+
+define('LINK_SITE','http://localhost/TCC/');
 
 if(!$con) {
   header('Location: '.LINK_SITE.'includes/erro.php');
