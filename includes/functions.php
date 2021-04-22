@@ -27,17 +27,17 @@ function insert_mesa() {
   $status = true;
 
   # VERIFICAR SE MESA JÁ EXISTE
-  $query  = "SELECT * FROM MESA WHERE numero = $numero";
-  $result = mysqli_query($con, $query);
+  $query  = "SELECT * FROM mesa WHERE numero = $numero";
 
-  # ALERTA
-  if ($result && mysqli_num_rows($result)) {
+  $q = $con->query($query);
+  if($q->num_rows > 0){
     echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Mesa Já Existe!</center></div>';
-  } else {
-    $query  = "INSERT INTO MESA (numero, status, desconto) ";
+  }else{
+    $query  = "INSERT INTO mesa (numero, status, desconto) ";
     $query .= "VALUES ('$numero', '$status', '$desconto')";
-    $result = mysqli_query($con, $query);
+    $con->query($query);
   }
+
 }
 
 function trocar_mesa() {
@@ -376,7 +376,7 @@ function autorizacao() {
   $auth = $_SESSION['auth'];
 
   if (!$auth) {
-    header("Location: " . LINK_SITE . "");
+    header("Location: " . LINK_SITE );
   }
 }
 
@@ -386,7 +386,7 @@ function autorizacao_super() {
   $_SESSION['auth'] = false;
 
   if (!$auth) {
-    header("Location: " . LINK_SITE . "");
+    header("Location: " . LINK_SITE );
   }
 }
 
@@ -414,7 +414,7 @@ function insert_produto() {
   $tipo  = $_POST['tipo'];
   $preco = $_POST['preco'];
 
-  $query  = "INSERT INTO PRODUTO (nome_produto, tipo, preco) ";
+  $query  = "INSERT INTO produto (nome_produto, tipo, preco) ";
   $query .= "VALUES ('$nome', '$tipo', '$preco')";
 
   $result = mysqli_query($con, $query);
@@ -434,7 +434,7 @@ function alterar_produto($id, $nome, $tipo, $preco) {
 function delete_produto($id) {
   global $con;
 
-  $query  = "DELETE FROM PRODUTO WHERE id_produto = $id";
+  $query  = "DELETE FROM produto WHERE id_produto = $id";
   $result = mysqli_query($con, $query);
 
   if (!$result) {
@@ -452,7 +452,7 @@ function delete_produto($id) {
 function delete_pedido($id_pedido, $id_mesa) {
   global $con;
 
-  $query  = "DELETE FROM PEDIDO WHERE id_pedido = $id_pedido";
+  $query  = "DELETE FROM pedido WHERE id_pedido = $id_pedido";
   $result = mysqli_query($con, $query);
 
   header('Location: ' . LINK_SITE . 'admin/src/mesa/mesa.php?id=' . $id_mesa);

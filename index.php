@@ -2,19 +2,17 @@
 
 session_start();
 include 'includes/functions.php';
+global $con;
 
 # CONFIGURANDO AUTORIZAÇÃO DE ACESSO PARA 'FALSE'
 $_SESSION['auth'] = false;
 $_SESSION['auth_super'] = false;
 
 # SELECIONANDO USUARIOS PARA SABER SE EXISTE ALGUM ADMINISTRADOR
-$query  = "SELECT * FROM USUARIO WHERE tipo = 'administrador'";
-$result = mysqli_query($con, $query);
-
-# SE NÃO HOUVER ADMINISTRADOR REDIRECIONAR PARA O CADASTRO
-if ($result && mysqli_num_rows($result)) { } 
-else {
-  header("Location: ".LINK_SITE."cadastro.php");
+$query  = "SELECT * FROM usuario WHERE tipo='administrador'";
+$q = $con->query($query);
+if($q->num_rows == 0){
+  header("Location: " . LINK_SITE . "cadastro.php");
 }
 
 # TENTATIVA DE LOGIN PARA A PAGINA DO ADMIN OU FUNCIONARIO
@@ -50,15 +48,15 @@ if (isset($_POST['submit'])) {
         Usuário ou senha Incorreto!
       </div>';
 
-    # DANDO PERMISSÃO E REDIRECIONANDO O USUÁRIO
+      # DANDO PERMISSÃO E REDIRECIONANDO O USUÁRIO
     } else {
       $_SESSION['login'] = $db_login;
       if ($tipo == 'administrador') {
         $_SESSION['auth_super'] = true;
-        header("location: ".LINK_SITE."admin/mesas.php?user_id=".$user_id);
+        header("location: " . LINK_SITE . "admin/mesas.php?user_id=" . $user_id);
       } else {
         $_SESSION['auth'] = true;
-        header("location: ".LINK_SITE."mesas.php?user_id=".$user_id);
+        header("location: " . LINK_SITE . "mesas.php?user_id=" . $user_id);
       }
     }
   }
@@ -68,6 +66,7 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Sistema Restaurante</title>
 
@@ -95,4 +94,5 @@ if (isset($_POST['submit'])) {
     <a href="forgot_pw.php"><button class="w-100 btn btn-lg btn-outline-secondary">Recuperar Senha</button></a>
   </main>
 </body>
+
 </html>
