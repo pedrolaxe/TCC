@@ -44,7 +44,7 @@ function trocar_mesa() {
   global $con;
 
   # INFORMACOES DA MESA QUE VAI SE MUDAR PARA A OUTRA
-  $id_mesa1 = $_POST['id'];
+  $id_mesa1 = anti_injection($_POST['id']);
   $id_mesa2 = '';
 
   # ARRAY PARA MANIPULAR PRODUTOS E SUAS RESPECTIVAS QUANTIDADES PARA A MESA NOVA
@@ -54,17 +54,17 @@ function trocar_mesa() {
   $qtd2_array      = [];
 
   # MUDAR PARA A MESA DESSE NUMERO
-  $numero = $_POST['numero'];
+  $numero = anti_injection($_POST['numero']);
 
   # ACHO QUE NAO PRECISA DO $ID_POS
   $id_pos     = '';
   $numero_aux = '';
 
   # CONFERIR SE A MESA EXISTE
-  $query  = "SELECT * FROM MESA WHERE numero = $numero";
-  $result = mysqli_query($con, $query);
+  $query  = "SELECT * FROM mesa WHERE numero = $numero";
+  $result = $con->query($query);
 
-  while ($row = mysqli_fetch_array($result)) {
+  while ($row = $result->fetch_assoc() ) {
 
     $id_mesa2   = $row['id_mesa'];
 
@@ -75,7 +75,6 @@ function trocar_mesa() {
 
   # CONFERIR SE É A MESMA MESA
   if ($id_mesa1 == $id_mesa2) {
-
     header("Location: trocar_mesa.php?id=" . $id_mesa1 . "&changed=true");
   }
 
@@ -83,27 +82,22 @@ function trocar_mesa() {
   elseif (!empty($id_mesa2)) {
 
     # SELECIONAR PEDIDO DA MESA ANTERIOR E ADICIONAR PARA OUTRA MESA
-
     echo "Mesa Existe!<br>";
 
-
     $query  = "
-  
-  SELECT * FROM PEDIDO 
-  INNER JOIN PRODUTO ON 
-  PEDIDO.id_produto = PRODUTO.id_produto 
-  INNER JOIN MESA ON 
-  PEDIDO.id_mesa = MESA.id_mesa
+    SELECT * FROM pedido 
+    INNER JOIN produto ON 
+    PEDIDO.id_produto = produto.id_produto 
+    INNER JOIN mesa ON 
+    PEDIDO.id_mesa = mesa.id_mesa";
 
-  ";
+    $result = $con->query($query);
 
-    $result = mysqli_query($con, $query);
-
-    while ($row = mysqli_fetch_array($result)) {
+    while ($row = $result->fetch_assoc() ) {
 
       $id_mesa      = $row['id_mesa'];
       $id_produto   = $row['id_produto'];
-      $id_pedido   = $row['id_pedido'];
+      $id_pedido    = $row['id_pedido'];
       $qtd          = $row['quantidade'];
       $nome_produto = $row['nome_produto'];
       $preco        = $row['preco'];
@@ -129,13 +123,13 @@ function trocar_mesa() {
 
     ";
 
-    $result = mysqli_query($con, $query);
+    $result = $con->query($query);
 
-    while ($row = mysqli_fetch_array($result)) {
+    while ($row = $result->fetch_assoc() ) {
 
       $id_mesa      = $row['id_mesa'];
       $id_produto   = $row['id_produto'];
-      $id_pedido   = $row['id_pedido'];
+      $id_pedido    = $row['id_pedido'];
       $qtd          = $row['quantidade'];
       $nome_produto = $row['nome_produto'];
       $preco        = $row['preco'];
@@ -154,7 +148,7 @@ function trocar_mesa() {
     if (!$produtosId2_array) {
 
       for ($i = 0; $i < sizeof($produtosId1_array); $i++) {
-        $query  = "INSERT INTO PEDIDO (quantidade, id_mesa, id_produto)";
+        $query  = "INSERT INTO pedido (quantidade, id_mesa, id_produto)";
         $query .= "VALUES ('$qtd1_array[$i]', '$id_mesa2', '$produtosId1_array[$i]')";
         $result = mysqli_query($con, $query);
       }
@@ -199,8 +193,8 @@ function trocar_mesa() {
     # SELECIONAR PEDIDO DA MESA ANTERIOR E ADICIONAR PARA OUTRA MESA
     echo "Mesa Não Existe!<br>";
 
-    $query = "UPDATE MESA SET numero = $numero WHERE id_mesa = $id_mesa1";
-    $result = mysqli_query($con, $query);
+    $query = "UPDATE mesa SET numero = $numero WHERE id_mesa='$id_mesa1'";
+    $result = $con->query($query);
 
     header('Location: ' . LINK_SITE . 'admin/mesas.php');
   }
