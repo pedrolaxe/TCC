@@ -11,7 +11,7 @@ $_SESSION['auth_super'] = false;
 # SELECIONANDO USUARIOS PARA SABER SE EXISTE ALGUM ADMINISTRADOR
 $query  = "SELECT * FROM usuario WHERE tipo='administrador'";
 $q = $con->query($query);
-if($q->num_rows == 0){
+if($q->rowCount() == 0){
   header("Location: " . LINK_SITE . "cadastro.php");
 }
 
@@ -20,21 +20,21 @@ if (isset($_POST['submit'])) {
   $db_login = '';
 
   # LOGIN E SENHA
-  $login = mysqli_real_escape_string($con, $_POST['login']);
-  $senha = mysqli_real_escape_string($con, $_POST['senha']);
+  $login = $_POST['login'];
+  $senha = $_POST['senha'];
 
   # MELHORAR A SEGURANÇA ?
   $senha = md5($senha);
 
   $query = "SELECT * FROM usuario WHERE login = '{$login}'";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
   if (!$result) {
     die("Query Failed");
   } else {
 
     # MOSTRAR TODAS AS COLUNAS DE TODA A TABELA
-    while ($row = mysqli_fetch_array($result)) {
+    foreach($result as $row) {
       $user_id  = $row['id_usuario'];
       $db_login = $row['login'];
       $db_senha = $row['senha'];

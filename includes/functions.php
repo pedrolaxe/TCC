@@ -93,7 +93,7 @@ function trocar_mesa() {
 
     $result = $con->query($query);
 
-    while ($row = $result->fetch_assoc() ) {
+    foreach($result as $row) {
 
       $id_mesa      = $row['id_mesa'];
       $id_produto   = $row['id_produto'];
@@ -125,7 +125,7 @@ function trocar_mesa() {
 
     $result = $con->query($query);
 
-    while ($row = $result->fetch_assoc() ) {
+    foreach($result as $row) {
 
       $id_mesa      = $row['id_mesa'];
       $id_produto   = $row['id_produto'];
@@ -150,7 +150,7 @@ function trocar_mesa() {
       for ($i = 0; $i < sizeof($produtosId1_array); $i++) {
         $query  = "INSERT INTO pedido (quantidade, id_mesa, id_produto)";
         $query .= "VALUES ('$qtd1_array[$i]', '$id_mesa2', '$produtosId1_array[$i]')";
-        $result = mysqli_query($con, $query);
+        $result = $con->query($query);
       }
     } else {
 
@@ -165,12 +165,12 @@ function trocar_mesa() {
             $produto_repetido = true;
             $qtd = $qtd1_array[$i] + $qtd2_array[$j];
             $query = "UPDATE PEDIDO SET quantidade = $qtd WHERE id_produto = $produtosId2_array[$j] AND (id_mesa = $id_mesa2)";
-            $result = mysqli_query($con, $query);
+            $result = $con->query($query);
           } elseif (!$produto_repetido && $j == sizeof($produtosId2_array) - 1) {
 
             $query  = "INSERT INTO PEDIDO (quantidade, id_mesa, id_produto)";
             $query .= "VALUES ('$qtd1_array[$i]', '$id_mesa2', '$produtosId1_array[$i]')";
-            $result = mysqli_query($con, $query);
+            $result = $con->query($query);
           }
         }
       }
@@ -213,9 +213,9 @@ function fechar_mesa($id, $total) {
   }
 
   $query  = "SELECT * FROM MESA WHERE id_mesa = $id";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
-  while ($row = mysqli_fetch_array($result)) {
+  foreach($result as $row) {
 
     $id       = $row['id_mesa'];
     $numero   = $row['numero'];
@@ -241,7 +241,7 @@ function fechar_mesa($id, $total) {
 
   $result2 = mysqli_query($con, $query2);
 
-  while ($row = mysqli_fetch_array($result2)) {
+  foreach($result2 as $row) {
 
     $id_mesa      = $row['id_mesa'];
     $id_pedido    = $row['id_pedido'];
@@ -265,10 +265,10 @@ function fechar_mesa($id, $total) {
 
 
   $query2 = "DELETE FROM PEDIDO WHERE id_mesa = $id";
-  $result = mysqli_query($con, $query2);
+  $result = $con->query($query2);
 
   $query  = "DELETE FROM MESA WHERE id_mesa = $id";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
   try {
     $impressora = imprimir_conta($soma, $qtd_array, $nome_array, $qtdPreco_array, $numero, $desconto);
@@ -290,7 +290,7 @@ function insert_desconto() {
   $desconto = $_POST['desconto'];
 
   $query = "UPDATE mesa SET desconto='$desconto' WHERE id_mesa='$id_mesa'";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
   header('Location: ' . LINK_SITE . 'admin/src/mesa/mesa.php?id='.$id_mesa);
 }
@@ -299,10 +299,10 @@ function delete_mesa($id) {
   global $con;
 
   $query2 = "DELETE FROM PEDIDO WHERE id_mesa = $id";
-  $result = mysqli_query($con, $query2);
+  $result = $con->query($query2);
 
   $query  = "DELETE FROM MESA WHERE id_mesa = $id";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
   header('Location: ' . LINK_SITE . 'admin/mesas.php');
 }
@@ -332,7 +332,7 @@ function cadastro_usuario() {
 
     $query  = "INSERT INTO usuario (login, senha, email, tipo) ";
     $query .= "VALUES ('$login', '$senha', '$email', '$tipo')";
-    $result = mysqli_query($con, $query);
+    $result = $con->query($query);
 
     header("Location: " . LINK_SITE . "admin/src/funcionario/funcionarios.php");
   }
@@ -344,7 +344,7 @@ function alterar_funcionario($idf, $login, $email, $senha) {
   $senhacrip = md5($senha);
 
   $query = "UPDATE usuario SET login='$login', senha='$senhacrip', email='$email' WHERE id_usuario='$idf' AND tipo='funcionario'";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
   if(!$result) {
     echo '<script>alert("falhou")</script>';
   }
@@ -355,7 +355,7 @@ function delete_funcionario($id) {
   global $con;
   if(ID_userisadmin($id)==false) {
     $query  = "DELETE FROM usuario WHERE id_usuario = $id";
-    $result = mysqli_query($con, $query);
+    $result = $con->query($query);
   
     if ($result) {
       header('Location: '.LINK_SITE.'admin/src/funcionario/funcionarios.php');
@@ -411,7 +411,7 @@ function insert_produto() {
   $query  = "INSERT INTO produto (nome_produto, tipo, preco) ";
   $query .= "VALUES ('$nome', '$tipo', '$preco')";
 
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
   header('Location: ' . LINK_SITE . 'admin/src/produto/add_produto.php?produto_criado=true');
 }
@@ -420,7 +420,7 @@ function alterar_produto($id, $nome, $tipo, $preco) {
   global $con;
 
   $query = "UPDATE produto SET nome_produto = '$nome', tipo = '$tipo', preco = '$preco' WHERE id_produto = $id";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
   header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
 }
@@ -429,7 +429,7 @@ function delete_produto($id) {
   global $con;
 
   $query  = "DELETE FROM produto WHERE id_produto = $id";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
   if (!$result) {
     header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
@@ -447,7 +447,7 @@ function delete_pedido($id_pedido, $id_mesa) {
   global $con;
 
   $query  = "DELETE FROM pedido WHERE id_pedido = $id_pedido";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
   header('Location: ' . LINK_SITE . 'admin/src/mesa/mesa.php?id=' . $id_mesa);
 }

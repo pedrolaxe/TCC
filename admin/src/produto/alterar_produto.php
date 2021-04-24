@@ -22,7 +22,7 @@ if (isset($_GET['id_produto'])) {
   $query  = "SELECT * FROM PRODUTO WHERE id_produto = $id_produto";
   $result = mysqli_query($con, $query);
 
-  while($row = mysqli_fetch_array($result)) { 
+  foreach($result as $row) { 
     $id    = $row['id_produto'];
     $nome  = $row['nome_produto'];
     $tipo  = $row['tipo'];

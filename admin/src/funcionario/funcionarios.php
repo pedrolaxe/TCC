@@ -63,9 +63,9 @@ if (isset($_GET['edit_funcionario'])) {
             <?php
 
             $query  = "SELECT * FROM usuario WHERE tipo = 'funcionario' ORDER BY login ASC";
-            $result = mysqli_query($con, $query);
+            $result = $con->query($query);
 
-            while ($row = mysqli_fetch_array($result)) {
+            foreach($result as $row) {
 
               $registro = true;
               $id    = $row['id_usuario'];

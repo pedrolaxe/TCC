@@ -15,9 +15,9 @@ $id = $_GET['id'];
 // }
 
 $query  = "SELECT * FROM MESA WHERE id_mesa = $id";
-$result_mesa = mysqli_query($con, $query);
+$result_mesa = $con->query($query);
 
-while ($row = mysqli_fetch_array($result_mesa)) {
+foreach($result_mesa as $row) {
 
   $id_mesa = $row['id_mesa'];
   $numero_mesa = $row['numero'];
@@ -88,11 +88,11 @@ while ($row = mysqli_fetch_array($result_mesa)) {
               <?php
 
               $query  = "SELECT * FROM PRODUTO WHERE TIPO = 'bar'";
-              $result = mysqli_query($con, $query);
+              $result = $con->query($query);
 
               $count = 1;
 
-              while ($row = mysqli_fetch_array($result)) {
+              foreach($result as $row) {
 
                 $registro = true;
                 $id_produto = $row['id_produto'];
@@ -133,11 +133,11 @@ while ($row = mysqli_fetch_array($result_mesa)) {
               <?php
 
               $query  = "SELECT * FROM PRODUTO WHERE TIPO = 'porcao'";
-              $result = mysqli_query($con, $query);
+              $result = $con->query($query);
 
               $count = 1;
 
-              while ($row = mysqli_fetch_array($result)) {
+              foreach($result as $row) {
 
                 $registro = true;
                 $id_produto = $row['id_produto'];
@@ -179,11 +179,11 @@ while ($row = mysqli_fetch_array($result_mesa)) {
               <?php
 
               $query  = "SELECT * FROM PRODUTO WHERE TIPO = 'refeicao'";
-              $result = mysqli_query($con, $query);
+              $result = $con->query($query);
 
               $count = 1;
 
-              while ($row = mysqli_fetch_array($result)) {
+              foreach($result as $row) {
 
                 $registro = true;
                 $id_produto = $row['id_produto'];
@@ -227,11 +227,11 @@ while ($row = mysqli_fetch_array($result_mesa)) {
               <?php
 
               $query  = "SELECT * FROM PRODUTO WHERE TIPO = 'lanche'";
-              $result = mysqli_query($con, $query);
+              $result = $con->query($query);
 
               $count = 1;
 
-              while ($row = mysqli_fetch_array($result)) {
+              foreach($result as $row) {
 
                 $registro = true;
                 $id_produto = $row['id_produto'];
@@ -272,11 +272,11 @@ while ($row = mysqli_fetch_array($result_mesa)) {
               <?php
 
               $query  = "SELECT * FROM PRODUTO WHERE TIPO = 'caldo'";
-              $result = mysqli_query($con, $query);
+              $result = $con->query($query);
 
               $count = 1;
 
-              while ($row = mysqli_fetch_array($result)) {
+              foreach($result as $row) {
 
                 $registro = true;
                 $id_produto = $row['id_produto'];
