@@ -57,9 +57,9 @@ if (isset($_GET['alterar_produto'])) {
             <?php
 
             $query  = "SELECT * FROM produto WHERE tipo = 'bar' ORDER BY nome_produto ASC";
-            $result = mysqli_query($con, $query);
+            $result = $con->query($query);
 
-            while ($row = mysqli_fetch_array($result)) {
+            foreach($result as $row) {
 
               $registro = true;
               $id    = $row['id_produto'];
@@ -100,12 +100,12 @@ if (isset($_GET['alterar_produto'])) {
             <?php
 
             $query  = "SELECT * FROM produto WHERE tipo = 'porcao' ORDER BY nome_produto ASC";
-            $result = mysqli_query($con, $query);
+            $result = $con->query($query);
 
             # NAO HÁ REGISTRO, MAS SE ELE ACHAR REGISTRO $registro = true
             $registro = false;
 
-            while ($row = mysqli_fetch_array($result)) {
+            foreach($result as $row) {
 
               $registro = true;
               $id    = $row['id_produto'];
@@ -147,12 +147,12 @@ if (isset($_GET['alterar_produto'])) {
             <?php
 
             $query  = "SELECT * FROM produto WHERE tipo = 'refeicao' ORDER BY nome_produto ASC";
-            $result = mysqli_query($con, $query);
+            $result = $con->query($query);
 
             # NAO HÁ REGISTRO, MAS SE ELE ACHAR REGISTRO $registro = true
             $registro = false;
 
-            while ($row = mysqli_fetch_array($result)) {
+            foreach($result as $row) {
 
               $registro = true;
               $id    = $row['id_produto'];
@@ -199,12 +199,12 @@ if (isset($_GET['alterar_produto'])) {
             <?php
 
             $query  = "SELECT * FROM produto WHERE tipo = 'lanche' ORDER BY nome_produto ASC";
-            $result = mysqli_query($con, $query);
+            $result = $con->query($query);
 
             # NAO HÁ REGISTRO, MAS SE ELE ACHAR REGISTRO $registro = true
             $registro = false;
 
-            while ($row = mysqli_fetch_array($result)) {
+            foreach($result as $row) {
 
               $registro = true;
               $id    = $row['id_produto'];
@@ -246,12 +246,12 @@ if (isset($_GET['alterar_produto'])) {
             <?php
 
             $query  = "SELECT * FROM produto WHERE tipo = 'caldo' ORDER BY nome_produto ASC";
-            $result = mysqli_query($con, $query);
+            $result = $con->query($query);
 
             # NAO HÁ REGISTRO, MAS SE ELE ACHAR REGISTRO $registro = true
             $registro = false;
 
-            while ($row = mysqli_fetch_array($result)) {
+            foreach($result as $row) {
 
               $registro = true;
               $id    = $row['id_produto'];

@@ -72,10 +72,10 @@ while($count < $id_array_size) {
 	  ";
 
 
-	  $result2 = mysqli_query($con, $query2);
+	  $result2 = $con->query($query2);
 
     # WHILE PARA VERIFICAR SE O PRODUTO JÁ EXISTE NA MESA
-    while($row = mysqli_fetch_array($result2)) { 
+    foreach($result2 as $row) { 
 
       $mesa_id      = $row['id_mesa'];
       $produto_id   = $row['id_produto'];
@@ -106,7 +106,7 @@ while($count < $id_array_size) {
 
           # UPDATE QUANTIDADE DO PRODUTO
           $query  = "UPDATE PEDIDO SET quantidade = $qtd WHERE id_produto = $id_produto AND (id_mesa = $id_mesa)";
-					$result = mysqli_query($con, $query);
+					$result = $con->query($query);
 
 					$produto_repetido = true;
 
@@ -123,11 +123,11 @@ while($count < $id_array_size) {
 
     # CASO O PRODUTO NÃO EXISTA NA MESA
 	  $query  = "SELECT * FROM PRODUTO WHERE id_produto = $id_produto";
-	  $result_produto = mysqli_query($con, $query);
+	  $result_produto = $con->query($query);
 	  
 
     # IMPRIMIR NOTA DA COZINHA
-	  while($row = mysqli_fetch_array($result_produto)) { 
+	  foreach($result_produto as $row) { 
 	    $id_produto = $row['id_produto'];
 	    $preco      = $row['preco'];
 	    $nome       = $row['nome_produto'];
@@ -148,7 +148,7 @@ while($count < $id_array_size) {
 
 	  $query  = "INSERT INTO PEDIDO (quantidade, id_mesa, id_produto)";
 	  $query .= "VALUES ('$qtd', '$id_mesa', '$id_produto')";
-	  $result = mysqli_query($con, $query);
+	  $result = $con->query($query);
 	}
 
 	$count += 1;

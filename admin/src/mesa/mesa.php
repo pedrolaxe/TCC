@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
   $query  = "SELECT * FROM MESA WHERE id_mesa = $id";
   $result = $con->query($query);
 
-  while ($row = $result->fetch_assoc() ) {
+  foreach($result as $row) {
     $registro = true;
     $id       = $row['id_mesa'];
     $numero   = $row['numero'];
@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 
           $result2 = $con->query($query2);
 
-          while ($row = $result2->fetch_assoc() ) {
+          foreach($result2 as $row) {
 
             $id_mesa      = $row['id_mesa'];
             $id_pedido    = $row['id_pedido'];

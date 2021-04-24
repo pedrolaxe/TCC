@@ -32,7 +32,7 @@ if (isset($_GET['id_funcionario'])) {
     $query  = "SELECT * FROM usuario WHERE id_usuario = $id_funcionario";
     $result = mysqli_query($con, $query);
 
-    while ($row = mysqli_fetch_array($result)) {
+    foreach($result as $row) {
         //$id    = $row['id_func'];
         $login  = $row['login'];
         $email = $row['email'];

@@ -47,9 +47,9 @@ if (isset($_POST['submit'])) {
 
       $query  = "SELECT * FROM mesa ORDER BY ABS(numero)";
       $result = $con->query($query);
-     // echo var_dump($result);
+      // echo var_dump($result);
 
-      while ($row = $result->fetch_assoc() ) {
+      foreach($result as $row) {
 
         $id      = $row['id_mesa'];
         $numero  = $row['numero'];
@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
 
                    $result2 = $con->query($query2);
 
-                  while ($row = $result2->fetch_assoc() ) {
+                  foreach($result2 as $row) {
                     $id_mesa      = $row['id_mesa'];
                     $qtd          = $row['quantidade'];
                     $nome_produto = $row['nome_produto'];
