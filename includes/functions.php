@@ -30,7 +30,7 @@ function insert_mesa() {
   $query  = "SELECT * FROM mesa WHERE numero = $numero";
 
   $q = $con->query($query);
-  if($q->num_rows > 0){
+  if($q->rowCount() > 0){
     echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Mesa Já Existe!</center></div>';
   }else{
     $query  = "INSERT INTO mesa (numero, status, desconto) ";
