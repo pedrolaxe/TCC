@@ -64,7 +64,7 @@ function trocar_mesa() {
   $query  = "SELECT * FROM mesa WHERE numero = $numero";
   $result = $con->query($query);
 
-  while ($row = $result->fetch_assoc() ) {
+  while ($row = $result->fetch() ) {
 
     $id_mesa2   = $row['id_mesa'];
 
@@ -387,7 +387,7 @@ function autorizacao_super() {
 function ID_userisadmin($id) {
   global $con;
   $sql = $con->query("SELECT * FROM usuario WHERE id_usuario='$id' AND tipo='administrador'");
-  while($listar = $sql->fetch_assoc()) {
+  while($listar = $sql->fetch()) {
     if($listar['tipo']=="administrador") {
       return true;
     } else {
@@ -495,7 +495,7 @@ function Verify_code($codigo){
 	global $con;
 	if(!empty($codigo)){
 		$sqlcode = $con->query("SELECT codexp FROM zn_users WHERE codigo='$codigo'");
-		$lista = $sqlcode->fetch_assoc();
+		$lista = $sqlcode->fetch();
 		if($lista['codexp']==1){
 			return true;
 		}else{
