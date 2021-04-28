@@ -56,9 +56,9 @@ if (isset($_POST['submit'])) {
 
 
         # PARA APARECER MESA '09' EM VEZ DE '9'
-        if (strlen($numero) == 1) {
-          $numero = str_pad($numero, 2, '0', STR_PAD_LEFT);
-        }
+        // if (strlen($numero) == 1) {
+        //   $numero = str_pad($numero, 2, '0', STR_PAD_LEFT);
+        // }
 
         # NAO ESTÁ SENDO USADO AINDA
         // $status = $row['status'];
@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 
                 <?php
 
-                echo '<h2><a href="' . LINK_SITE . 'admin/src/mesa/mesa.php?id=' . $id . '">Mesa ' . $numero . '</a>
+                echo '<h2><a href="' . LINK_SITE . 'admin/src/mesa/mesa.php?id=' . $id . '">' . $numero . '</a>
               <a href="' . LINK_SITE . 'admin/src/pedido/pedido.php?id=' . $id . '" style="float:right">+</a></h2>';
 
                 ?>

@@ -29,10 +29,12 @@ function insert_mesa() {
   # VERIFICAR SE MESA JÁ EXISTE
   $query  = "SELECT * FROM mesa WHERE numero = $numero";
 
-  $q = $con->query($query);
-  if($q->rowCount() > 0){
-    echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Mesa Já Existe!</center></div>';
-  }else{
+  try {
+    $q = $con->query($query);
+    if($q->rowCount() > 0){
+      echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Mesa Já Existe!</center></div>';
+    } else{ }
+  } catch(Exception $e) {
     $query  = "INSERT INTO mesa (numero, status, desconto) ";
     $query .= "VALUES ('$numero', '$status', '$desconto')";
     $con->query($query);

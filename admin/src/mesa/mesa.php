@@ -17,9 +17,9 @@ if (isset($_GET['id'])) {
     $numero   = $row['numero'];
     $desconto = $row['desconto'];
 
-    if (strlen($numero) == 1) {
-      $numero = str_pad($numero, 2, '0', STR_PAD_LEFT);
-    }
+    // if (strlen($numero) == 1) {
+    //   $numero = str_pad($numero, 2, '0', STR_PAD_LEFT);
+    // }
 
     $status = $row['status'];
   }
@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
     </div>
     <div class="card mb-4 shadow">
       <div class="card-header">
-        <h1 class="my-0 fw-bold"><a href='<?php echo LINK_SITE; ?>admin/mesas.php'><i class="fas fa-arrow-left"></i></a><b style="float: right">Mesa <?php echo $numero ?></b></h1>
+        <h1 class="my-0 fw-bold"><a href='<?php echo LINK_SITE; ?>admin/mesas.php'><i class="fas fa-arrow-left"></i></a><b style="float: right"><?php echo $numero ?></b></h1>
       </div>
       <div class="card-body">
         <ul class="list-unstyled mt-3 mb-4">
