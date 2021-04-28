@@ -20,7 +20,7 @@ if (isset($_GET['id_produto'])) {
   $id_produto = $_GET['id_produto'];
 
   $query  = "SELECT * FROM PRODUTO WHERE id_produto = $id_produto";
-  $result = mysqli_query($con, $query);
+  $result = $con->query($query);
 
   foreach($result as $row) { 
     $id    = $row['id_produto'];
