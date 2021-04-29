@@ -17,6 +17,7 @@ autorizacao_super();
 
   <!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="<?=LINK_SITE;?>assets/css/index.css" media="screen" />
+  <link href="<?=LINK_SITE;?>assets/css/produtos.css" rel="stylesheet">
 
   <style type="text/css">
     
@@ -44,7 +45,7 @@ autorizacao_super();
   <br>
   <div class="row">
 
-  	<h1>⚙️ Relatório de Vendas</h1>
+  	<h1><i class="far fa-file-alt"></i> Relatório de Vendas</h1>
 
     <br><br><br>
 
@@ -52,44 +53,61 @@ autorizacao_super();
 
   	<br><br>
 
-  	<div class="col-8">
+  	<div class="col-12">
 
-      <table class="styled-table">
+      <table class="styled-table" style="width: 100%">
           <thead>
             <tr>
-              <th>Nome</th>
-              <th></th>
-              <th></th>
+              <th>Pedido</th>
+              <th>Comanda</th>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Data</th>
             </tr>
           </thead>
           <tbody>
 
             <?php
 
-            // $query  = "SELECT * FROM PEDIDO WHERE tipo = 'funcionario' ORDER BY login ASC";
-            // $result = $con->query($query);
+            $query  = "
 
-            foreach($result as $row) {
+                  SELECT * FROM PEDIDO 
+                  INNER JOIN PRODUTO ON 
+                  PEDIDO.id_produto = PRODUTO.id_produto 
+                  INNER JOIN COMANDA ON 
+                  PEDIDO.id_comanda = COMANDA.id_comanda
+                  
+            ";
 
-              
+
+            $result = $con->query($query);
+
+            foreach($result as $row) { 
+
+            $id_comanda   = $row['id_comanda'];
+            $id_pedido    = $row['id_pedido'];
+            $nome_produto = $row['nome_produto'];
+            $qtd          = $row['quantidade'];
+            $data = '05/05/21';            
 
             ?>
               <tr>
-                <td><?php ?></td>
-                <td style="text-align: right; padding-left: 0"><a href="edit_colaborador.php?id_colaborador=<?=$id;?>"><button class="btn btn-outline-dark"><i class="far fa-edit"></i></button></a></td>
-
-                <td style="text-align: right; padding-left: 0"><a href="colaboradores.php?delete_colaborador=<?=$id;?>"><button class="btn btn-outline-dark"><i class="fas fa-trash"></i></button></a></td>
+                <td><?php echo $id_pedido ?></td>
+                <td><?php echo $id_comanda ?></td>
+                <td><?php echo $nome_produto ?></td>
+                <td><?php echo $qtd ?></td>
+                <td><?php echo $data ?></td>
               </tr>
 
             <?php } ?>
 
           </tbody>
+
         </table>
-  	 
-      <a href="painel.php"><button class="btn btn-lg btn-outline" style="float:right; width:120px;">Voltar</button></a>
 
   	</div>
 
+ <a href="painel.php"><button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-top: 20px">Voltar</button></a>
   
   </div>
 </div>
