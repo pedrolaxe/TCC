@@ -14,12 +14,12 @@ $id = $_GET['id'];
 //   $id = $_GET['id'];
 // }
 
-$query  = "SELECT * FROM MESA WHERE id_mesa = $id";
-$result_mesa = mysqli_query($con, $query);
+$query  = "SELECT * FROM comanda WHERE id_comanda = $id";
+$result_comanda = mysqli_query($con, $query);
 
-while($row = mysqli_fetch_array($result_mesa)) { 
-  $id_mesa = $row['id_mesa'];
-  $numero_mesa = $row['numero'];
+while($row = mysqli_fetch_array($result_comanda)) { 
+  $id_comanda = $row['id_comanda'];
+  $nome_comanda = $row['nome'];
 }
 
 ?>
@@ -307,8 +307,8 @@ while($row = mysqli_fetch_array($result_mesa)) {
 
 <br><br>
 
-<input name="id_mesa" value="<?php echo $id_mesa ?>" hidden>
-<input name="numero_mesa" value="<?php echo $numero_mesa ?>" hidden>
+<input name="id_comanda" value="<?php echo $id_comanda ?>" hidden>
+<input name="nome_comanda" value="<?php echo $nome_comanda ?>" hidden>
 
 <center>
   <button class="btn btn-primary" style="width: 15em; height: 4em; margin-right: 1em" type="submit" name="tipo" value="normal">Pedido</button>

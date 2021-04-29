@@ -53,10 +53,10 @@ if (isset($_POST['submit'])) {
       $_SESSION['login'] = $db_login;
       if ($tipo == 'administrador') {
         $_SESSION['auth_super'] = true;
-        header("location: " . LINK_SITE . "admin/mesas.php?user_id=" . $user_id);
+        header("location: " . LINK_SITE . "admin/comandas.php?user_id=" . $user_id);
       } else {
         $_SESSION['auth'] = true;
-        header("location: " . LINK_SITE . "mesas.php?user_id=" . $user_id);
+        header("location: " . LINK_SITE . "comandas.php?user_id=" . $user_id);
       }
     }
   }
