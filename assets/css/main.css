@@ -23,7 +23,7 @@ a:hover {
 }
 
 .btn-lg {
-	border: 2px solid;
+	border: 3px solid;
 	font-weight: bold !important;
 	background-color: #DEF2F1;
 }
@@ -34,7 +34,7 @@ a:hover {
 
 .btn-primary:hover {
 	background-color: #6E6658;
-	border: 1px solid #88BDBC;
+	border: 3px solid #88BDBC;
 }
 
 /* Mudar Brilho do Input quando está on focus */

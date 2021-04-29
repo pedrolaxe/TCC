@@ -21,17 +21,17 @@ autorizacao_super();
 <style type="text/css">
   
 button {
-  border: 4px solid black !important;
+  border: 3px solid black !important;
 }
 
 button:hover {
-  border: 4px solid white;
+  border: 3px solid white;
   background-color: black;
   color: white;
 }
 
 .btn-outline-success {
-  border: 4px solid green !important;
+  border: 3px solid green !important;
 }
 
 </style>
@@ -60,8 +60,8 @@ button:hover {
   	<i class="fas fa-4x fa-chart-pie"></i><br><br><br>
 
   	<a href="config_gerais.php"><button class="btn-lg btn-outline">Configurações Gerais</button></a><br><br>
-  	<button class="btn-lg btn-outline">Relatórios de Vendas</button><br><br>
-    <button class="btn-lg btn-outline">Estatísticas</button>
+  	<a href="relatorio.php"><button class="btn-lg btn-outline">Relatórios de Vendas</button></a><br><br>
+    <a href="estatistica.php"><button class="btn-lg btn-outline">Estatísticas</button></a>
   	</div>
 
   	<div class="col-4">
