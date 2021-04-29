@@ -3,7 +3,7 @@
 include '../../../includes/functions.php';
 
 if (isset($_POST['submit'])) {
-  cadastro_usuario();
+  cadastro_colaborador();
 }
 
 ?>
@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
       <input type="password" id="inputPassword" class="form-control" name="conf_senha" placeholder="Confirmação de Senha" required>
       <label for="inputEmail" class="visually-hidden">Email</label>
       <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email" required>
-      <input type="text" id="" class="form-control" name="tipo" placeholder="Email" value="colaborador" hidden>
+      <input type="text" id="" class="form-control" name="tipo" placeholder="Email" value="funcionario" hidden>
 
       <br>
 

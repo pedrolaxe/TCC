@@ -62,11 +62,11 @@ autorizacao_super();
         <input class="form-control" type="text" name="nome_impressora" placeholder="Nome da Impressora">
 
         <br>
-        <button class="btn btn-lg btn-outline" style="float:right; width:120px" type="submit" name="submit">Voltar</button>
-        <button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-left: 20px" type="submit" name="submit">Ok</button>
+        <button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
 
       </form>
-  	
+  	 
+      <a href="painel.php"><button class="btn btn-lg btn-outline" style="float:right; width:120px;">Voltar</button></a>
 
   	</div>
 

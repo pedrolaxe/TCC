@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
     </div>
     <div class="card mb-4 shadow">
       <div class="card-header">
-        <h1 class="my-0 fw-bold"><a href='<?php echo LINK_SITE; ?>admin/comandas.php'><i class="fas fa-arrow-left"></i></a><b style="float: right"><?php echo $nome ?></b></h1>
+        <h1 class="my-0 fw-bold"><a href='<?php echo LINK_SITE; ?>admin/comandas.php'><i class="fas fa-arrow-left"></i></a><b style="float: right"><?php echo ucfirst($nome) ?></b></h1>
       </div>
       <div class="card-body">
         <ul class="list-unstyled mt-3 mb-4">
@@ -179,14 +179,14 @@ if (isset($_POST['submit'])) {
 
 
       <a href="trocar_comanda.php?id=' . $id . '">
-        <button style="margin-left:6px" class="btn-lg btn-outline-success">Trocar comanda</button>
+        <button style="margin-left:6px; width: 10em" class="btn-lg btn-outline-success">Trocar Comanda</button>
       </a>
 
-      <button style="margin-top:5px" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Deletar comanda</button>
-
-      <a href="desconto.php?id=' . $id . '">
-        <button style="display:inline; width: 7.3em" type="button" class="btn-lg btn-outline-dark">Desconto</button>
+        <a href="desconto.php?id=' . $id . '">
+        <button style="display:inline; width: 7.8em" type="button" class="btn-lg btn-outline-dark">Desconto</button>
       </a>
+
+      <button style="margin-top:5px;width: 10em" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Deletar Comanda</button>
 
       ';
 

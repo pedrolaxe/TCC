@@ -14,12 +14,12 @@ if (isset($_GET['changed'])) {
   $changed = $_GET['changed'];
   if($changed) {
     // MELHORAR MENSAGEM
-    echo "NÃO PODE MUDAR PARA A MESMA MESA";
+    echo "NÃO PODE MUDAR PARA A MESMA COMANDA";
   } 
 }
 
 if (isset($_POST['submit'])) {
-  trocar_mesa();
+  trocar_comanda();
 } 
 
 ?>
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Add Mesa</title>
+  <title>Add Comanda</title>
   <link rel="icon" href="assets/img/logo.jpg">
 
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
@@ -42,14 +42,14 @@ if (isset($_POST['submit'])) {
 <?php include '../../../includes/header_admin.php'; ?>
     
 <main class="form-signin">
-  <form action='trocar_mesa.php' method='post'>
-    <h1>Trocar de Mesa</h1>
+  <form action='trocar_comanda.php' method='post'>
+    <h1>Trocar de Comanda</h1>
     <input name="id" value="<?php echo $id ?>" hidden>
     <br>
-    <label for="inputEmail" class="visually-hidden">Trocar Mesa</label>
-    <input name="numero" type="number" class="form-control" placeholder="Trocar Para" autocomplete="off" required autofocus>
+    <label for="inputEmail" class="visually-hidden">Trocar Comanda</label>
+    <input name="nome" type="text" class="form-control" placeholder="Trocar Para" autocomplete="off" required autofocus>
     <br>
-    <button class="w-100 btn btn-lg btn-primary" type="submit" name='submit'>Trocar Mesa</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit" name='submit'>Trocar Comanda</button>
     <br><br>
   </form>
 </main>

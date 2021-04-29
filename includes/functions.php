@@ -63,7 +63,7 @@ function trocar_comanda() {
   $nome_aux = '';
 
   # CONFERIR SE A comanda EXISTE
-  $query  = "SELECT * FROM comanda WHERE nome = $nome";
+  $query  = "SELECT * FROM comanda WHERE nome = '$nome'";
   $result = $con->query($query);
 
   while ($row = $result->fetch() ) {
@@ -205,7 +205,7 @@ function trocar_comanda() {
 function fechar_comanda($id, $total) {
   global $con;
 
-  # VERIFICAR SE USUARIO É ADMIN PARA DIRECIONAR PARA O CAMINHO CERTO
+  # VERIFICAR SE colaborador É ADMIN PARA DIRECIONAR PARA O CAMINHO CERTO
   $userIsAdmin = ID_userisadmin($_SESSION['user_id']);
 
   if ($userIsAdmin) {
@@ -312,9 +312,9 @@ function delete_comanda($id) {
 ######################################################
 
 
-# ADMIN/FUNCIONARIOS
+# ADMIN/colaboradores
 
-function cadastro_usuario() {
+function cadastro_colaborador() {
   global $con;
 
   $login             = anti_injection($_POST['login']);
@@ -332,35 +332,35 @@ function cadastro_usuario() {
 
     $senha = md5($senha);
 
-    $query  = "INSERT INTO usuario (login, senha, email, tipo) ";
-    $query .= "VALUES ('$login', '$senha', '$email', '$tipo')";
+    $query  = "INSERT INTO colaborador (login, senha, email, tipo, codigo, codexp) ";
+    $query .= "VALUES ('$login', '$senha', '$email', '$tipo', '', false)";
     $result = $con->query($query);
 
-    header("Location: " . LINK_SITE . "admin/src/funcionario/funcionarios.php");
+    header("Location: " . LINK_SITE . "admin/src/colaborador/colaboradores.php");
   }
 }
 
-function alterar_funcionario($idf, $login, $email, $senha) {
+function alterar_colaborador($idf, $login, $email, $senha) {
   global $con;
 
   $senhacrip = md5($senha);
 
-  $query = "UPDATE usuario SET login='$login', senha='$senhacrip', email='$email' WHERE id_usuario='$idf' AND tipo='funcionario'";
+  $query = "UPDATE colaborador SET login='$login', senha='$senhacrip', email='$email' WHERE id_colaborador='$idf' AND tipo='colaborador'";
   $result = $con->query($query);
   if(!$result) {
     echo '<script>alert("falhou")</script>';
   }
-  header('Location: ' . LINK_SITE . 'admin/src/funcionario/funcionarios.php');
+  header('Location: ' . LINK_SITE . 'admin/src/colaborador/colaboradores.php');
 }
 
-function delete_funcionario($id) {
+function delete_colaborador($id) {
   global $con;
   if(ID_userisadmin($id)==false) {
-    $query  = "DELETE FROM usuario WHERE id_usuario = $id";
+    $query  = "DELETE FROM colaborador WHERE id_colaborador = $id";
     $result = $con->query($query);
   
     if ($result) {
-      header('Location: '.LINK_SITE.'admin/src/funcionario/funcionarios.php');
+      header('Location: '.LINK_SITE.'admin/src/colaborador/colaboradores.php');
     }
   }else{
     echo "Nao pode remover admin!";
@@ -388,7 +388,7 @@ function autorizacao_super() {
 
 function ID_userisadmin($id) {
   global $con;
-  $sql = $con->query("SELECT * FROM usuario WHERE id_usuario='$id' AND tipo='administrador'");
+  $sql = $con->query("SELECT * FROM colaborador WHERE id_colaborador='$id' AND tipo='administrador'");
   while($listar = $sql->fetch()) {
     if($listar['tipo']=="administrador") {
       return true;
@@ -485,7 +485,7 @@ function Send_recover($email,$codigo){
 function Expira_code($codigo){
 	global $con;
 	if(!empty($codigo)){
-		$sql = $con->query("UPDATE usuario SET codexp='1' WHERE codigo='$codigo'");
+		$sql = $con->query("UPDATE colaborador SET codexp='1' WHERE codigo='$codigo'");
 		if($sql){
 			return true;
 		}else{

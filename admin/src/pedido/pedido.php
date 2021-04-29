@@ -5,7 +5,7 @@ include "../../../includes/functions.php";
 
 autorizacao_super();
 
-// PEGAR INFORMAÇÕES DO USUARIO NO BANCO DE DADOS
+// PEGAR INFORMAÇÕES DO COLABORADOR NO BANCO DE DADOS
 $id = $_GET['id'];
 
 // try {

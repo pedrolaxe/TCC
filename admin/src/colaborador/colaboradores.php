@@ -62,13 +62,13 @@ if (isset($_GET['edit_colaborador'])) {
 
             <?php
 
-            $query  = "SELECT * FROM usuario WHERE tipo = 'colaborador' ORDER BY login ASC";
+            $query  = "SELECT * FROM colaborador WHERE tipo = 'funcionario' ORDER BY login ASC";
             $result = $con->query($query);
 
             foreach($result as $row) {
 
               $registro = true;
-              $id    = $row['id_usuario'];
+              $id    = $row['id_colaborador'];
               $tipo  = $row['tipo'];
               $nome_produto  = $row['login'];
               // $preco = $row['preco'];

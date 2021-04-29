@@ -3,14 +3,14 @@
 include 'includes/functions.php';
 
 # SE HOUVER ADMINISTRADOR REDIRECIONAR PARA O INDEX
-$query  = "SELECT * FROM usuario WHERE tipo='administrador'";
+$query  = "SELECT * FROM colaborador WHERE tipo='administrador'";
 $q = $con->query($query);
 if($q->rowCount() > 0){
   header("Location: " . LINK_SITE . "index.php");
 }
 # CADASTRO DO ADMIN
 if(isset($_POST['submit'])) {
-  cadastro_usuario();
+  cadastro_colaborador();
 }
 
 ?>

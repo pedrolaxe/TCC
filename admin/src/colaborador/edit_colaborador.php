@@ -25,11 +25,11 @@ if (isset($_POST['submit'])) {
     } 
 }
 
-# SELECIONAR USUARIO PARA SER ALTERADO
+# SELECIONAR colaborador PARA SER ALTERADO
 if (isset($_GET['id_colaborador'])) {
     $id_colaborador = $_GET['id_colaborador'];
 
-    $query  = "SELECT * FROM usuario WHERE id_usuario = $id_colaborador";
+    $query  = "SELECT * FROM colaborador WHERE id_colaborador = $id_colaborador";
     $result = mysqli_query($con, $query);
 
     foreach($result as $row) {
