@@ -99,6 +99,7 @@ if (isset($_POST['submit'])) {
       <button class="w-100 btn btn-lg btn-primary" type="submit" name='submit'>Criar Produto</button>
       <br><br>
     </form>
+    <a href="../../painel.php"><button class="w-100 btn btn-lg btn-outline-secondary">Voltar</button></a>
   </main>
 
 </body>

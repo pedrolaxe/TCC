@@ -8,8 +8,8 @@ global $con;
 $_SESSION['auth'] = false;
 $_SESSION['auth_super'] = false;
 
-# SELECIONANDO USUARIOS PARA SABER SE EXISTE ALGUM ADMINISTRADOR
-$query  = "SELECT * FROM usuario WHERE tipo='administrador'";
+# SELECIONANDO COLABORADORES PARA SABER SE EXISTE ALGUM ADMINISTRADOR
+$query  = "SELECT * FROM COLABORADOR WHERE tipo='administrador'";
 $q = $con->query($query);
 if($q->rowCount() == 0){
   header("Location: " . LINK_SITE . "cadastro.php");
@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
   # MELHORAR A SEGURANÇA ?
   $senha = md5($senha);
 
-  $query = "SELECT * FROM usuario WHERE login = '{$login}'";
+  $query = "SELECT * FROM COLABORADOR WHERE login = '{$login}'";
   $result = $con->query($query);
 
   if (!$result) {
@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 
     # MOSTRAR TODAS AS COLUNAS DE TODA A TABELA
     foreach($result as $row) {
-      $user_id  = $row['id_usuario'];
+      $user_id  = $row['id_colaborador'];
       $db_login = $row['login'];
       $db_senha = $row['senha'];
       $tipo     = $row['tipo'];
@@ -53,10 +53,10 @@ if (isset($_POST['submit'])) {
       $_SESSION['login'] = $db_login;
       if ($tipo == 'administrador') {
         $_SESSION['auth_super'] = true;
-        header("location: " . LINK_SITE . "admin/mesas.php?user_id=" . $user_id);
+        header("location: " . LINK_SITE . "admin/comandas.php?user_id=" . $user_id);
       } else {
         $_SESSION['auth'] = true;
-        header("location: " . LINK_SITE . "mesas.php?user_id=" . $user_id);
+        header("location: " . LINK_SITE . "comandas.php?user_id=" . $user_id);
       }
     }
   }

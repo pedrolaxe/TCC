@@ -55,15 +55,15 @@ function imprimir_cozinha($nome, $qtd) {
   }
 }
 
-function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $numero, $desconto) {
+function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $nome, $desconto) {
   try {
     $nome_estabelecimento = get_nome_estabelecimento();
     $printer = get_nome_impressora();
 
-    # PARA APARECER 'MESA 01' EM VEZ DE 'MESA 1'
-    if(strlen($numero) == 1) {
-      $numero = str_pad($numero, 2, '0', STR_PAD_LEFT);
-    }
+    # PARA APARECER 'comanda 01' EM VEZ DE 'comanda 1'
+    // if(strlen($nome) == 1) {
+    //   $nome = str_pad($nome, 2, '0', STR_PAD_LEFT);
+    // }
 
     # AUMENTANDO TAMANHO DA LETRA E CENTRALIZANDO
     $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
@@ -77,8 +77,8 @@ function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $numer
     
     $printer -> text("------------------------------------------------\n");
 
-    # ESCREVER MESA, DATA E HORA
-    $printer -> text("MESA: " . $numero . "\n");
+    # ESCREVER comanda, DATA E HORA
+    $printer -> text("comanda: " . $nome . "\n");
     $printer -> text("DATA: " . date("d/m/y") . "\n");
     $printer -> text("HORA: " . date("H:i") . "\n");
 
@@ -137,7 +137,7 @@ function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $numer
   }
 }
 
-function numero_mesa($numero_mesa) {
+function nome_comanda($nome_comanda) {
   try {
     $printer = get_nome_impressora();
 
@@ -145,13 +145,13 @@ function numero_mesa($numero_mesa) {
     $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
     $printer -> setJustification(Printer::JUSTIFY_CENTER);
 
-    # PARA APARECER 'MESA 01' EM VEZ DE 'MESA 1'
-    if(strlen($numero_mesa) == 1) {
-      $numero_mesa = str_pad($numero_mesa, 2, '0', STR_PAD_LEFT);
-    }
+    # PARA APARECER 'comanda 01' EM VEZ DE 'comanda 1'
+    // if(strlen($nome_comanda) == 1) {
+    //   $nome_comanda = str_pad($nome_comanda, 2, '0', STR_PAD_LEFT);
+    // }
 
-    # PRINT NUMERO DA MESA
-    $printer -> text("\nMESA ".$numero_mesa."\n\n\n");
+    # PRINT nome DA comanda
+    $printer -> text("\ncomanda ".$nome_comanda."\n\n\n");
 
     # TAMANHO NORMAL DA LETRA E ALINHANDO TEXTO PARA A ESQUERDA
     $printer -> setJustification(Printer::JUSTIFY_LEFT);

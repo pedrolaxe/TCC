@@ -15,100 +15,100 @@ function anti_injection($sql) {
 ######################################################
 
 
-# MESA
+# comanda
 
-function insert_mesa() {
+function insert_comanda() {
   global $con;
 
-  $numero   = $_POST['numero'];
+  $nome   = $_POST['nome'];
   $desconto = 0;
 
   # NAO ESTÁ SENDO USADO AINDA
   $status = true;
 
-  # VERIFICAR SE MESA JÁ EXISTE
-  $query  = "SELECT * FROM mesa WHERE numero = $numero";
+  # VERIFICAR SE comanda JÁ EXISTE
+  $query  = "SELECT * FROM comanda WHERE nome = $nome";
 
   try {
     $q = $con->query($query);
     if($q->rowCount() > 0){
-      echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Mesa Já Existe!</center></div>';
+      echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A comanda Já Existe!</center></div>';
     } else{ }
   } catch(Exception $e) {
-    $query  = "INSERT INTO mesa (numero, status, desconto) ";
-    $query .= "VALUES ('$numero', '$status', '$desconto')";
+    $query  = "INSERT INTO comanda (nome, status, desconto) ";
+    $query .= "VALUES ('$nome', '$status', '$desconto')";
     $con->query($query);
   }
 
 }
 
-function trocar_mesa() {
+function trocar_comanda() {
   global $con;
 
-  # INFORMACOES DA MESA QUE VAI SE MUDAR PARA A OUTRA
-  $id_mesa1 = anti_injection($_POST['id']);
-  $id_mesa2 = '';
+  # INFORMACOES DA comanda QUE VAI SE MUDAR PARA A OUTRA
+  $id_comanda1 = anti_injection($_POST['id']);
+  $id_comanda2 = '';
 
-  # ARRAY PARA MANIPULAR PRODUTOS E SUAS RESPECTIVAS QUANTIDADES PARA A MESA NOVA
+  # ARRAY PARA MANIPULAR PRODUTOS E SUAS RESPECTIVAS QUANTIDADES PARA A comanda NOVA
   $produtosId1_array = [];
   $produtosId2_array = [];
   $qtd1_array      = [];
   $qtd2_array      = [];
 
-  # MUDAR PARA A MESA DESSE NUMERO
-  $numero = anti_injection($_POST['numero']);
+  # MUDAR PARA A comanda DESSE nome
+  $nome = anti_injection($_POST['nome']);
 
   # ACHO QUE NAO PRECISA DO $ID_POS
   $id_pos     = '';
-  $numero_aux = '';
+  $nome_aux = '';
 
-  # CONFERIR SE A MESA EXISTE
-  $query  = "SELECT * FROM mesa WHERE numero = $numero";
+  # CONFERIR SE A comanda EXISTE
+  $query  = "SELECT * FROM comanda WHERE nome = '$nome'";
   $result = $con->query($query);
 
   while ($row = $result->fetch() ) {
 
-    $id_mesa2   = $row['id_mesa'];
+    $id_comanda2   = $row['id_comanda'];
 
-    # PARA VERIFICAR SE A MESA EXISTE
-    $numero_aux = $row['numero'];
+    # PARA VERIFICAR SE A comanda EXISTE
+    $nome_aux = $row['nome'];
   }
 
 
-  # CONFERIR SE É A MESMA MESA
-  if ($id_mesa1 == $id_mesa2) {
-    header("Location: trocar_mesa.php?id=" . $id_mesa1 . "&changed=true");
+  # CONFERIR SE É A MESMA comanda
+  if ($id_comanda1 == $id_comanda2) {
+    header("Location: trocar_comanda.php?id=" . $id_comanda1 . "&changed=true");
   }
 
-  # SE A MESA EXISTE
-  elseif (!empty($id_mesa2)) {
+  # SE A comanda EXISTE
+  elseif (!empty($id_comanda2)) {
 
-    # SELECIONAR PEDIDO DA MESA ANTERIOR E ADICIONAR PARA OUTRA MESA
-    echo "Mesa Existe!<br>";
+    # SELECIONAR PEDIDO DA comanda ANTERIOR E ADICIONAR PARA OUTRA comanda
+    echo "comanda Existe!<br>";
 
     $query  = "
     SELECT * FROM pedido 
     INNER JOIN produto ON 
     PEDIDO.id_produto = produto.id_produto 
-    INNER JOIN mesa ON 
-    PEDIDO.id_mesa = mesa.id_mesa";
+    INNER JOIN comanda ON 
+    PEDIDO.id_comanda = comanda.id_comanda";
 
     $result = $con->query($query);
 
     foreach($result as $row) {
 
-      $id_mesa      = $row['id_mesa'];
+      $id_comanda      = $row['id_comanda'];
       $id_produto   = $row['id_produto'];
       $id_pedido    = $row['id_pedido'];
       $qtd          = $row['quantidade'];
       $nome_produto = $row['nome_produto'];
       $preco        = $row['preco'];
 
-      # echo "id_mesa: ".$id_mesa."<br>"."id_mesa1: ".$id_mesa1;
+      # echo "id_comanda: ".$id_comanda."<br>"."id_comanda1: ".$id_comanda1;
 
 
-      # PROCURAR PEDIDO DA mesa2
-      if ($id_mesa2 == $id_mesa) {
+      # PROCURAR PEDIDO DA comanda2
+      if ($id_comanda2 == $id_comanda) {
 
         array_push($produtosId2_array, $id_produto);
         array_push($qtd2_array, $qtd);
@@ -120,8 +120,8 @@ function trocar_mesa() {
     SELECT * FROM PEDIDO 
     INNER JOIN PRODUTO ON 
     PEDIDO.id_produto = PRODUTO.id_produto 
-    INNER JOIN MESA ON 
-    PEDIDO.id_mesa = MESA.id_mesa
+    INNER JOIN comanda ON 
+    PEDIDO.id_comanda = comanda.id_comanda
 
     ";
 
@@ -129,18 +129,18 @@ function trocar_mesa() {
 
     foreach($result as $row) {
 
-      $id_mesa      = $row['id_mesa'];
+      $id_comanda      = $row['id_comanda'];
       $id_produto   = $row['id_produto'];
       $id_pedido    = $row['id_pedido'];
       $qtd          = $row['quantidade'];
       $nome_produto = $row['nome_produto'];
       $preco        = $row['preco'];
 
-      # echo "id_mesa: ".$id_mesa."<br>"."id_mesa1: ".$id_mesa1;
+      # echo "id_comanda: ".$id_comanda."<br>"."id_comanda1: ".$id_comanda1;
 
 
-      # PROCURAR PEDIDO DA mesa1
-      if ($id_mesa1 == $id_mesa) {
+      # PROCURAR PEDIDO DA comanda1
+      if ($id_comanda1 == $id_comanda) {
 
         array_push($produtosId1_array, $id_produto);
         array_push($qtd1_array, $qtd);
@@ -150,8 +150,8 @@ function trocar_mesa() {
     if (!$produtosId2_array) {
 
       for ($i = 0; $i < sizeof($produtosId1_array); $i++) {
-        $query  = "INSERT INTO pedido (quantidade, id_mesa, id_produto)";
-        $query .= "VALUES ('$qtd1_array[$i]', '$id_mesa2', '$produtosId1_array[$i]')";
+        $query  = "INSERT INTO pedido (quantidade, id_comanda, id_produto)";
+        $query .= "VALUES ('$qtd1_array[$i]', '$id_comanda2', '$produtosId1_array[$i]')";
         $result = $con->query($query);
       }
     } else {
@@ -166,46 +166,46 @@ function trocar_mesa() {
 
             $produto_repetido = true;
             $qtd = $qtd1_array[$i] + $qtd2_array[$j];
-            $query = "UPDATE PEDIDO SET quantidade = $qtd WHERE id_produto = $produtosId2_array[$j] AND (id_mesa = $id_mesa2)";
+            $query = "UPDATE PEDIDO SET quantidade = $qtd WHERE id_produto = $produtosId2_array[$j] AND (id_comanda = $id_comanda2)";
             $result = $con->query($query);
           } elseif (!$produto_repetido && $j == sizeof($produtosId2_array) - 1) {
 
-            $query  = "INSERT INTO PEDIDO (quantidade, id_mesa, id_produto)";
-            $query .= "VALUES ('$qtd1_array[$i]', '$id_mesa2', '$produtosId1_array[$i]')";
+            $query  = "INSERT INTO PEDIDO (quantidade, id_comanda, id_produto)";
+            $query .= "VALUES ('$qtd1_array[$i]', '$id_comanda2', '$produtosId1_array[$i]')";
             $result = $con->query($query);
           }
         }
       }
     }
 
-    delete_mesa($id_mesa1);
+    delete_comanda($id_comanda1);
 
     $userIsAdmin = ID_userisadmin($_SESSION['user_id']);
 
     if ($userIsAdmin) {
-      header('Location: ' . LINK_SITE . 'admin/mesas.php');
+      header('Location: ' . LINK_SITE . 'admin/comandas.php');
     } else {
-      header('Location: ' . LINK_SITE . 'mesas.php');
+      header('Location: ' . LINK_SITE . 'comandas.php');
     }
   }
 
-  # SE A MESA NÃO EXISTIR...
+  # SE A comanda NÃO EXISTIR...
   else {
 
-    # SELECIONAR PEDIDO DA MESA ANTERIOR E ADICIONAR PARA OUTRA MESA
-    echo "Mesa Não Existe!<br>";
+    # SELECIONAR PEDIDO DA comanda ANTERIOR E ADICIONAR PARA OUTRA comanda
+    echo "comanda Não Existe!<br>";
 
-    $query = "UPDATE mesa SET numero = $numero WHERE id_mesa='$id_mesa1'";
+    $query = "UPDATE comanda SET nome = $nome WHERE id_comanda='$id_comanda1'";
     $result = $con->query($query);
 
-    header('Location: ' . LINK_SITE . 'admin/mesas.php');
+    header('Location: ' . LINK_SITE . 'admin/comandas.php');
   }
 }
 
-function fechar_mesa($id, $total) {
+function fechar_comanda($id, $total) {
   global $con;
 
-  # VERIFICAR SE USUARIO É ADMIN PARA DIRECIONAR PARA O CAMINHO CERTO
+  # VERIFICAR SE colaborador É ADMIN PARA DIRECIONAR PARA O CAMINHO CERTO
   $userIsAdmin = ID_userisadmin($_SESSION['user_id']);
 
   if ($userIsAdmin) {
@@ -214,13 +214,13 @@ function fechar_mesa($id, $total) {
     include "../../impressao.php";
   }
 
-  $query  = "SELECT * FROM MESA WHERE id_mesa = $id";
+  $query  = "SELECT * FROM comanda WHERE id_comanda = $id";
   $result = $con->query($query);
 
   foreach($result as $row) {
 
-    $id       = $row['id_mesa'];
-    $numero   = $row['numero'];
+    $id       = $row['id_comanda'];
+    $nome   = $row['nome'];
     $status   = $row['status'];
     $desconto = $row['desconto'];
   }
@@ -236,8 +236,8 @@ function fechar_mesa($id, $total) {
     SELECT * FROM PEDIDO 
     INNER JOIN PRODUTO ON 
     PEDIDO.id_produto = PRODUTO.id_produto 
-    INNER JOIN MESA ON 
-    PEDIDO.id_mesa = MESA.id_mesa
+    INNER JOIN comanda ON 
+    PEDIDO.id_comanda = comanda.id_comanda
 
     ";
 
@@ -245,14 +245,14 @@ function fechar_mesa($id, $total) {
 
   foreach($result2 as $row) {
 
-    $id_mesa      = $row['id_mesa'];
+    $id_comanda      = $row['id_comanda'];
     $id_pedido    = $row['id_pedido'];
     $qtd          = $row['quantidade'];
     $nome_produto = $row['nome_produto'];
     $preco        = $row['preco'];
 
 
-    if ($id == $id_mesa) {
+    if ($id == $id_comanda) {
 
       array_push($qtd_array, $qtd);
       array_push($nome_array, $nome_produto);
@@ -266,21 +266,21 @@ function fechar_mesa($id, $total) {
   # INCLUIR EM OUTRA TABELA ANTES DE DELETAR
 
 
-  $query2 = "DELETE FROM PEDIDO WHERE id_mesa = $id";
+  $query2 = "DELETE FROM PEDIDO WHERE id_comanda = $id";
   $result = $con->query($query2);
 
-  $query  = "DELETE FROM MESA WHERE id_mesa = $id";
+  $query  = "DELETE FROM comanda WHERE id_comanda = $id";
   $result = $con->query($query);
 
   try {
-    $impressora = imprimir_conta($soma, $qtd_array, $nome_array, $qtdPreco_array, $numero, $desconto);
+    $impressora = imprimir_conta($soma, $qtd_array, $nome_array, $qtdPreco_array, $nome, $desconto);
     cut();
   } catch (Exception $e) { }
 
   if ($userIsAdmin) {
-    header('Location: ' . LINK_SITE . 'admin/mesas.php?impressora='.$impressora);
+    header('Location: ' . LINK_SITE . 'admin/comandas.php?impressora='.$impressora);
   } else {
-    header('Location: ' . LINK_SITE . 'mesas.php?impressora='.$impressora);
+    header('Location: ' . LINK_SITE . 'comandas.php?impressora='.$impressora);
   }
 
 }
@@ -288,33 +288,33 @@ function fechar_mesa($id, $total) {
 function insert_desconto() {
   global $con;
 
-  $id_mesa  = $_POST['id'];
+  $id_comanda  = $_POST['id'];
   $desconto = $_POST['desconto'];
 
-  $query = "UPDATE mesa SET desconto='$desconto' WHERE id_mesa='$id_mesa'";
+  $query = "UPDATE comanda SET desconto='$desconto' WHERE id_comanda='$id_comanda'";
   $result = $con->query($query);
 
-  header('Location: ' . LINK_SITE . 'admin/src/mesa/mesa.php?id='.$id_mesa);
+  header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id_comanda);
 }
 
-function delete_mesa($id) {
+function delete_comanda($id) {
   global $con;
 
-  $query2 = "DELETE FROM PEDIDO WHERE id_mesa = $id";
+  $query2 = "DELETE FROM PEDIDO WHERE id_comanda = $id";
   $result = $con->query($query2);
 
-  $query  = "DELETE FROM MESA WHERE id_mesa = $id";
+  $query  = "DELETE FROM comanda WHERE id_comanda = $id";
   $result = $con->query($query);
 
-  header('Location: ' . LINK_SITE . 'admin/mesas.php');
+  header('Location: ' . LINK_SITE . 'admin/comandas.php');
 }
 
 ######################################################
 
 
-# ADMIN/FUNCIONARIOS
+# ADMIN/colaboradores
 
-function cadastro_usuario() {
+function cadastro_colaborador() {
   global $con;
 
   $login             = anti_injection($_POST['login']);
@@ -332,35 +332,35 @@ function cadastro_usuario() {
 
     $senha = md5($senha);
 
-    $query  = "INSERT INTO usuario (login, senha, email, tipo) ";
-    $query .= "VALUES ('$login', '$senha', '$email', '$tipo')";
+    $query  = "INSERT INTO colaborador (login, senha, email, tipo, codigo, codexp) ";
+    $query .= "VALUES ('$login', '$senha', '$email', '$tipo', '', false)";
     $result = $con->query($query);
 
-    header("Location: " . LINK_SITE . "admin/src/funcionario/funcionarios.php");
+    header("Location: " . LINK_SITE . "admin/src/colaborador/colaboradores.php");
   }
 }
 
-function alterar_funcionario($idf, $login, $email, $senha) {
+function alterar_colaborador($idf, $login, $email, $senha) {
   global $con;
 
   $senhacrip = md5($senha);
 
-  $query = "UPDATE usuario SET login='$login', senha='$senhacrip', email='$email' WHERE id_usuario='$idf' AND tipo='funcionario'";
+  $query = "UPDATE colaborador SET login='$login', senha='$senhacrip', email='$email' WHERE id_colaborador='$idf' AND tipo='colaborador'";
   $result = $con->query($query);
   if(!$result) {
     echo '<script>alert("falhou")</script>';
   }
-  header('Location: ' . LINK_SITE . 'admin/src/funcionario/funcionarios.php');
+  header('Location: ' . LINK_SITE . 'admin/src/colaborador/colaboradores.php');
 }
 
-function delete_funcionario($id) {
+function delete_colaborador($id) {
   global $con;
   if(ID_userisadmin($id)==false) {
-    $query  = "DELETE FROM usuario WHERE id_usuario = $id";
+    $query  = "DELETE FROM colaborador WHERE id_colaborador = $id";
     $result = $con->query($query);
   
     if ($result) {
-      header('Location: '.LINK_SITE.'admin/src/funcionario/funcionarios.php');
+      header('Location: '.LINK_SITE.'admin/src/colaborador/colaboradores.php');
     }
   }else{
     echo "Nao pode remover admin!";
@@ -388,7 +388,7 @@ function autorizacao_super() {
 
 function ID_userisadmin($id) {
   global $con;
-  $sql = $con->query("SELECT * FROM usuario WHERE id_usuario='$id' AND tipo='administrador'");
+  $sql = $con->query("SELECT * FROM colaborador WHERE id_colaborador='$id' AND tipo='administrador'");
   while($listar = $sql->fetch()) {
     if($listar['tipo']=="administrador") {
       return true;
@@ -445,13 +445,13 @@ function delete_produto($id) {
 
 # PEDIDO
 
-function delete_pedido($id_pedido, $id_mesa) {
+function delete_pedido($id_pedido, $id_comanda) {
   global $con;
 
   $query  = "DELETE FROM pedido WHERE id_pedido = $id_pedido";
   $result = $con->query($query);
 
-  header('Location: ' . LINK_SITE . 'admin/src/mesa/mesa.php?id=' . $id_mesa);
+  header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id=' . $id_comanda);
 }
 
 
@@ -485,7 +485,7 @@ function Send_recover($email,$codigo){
 function Expira_code($codigo){
 	global $con;
 	if(!empty($codigo)){
-		$sql = $con->query("UPDATE usuario SET codexp='1' WHERE codigo='$codigo'");
+		$sql = $con->query("UPDATE colaborador SET codexp='1' WHERE codigo='$codigo'");
 		if($sql){
 			return true;
 		}else{

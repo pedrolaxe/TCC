@@ -5,7 +5,7 @@ include "../../../includes/functions.php";
 
 autorizacao_super();
 
-// PEGAR INFORMAÇÕES DO USUARIO NO BANCO DE DADOS
+// PEGAR INFORMAÇÕES DO COLABORADOR NO BANCO DE DADOS
 $id = $_GET['id'];
 
 // try {
@@ -14,13 +14,13 @@ $id = $_GET['id'];
 //   $id = $_GET['id'];
 // }
 
-$query  = "SELECT * FROM MESA WHERE id_mesa = $id";
-$result_mesa = $con->query($query);
+$query  = "SELECT * FROM comanda WHERE id_comanda = $id";
+$result_comanda = $con->query($query);
 
-foreach($result_mesa as $row) {
+foreach($result_comanda as $row) {
 
-  $id_mesa = $row['id_mesa'];
-  $numero_mesa = $row['numero'];
+  $id_comanda = $row['id_comanda'];
+  $nome_comanda = $row['nome'];
 }
 
 ?>
@@ -67,7 +67,7 @@ foreach($result_mesa as $row) {
   <?php include '../../../includes/header_admin.php'; ?>
 
   <div class='container-fluid'>
-    <!-- <h1>Mesa <?php echo $numero_mesa; ?></h1> -->
+    <!-- <h1>comanda <?php echo $nome_comanda; ?></h1> -->
     <form action="add_pedido.php" method="POST">
 
       <br>
@@ -306,8 +306,8 @@ foreach($result_mesa as $row) {
 
   <br><br>
 
-  <input name="id_mesa" value="<?php echo $id_mesa ?>" hidden>
-  <input name="numero_mesa" value="<?php echo $numero_mesa ?>" hidden>
+  <input name="id_comanda" value="<?php echo $id_comanda ?>" hidden>
+  <input name="nome_comanda" value="<?php echo $nome_comanda ?>" hidden>
 
   <center>
     <button class="btn btn-primary" style="width: 15em; height: 4em; margin-right: 1em" type="submit" name="tipo" value="normal">Pedido</button>
