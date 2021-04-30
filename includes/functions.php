@@ -24,7 +24,7 @@ function insert_comanda() {
   $desconto = 0;
 
   # NAO ESTÁ SENDO USADO AINDA
-  $status = true;
+  $status = 'aberto';
 
   # VERIFICAR SE comanda JÁ EXISTE
   $query  = "SELECT * FROM comanda WHERE nome = $nome";
@@ -241,7 +241,7 @@ function fechar_comanda($id, $total) {
 
     ";
 
-  $result2 = mysqli_query($con, $query2);
+  $result2 = $con->query($query);
 
   foreach($result2 as $row) {
 
@@ -263,14 +263,14 @@ function fechar_comanda($id, $total) {
   }
 
 
-  # INCLUIR EM OUTRA TABELA ANTES DE DELETAR
-
-
-  $query2 = "DELETE FROM PEDIDO WHERE id_comanda = $id";
-  $result = $con->query($query2);
-
-  $query  = "DELETE FROM comanda WHERE id_comanda = $id";
+  $query = "UPDATE COMANDA SET status ='fechado' WHERE id_comanda = $id";
   $result = $con->query($query);
+
+
+  // $query2 = "DELETE FROM PEDIDO WHERE id_comanda = $id";
+  // $result = $con->query($query2);
+  // $query  = "DELETE FROM comanda WHERE id_comanda = $id";
+  // $result = $con->query($query);
 
   try {
     $impressora = imprimir_conta($soma, $qtd_array, $nome_array, $qtdPreco_array, $nome, $desconto);

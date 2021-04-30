@@ -53,9 +53,11 @@ if (isset($_POST['submit'])) {
       $_SESSION['login'] = $db_login;
       if ($tipo == 'administrador') {
         $_SESSION['auth_super'] = true;
+        $_SESSION['login_usuario'] = $db_login;
         header("location: " . LINK_SITE . "admin/comandas.php?user_id=" . $user_id);
       } else {
         $_SESSION['auth'] = true;
+        $_SESSION['login_usuario'] = $db_login;
         header("location: " . LINK_SITE . "comandas.php?user_id=" . $user_id);
       }
     }

@@ -78,7 +78,7 @@ function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $nome,
     $printer -> text("------------------------------------------------\n");
 
     # ESCREVER comanda, DATA E HORA
-    $printer -> text("comanda: " . $nome . "\n");
+    $printer -> text("COMANDA: " . $nome . "\n");
     $printer -> text("DATA: " . date("d/m/y") . "\n");
     $printer -> text("HORA: " . date("H:i") . "\n");
 
