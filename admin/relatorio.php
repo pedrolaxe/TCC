@@ -68,6 +68,7 @@ autorizacao_super();
             <tr>
               <th>Pedido</th>
               <th>Comanda</th>
+              <th>Nome</th>
               <th>Produto</th>
               <th>Quantidade</th>
               <th>Data</th>
@@ -92,22 +93,28 @@ autorizacao_super();
 
             foreach($result as $row) { 
 
-            $id_comanda   = $row['id_comanda'];
-            $id_pedido    = $row['id_pedido'];
-            $nome_produto = $row['nome_produto'];
-            $qtd          = $row['quantidade'];
-            $data = '05/05/21';            
+            $status = $row['status'];
+  
+            if($status == 'fechado') { 
+
+              $id_comanda   = $row['id_comanda'];
+              $id_pedido    = $row['id_pedido'];
+              $nome         = $row['nome'];
+              $nome_produto = $row['nome_produto'];
+              $qtd          = $row['quantidade'];
+              $data = '05/05/21';  
 
             ?>
               <tr>
                 <td><?php echo $id_pedido ?></td>
                 <td><?php echo $id_comanda ?></td>
+                <td><?php echo ucfirst($nome) ?></td>
                 <td><?php echo $nome_produto ?></td>
                 <td><?php echo $qtd ?></td>
                 <td><?php echo $data ?></td>
               </tr>
 
-            <?php } ?>
+            <?php } } ?>
 
           </tbody>
 

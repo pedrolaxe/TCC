@@ -20,6 +20,8 @@ if (isset($_POST['submit'])) {
   insert_comanda();
 }
 
+// echo $_SESSION['login_usuario'];
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +47,7 @@ if (isset($_POST['submit'])) {
 
       <?php
 
-      $query  = "SELECT * FROM comanda ORDER BY ABS(nome)";
+      $query  = "SELECT * FROM comanda WHERE status = 'aberto' ORDER BY ABS(nome)";
       $result = $con->query($query);
       // echo var_dump($result);
 
