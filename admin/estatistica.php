@@ -5,6 +5,37 @@ include "../includes/functions.php";
 
 autorizacao_super();
 
+$query  = "
+
+      SELECT * FROM PEDIDO 
+      INNER JOIN PRODUTO ON
+      PEDIDO.id_produto = PRODUTO.id_produto 
+      INNER JOIN COMANDA ON 
+      PEDIDO.id_comanda = COMANDA.id_comanda
+                  
+";
+
+$result = $con->query($query);
+
+foreach($result as $row) { 
+
+  $status = $row['status'];
+    
+  if($status == 'fechado') { 
+
+    $mes1 = '05/21';
+    $mes2 = '05/21';
+
+    $id_comanda   = $row['id_comanda'];
+    $id_pedido    = $row['id_pedido'];
+    $data_pedido  = $row['data'];
+    $nome         = $row['nome'];
+    $nome_produto = $row['nome_produto'];
+    $qtd          = $row['quantidade'];
+
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -46,13 +77,19 @@ autorizacao_super();
   <div class="row">
 
     <div class="col-4">
-      <br>
   	  <h1><i class="fas fa-chart-pie"></i> Estatísticas</h1>
     </div>
 
-    <div class="col-4">De: <input type="month" style="height:60px"></div>
+    <div class="col-3">De: 
+      <input type="month" style="height:60px; width: 250px"></div>
 
-    <div class="col-4">Até: <input type="month" style="height:60px"></div>
+    <div class="col-3">Até: 
+      <input type="month" style="height:60px; width: 250px">
+    </div>
+
+    <div class="col-1">
+      <button class="btn-lg btn-outline-primary" type="submit" name="" style="height:60px;">Ok</button>
+    </div>
 
 
     <br><br><br><br>
@@ -64,7 +101,7 @@ autorizacao_super();
 
 
   <div class="col-4">
-    <h2>Faturamento</h2>
+    <h2>Faturamento Mensal</h2>
     <br>
     <canvas id="myChart" width="200" height="200"></canvas>
   </div>
@@ -78,7 +115,6 @@ autorizacao_super();
     <br>
     <canvas id="aportes" width="200" height="200"></canvas>
   </div>
-
 
 
 

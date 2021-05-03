@@ -8,6 +8,10 @@ include "../../../impressao.php";
 
 autorizacao_super();
 
+date_default_timezone_set('America/Sao_Paulo');
+
+$data = date("Y-m-d H:i:s");
+
 # NUMERO DA comanda QUE SERÃO INCLUIDOS OS PEDIDOS
 $nome_comanda = $_POST['nome_comanda'];
 
@@ -146,8 +150,8 @@ while($count < $id_array_size) {
 	  }
 
 
-	  $query  = "INSERT INTO PEDIDO (quantidade, id_comanda, id_produto)";
-	  $query .= "VALUES ('$qtd', '$id_comanda', '$id_produto')";
+	  $query  = "INSERT INTO PEDIDO (quantidade, id_comanda, id_produto, data)";
+	  $query .= "VALUES ('$qtd', '$id_comanda', '$id_produto', '$data')";
 	  $result = $con->query($query);
 	}
 

@@ -45,13 +45,29 @@ autorizacao_super();
   <br>
   <div class="row">
 
-  	<h1><i class="far fa-file-alt"></i> Relatório de Vendas</h1>
+  	 <div class="col-5">
+      <br>
+      <h1><i class="fas fa-chart-pie"></i> Relatório de Vendas</h1>
+    </div>
 
-    <br><br><br>
+    <div class="col-3">De: 
+      <input type="month" style="height:60px; width: 250px">
+    </div>
 
-  	<hr>
+    <div class="col-3">Até: 
+      <input type="month" style="height:60px; width: 250px">
+    </div>
 
-  	<br><br>
+    <div class="col-1">
+      <br>
+      <button class="btn-lg btn-outline-primary" type="submit" name="" style="height:60px">Ok</button>
+    </div>
+
+    <br><br><br><br>
+
+    <hr>
+
+    <br><br>
 
   	<div class="col-12">
 
@@ -63,6 +79,7 @@ autorizacao_super();
               <th>Nome</th>
               <th>Produto</th>
               <th>Quantidade</th>
+              <th>Hora</th>
               <th>Data</th>
             </tr>
           </thead>
@@ -94,7 +111,9 @@ autorizacao_super();
               $nome         = $row['nome'];
               $nome_produto = $row['nome_produto'];
               $qtd          = $row['quantidade'];
-              $data = '05/05/21';  
+
+              // $data[0] é data e $data[1] é hora
+              $data         = explode(' ',trim($row['data'])); 
 
             ?>
               <tr>
@@ -103,7 +122,8 @@ autorizacao_super();
                 <td><?php echo ucfirst($nome) ?></td>
                 <td><?php echo $nome_produto ?></td>
                 <td><?php echo $qtd ?></td>
-                <td><?php echo $data ?></td>
+                <td><?php echo $data[1] ?></td>
+                <td><?php echo $data[0] ?></td>
               </tr>
 
             <?php } } ?>
