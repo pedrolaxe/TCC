@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
       <label for="Preço" class="visually-hidden">Preço</label>
       <input name="preco" type="money" class="form-control" placeholder="Preço" autocomplete="off" required>
       <br>
-      <button class="w-100 btn btn-lg btn-primary" type="submit" name='submit'>Criar Produto</button>
+      <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Criar Produto</button>
       <br><br>
     </form>
     <a href="../../painel.php"><button class="w-100 btn btn-lg btn-outline-secondary">Voltar</button></a>

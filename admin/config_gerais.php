@@ -5,6 +5,29 @@ include "../includes/functions.php";
 
 autorizacao_super();
 
+if (isset($_POST['submit'])) {
+  // insert_config();
+
+  $empresa    = $_POST['empresa'];
+  $impressora = $_POST['impressora'];
+  $logo       = $_POST['logo'];
+
+  $query  = "INSERT INTO config (nome_empresa, nome_impressora, logo) ";
+  $query .= "VALUES ('$empresa', '$impressora', '$logo')";
+  $result = $con->query($query);
+
+}
+
+# SELECIONAR TABLE CONFIG
+$query  = "SELECT * FROM config";
+$result = $con->query($query);
+
+while ($row = $result->fetch() ) {
+
+  $empresa    = $row['nome_empresa'];
+  $impressora = $row['nome_impressora'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -57,16 +80,16 @@ autorizacao_super();
       <form action="config_gerais.php" method="POST">
         <label for="Logo"><i style="font-size: 24px; font-weight: bolder">Logo da Empresa</i></label><br><br>
         <input class="form-control logo" type="file" id="img" name="logo" accept="image/*"><br>
-        <label for="Logo"><i style="font-size: 24px; font-weight: bolder">Outras Informações</i></label><br><br>
-        <input class="form-control" type="text" name="nome_empresa" placeholder="Nome da Empresa">
-        <input class="form-control" type="text" name="nome_impressora" placeholder="Nome da Impressora">
+        <label><i style="font-size: 24px; font-weight: bolder">Outras Informações</i></label><br><br>
+        <input class="form-control" value="<?php if (isset($empresa)) echo $empresa; ?>" type="text" name="empresa" placeholder="Nome da Empresa">
+        <input class="form-control" value="<?php if (isset($impressora)) echo $impressora; ?>" type="text" name="impressora" placeholder="Nome da Impressora">
 
         <br>
-        <button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
+        <button class="btn btn-lg btn-outline-primary" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
 
       </form>
   	 
-      <a href="painel.php"><button class="btn btn-lg btn-outline" style="float:right; width:120px;">Voltar</button></a>
+      <a href="painel.php"><button class="btn btn-lg btn-outline-secondary" style="float:right; width:120px;">Voltar</button></a>
 
   	</div>
 

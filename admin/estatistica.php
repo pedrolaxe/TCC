@@ -48,7 +48,7 @@ foreach($result as $row) {
 
   <!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="<?=LINK_SITE;?>assets/css/index.css" media="screen" />
-  <link href="<?=LINK_SITE;?>assets/css/produtos.css" rel="stylesheet">
+
 
   <style type="text/css">
     
@@ -62,6 +62,16 @@ foreach($result as $row) {
       height: auto;
       /*width: auto;*/
     }
+
+    button {
+  border: 3px solid !important;
+}
+
+button:hover {
+  border: 3px solid grey !important;
+  background-color: black;
+  color: white !important;
+}
 
   </style>
 
@@ -98,7 +108,7 @@ foreach($result as $row) {
 
   	<br><br>
 
-
+    <div class="col-1"></div>
 
   <div class="col-4">
     <h2>Faturamento Mensal</h2>
@@ -106,7 +116,7 @@ foreach($result as $row) {
     <canvas id="myChart" width="200" height="200"></canvas>
   </div>
 
-  <div class="col-4">
+  <div class="col-2">
     <!-- <canvas id="aportes" width="200" height="200"></canvas> -->
   </div>
 
@@ -116,9 +126,16 @@ foreach($result as $row) {
     <canvas id="aportes" width="200" height="200"></canvas>
   </div>
 
+  <div class="col-1"></div>
+
+
 
 
  <a href="painel.php"><button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-top: 70px">Voltar</button></a>
+
+
+ <a href="painel.php"><button class="btn btn-lg btn-outline-secondary" style="float:right; width:120px; margin-top: 70px">Voltar</button></a>
+
   
   </div>
 </div>

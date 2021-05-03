@@ -55,9 +55,20 @@ foreach($result_comanda as $row) {
 
     input[type=number]:focus {
       border: 2px solid #6E6658;
-      ;
-
     }
+    
+    button {
+      border: 3px solid black !important;
+      background-color: white !important;
+      color: black !important;
+    }
+
+    button:hover {
+      border: 3px solid white;
+      background-color: black !important;
+      color: white !important;
+    }
+
   </style>
 </head>
 
@@ -310,8 +321,8 @@ foreach($result_comanda as $row) {
   <input name="nome_comanda" value="<?php echo $nome_comanda ?>" hidden>
 
   <center>
-    <button class="btn btn-primary" style="width: 15em; height: 4em; margin-right: 1em" type="submit" name="tipo" value="normal">Pedido</button>
-    <button class="btn btn-primary" style="width: 15em; height: 4em" type="submit" name="tipo" value="impressao">Pedido + Impressão</button>
+    <button class="btn btn-lg btn-outline" style="width: 15em; height: 4em; margin-right: 1em" type="submit" name="tipo" value="normal">Pedido</button>
+    <button class="btn btn-lg btn-outline" style="width: 15em; height: 4em" type="submit" name="tipo" value="impressao">Pedido + Impressão</button>
   </center>
 
   </form>
