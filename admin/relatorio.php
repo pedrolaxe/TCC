@@ -43,25 +43,30 @@ autorizacao_super();
 
 <div class='container'>
   <br>
-  <div class="row">
 
-  	 <div class="col-5">
-      <br>
-      <h1><i class="fas fa-chart-pie"></i> Relatório de Vendas</h1>
-    </div>
+  <form action='relatorio.php' method='post'>
 
-    <div class="col-3">De: 
-      <input type="month" style="height:60px; width: 250px">
-    </div>
+    <div class="row">
 
-    <div class="col-3">Até: 
-      <input type="month" style="height:60px; width: 250px">
-    </div>
+    	 <div class="col-5">
+        <br>
+        <h1><i class="fas fa-chart-pie"></i> Relatório de Vendas</h1>
+      </div>
 
-    <div class="col-1">
-      <br>
-      <button class="btn-lg btn-outline-primary" type="submit" name="" style="height:60px">Ok</button>
-    </div>
+      <div class="col-3">De: 
+        <input name="data1" type="month" style="height:60px; width: 250px">
+      </div>
+
+      <div class="col-3">Até: 
+        <input name="data2" type="month" style="height:60px; width: 250px">
+      </div>
+
+      <div class="col-1">
+        <br>
+        <button class="btn-lg btn-outline-primary" type="submit" name="submit" style="height:60px">Ok</button>
+      </div>
+
+  </form>
 
     <br><br><br><br>
 
@@ -86,6 +91,12 @@ autorizacao_super();
           <tbody>
 
             <?php
+
+            if(isset($_POST['submit'])) {
+
+
+            $data1 = $_POST['data1'];
+            $data2 = $_POST['data2'];
 
             $query  = "
 
@@ -115,6 +126,10 @@ autorizacao_super();
               // $data[0] é data e $data[1] é hora
               $data         = explode(' ',trim($row['data'])); 
 
+              $data_aux = date("Y-m", strtotime($data[1]));
+
+              if ($data_aux >= $data1 && $data_aux <= $data2) {
+
             ?>
               <tr>
                 <td><?php echo $id_pedido ?></td>
@@ -126,7 +141,15 @@ autorizacao_super();
                 <td><?php echo $data[0] ?></td>
               </tr>
 
-            <?php } } ?>
+            <?php } else {
+              # MELHORAR MENSAGEM
+              echo "<tr><td>Não Existem Pedidos Nessa Data</td>";
+              echo "<td></td><td></td><td></td><td></td><td></td><td></td>";
+              echo "</tr>";
+              break;
+            }
+
+            } } } ?>
 
           </tbody>
 
