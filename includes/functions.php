@@ -27,18 +27,20 @@ function insert_comanda() {
   $status = 'aberto';
 
   # VERIFICAR SE comanda JÁ EXISTE
-  $query  = "SELECT * FROM comanda WHERE nome = $nome";
+  $query  = "SELECT * FROM comanda WHERE nome = '$nome'";
 
-  try {
-    $q = $con->query($query);
-    if($q->rowCount() > 0){
-      echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A comanda Já Existe!</center></div>';
-    } else{ }
-  } catch(Exception $e) {
+
+  $q = $con->query($query);
+  if($q->rowCount() > 0){
+    echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A comanda Já Existe!</center></div>';
+  } else{
     $query  = "INSERT INTO comanda (nome, status, desconto) ";
     $query .= "VALUES ('$nome', '$status', '$desconto')";
     $con->query($query);
   }
+  
+
+  
 
 }
 
@@ -195,7 +197,7 @@ function trocar_comanda() {
     # SELECIONAR PEDIDO DA comanda ANTERIOR E ADICIONAR PARA OUTRA comanda
     echo "comanda Não Existe!<br>";
 
-    $query = "UPDATE comanda SET nome = $nome WHERE id_comanda='$id_comanda1'";
+    $query = "UPDATE comanda SET nome = '$nome' WHERE id_comanda='$id_comanda1'";
     $result = $con->query($query);
 
     header('Location: ' . LINK_SITE . 'admin/comandas.php');

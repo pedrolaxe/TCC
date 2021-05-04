@@ -32,6 +32,14 @@ autorizacao_super();
       /*width: auto;*/
     }
 
+    button {
+      border: 3px solid !important;
+    }
+
+    button:hover {
+      border: 3px solid grey !important;
+    }
+
   </style>
 
 </head>
@@ -157,7 +165,7 @@ autorizacao_super();
 
   	</div>
 
- <a href="painel.php"><button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-top: 20px">Voltar</button></a>
+ <a href="painel.php"><button class="btn btn-lg btn-outline-secondary" style="float:right; width:120px; margin-top: 20px">Voltar</button></a>
   
   </div>
 </div>
