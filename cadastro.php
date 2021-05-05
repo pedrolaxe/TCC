@@ -2,9 +2,9 @@
 include 'includes/functions.php';
 
 # SE HOUVER ADMINISTRADOR REDIRECIONAR PARA O INDEX
-$query  = "SELECT * FROM colaborador WHERE tipo='administrador'";
+$query = "SELECT * FROM colaborador WHERE tipo='administrador'";
 $q = $con->query($query);
-if ($q->num_rows > 0) {
+if ($q->rowCount() > 0) {
   header("Location: " . LINK_SITE . "index.php");
 }
 # CADASTRO DO ADMIN
