@@ -12,11 +12,7 @@ function anti_injection($sql) {
   return $sql;
 }
 
-######################################################
-
-
 # comanda
-
 function insert_comanda() {
   global $con;
 
@@ -38,10 +34,6 @@ function insert_comanda() {
     $query .= "VALUES ('$nome', '$status', '$desconto')";
     $con->query($query);
   }
-  
-
-  
-
 }
 
 function trocar_comanda() {
@@ -337,8 +329,9 @@ function cadastro_colaborador() {
     $query  = "INSERT INTO colaborador (login, senha, email, tipo, codigo, codexp) ";
     $query .= "VALUES ('$login', '$senha', '$email', '$tipo', '', false)";
     $result = $con->query($query);
-
-    header("Location: " . LINK_SITE . "admin/src/colaborador/colaboradores.php");
+    if($result) {
+      header("Location: " . LINK_SITE . "admin/src/colaborador/colaboradores.php");
+    }
   }
 }
 
@@ -370,7 +363,6 @@ function delete_colaborador($id) {
 }
 
 function autorizacao() {
-  global $con;
   $auth = $_SESSION['auth'];
 
   if (!$auth) {
@@ -379,7 +371,6 @@ function autorizacao() {
 }
 
 function autorizacao_super() {
-  global $con;
   $auth = $_SESSION['auth_super'];
   $_SESSION['auth'] = false;
 
@@ -425,8 +416,9 @@ function alterar_produto($id, $nome, $tipo, $preco) {
 
   $query = "UPDATE produto SET nome_produto = '$nome', tipo = '$tipo', preco = '$preco' WHERE id_produto = $id";
   $result = $con->query($query);
-
-  header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
+  if($result){
+    header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
+  }
 }
 
 function delete_produto($id) {
@@ -452,8 +444,9 @@ function delete_pedido($id_pedido, $id_comanda) {
 
   $query  = "DELETE FROM pedido WHERE id_pedido = $id_pedido";
   $result = $con->query($query);
-
-  header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id=' . $id_comanda);
+  if($result){
+    header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id=' . $id_comanda);
+  }
 }
 
 
