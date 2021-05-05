@@ -7,8 +7,8 @@ if(basename($_SERVER['PHP_SELF']) == 'comandas.php') {
     <input class="form-control me-2" name="nome" type="text" placeholder="Abrir Comanda" aria-label="Search" autocomplete="off" required>
     <button class="btn-lg btn-outline-dark" type="submit" name="submit">Ok</button>
   </form>
-  <h2 style="margin-left: 30px">Olá, '.$_SESSION['login_usuario'].'!</h2>
   ';
+  # <b style="margin-left: 30px">'.$_SESSION['login_usuario'].' logado</b>
 } else { $add_comanda = ''; }
 
 echo '

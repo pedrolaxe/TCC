@@ -85,11 +85,10 @@ while ($row = $result->fetch() ) {
         <input class="form-control" value="<?php if (isset($impressora)) echo $impressora; ?>" type="text" name="impressora" placeholder="Nome da Impressora">
 
         <br>
-        <button class="btn btn-lg btn-outline-primary" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
+        <button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
 
       </form>
-  	 
-      <a href="painel.php"><button class="btn btn-lg btn-outline-secondary" style="float:right; width:120px;">Voltar</button></a>
+  	
 
   	</div>
 

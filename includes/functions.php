@@ -27,12 +27,12 @@ function insert_comanda() {
   $status = 'aberto';
 
   # VERIFICAR SE comanda JÁ EXISTE
-  $query  = "SELECT * FROM comanda WHERE nome = '$nome'";
+  $query  = "SELECT * FROM comanda WHERE nome = '$nome' AND status='aberto'";
 
 
   $q = $con->query($query);
   if($q->rowCount() > 0){
-    echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A comanda Já Existe!</center></div>';
+    echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Comanda Já Existe!</center></div>';
   } else{
     $query  = "INSERT INTO comanda (nome, status, desconto) ";
     $query .= "VALUES ('$nome', '$status', '$desconto')";
