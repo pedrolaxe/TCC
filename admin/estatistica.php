@@ -10,6 +10,7 @@ if (isset($_POST['submit'])) {
   $faturamento = 0;
   $qtdList  = [];
   $nomeList = [];
+  $precoList = [];
 
   $data1 = $_POST['data1'];
   $data2 = $_POST['data2'];
@@ -63,6 +64,7 @@ foreach($result as $row) {
 
         array_push($nomeList, $nome_produto);
         array_push($qtdList, $qtd);
+        array_push($precoList, $preco);
       }
 
 
@@ -81,7 +83,7 @@ foreach($result as $row) {
 
     } else {
       # MELHORAR MENSAGEM
-      echo "NÃO EXISTEM PEDIDOS NESSA DATA";
+      // echo "NÃO EXISTEM PEDIDOS NESSA DATA";
     }
 
   }
@@ -90,13 +92,20 @@ foreach($result as $row) {
 
 $nomeTop = [];
 $qtdTop  = [];
+$produtoTop = [];
 
 // echo '<pre>'; print_r($qtdList); echo '</pre>';
 // echo '<pre>'; print_r($nomeList); echo '</pre>';
 // echo 'TOP 1: '.$nomeList[array_search(max($qtdList), $qtdList)]. ' x '.$qtdList[array_search(max($qtdList), $qtdList)];
 
+if($qtdList) {
+
 array_push($nomeTop, $nomeList[array_search(max($qtdList), $qtdList)]);
-array_push($qtdTop, $qtdList[array_search(max($qtdList), $qtdList)]); 
+array_push($qtdTop, $qtdList[array_search(max($qtdList), $qtdList)]);
+
+# copia $qtdList
+$copia_qtdList = $qtdList;
+// echo $copia_qtdList;
 
 unset($qtdList[array_search(max($qtdList), $qtdList)]);
 
@@ -110,10 +119,48 @@ unset($qtdList[array_search(max($qtdList), $qtdList)]);
 array_push($nomeTop, $nomeList[array_search(max($qtdList), $qtdList)]);
 array_push($qtdTop, $qtdList[array_search(max($qtdList), $qtdList)]); 
 
+
+$qtdList = $copia_qtdList;
+for ($i = 0; $i < sizeof($nomeList); $i++) {
+
+  $produtoList[$i] = $qtdList[$i] * $precoList[$i];
+
+  // echo "qtdList: ".$qtdList[$i]."<br>";
+  // echo "precoList: ".$precoList[$i]."<br>";
+  // echo "produtoList: ".$produtoList[$i]."<br><br>";
+}
+
+$nomeTop2   = [];
+$produtoTop = [];
+
+array_push($nomeTop2, $nomeList[array_search(max($produtoList), $produtoList)]);
+array_push($produtoTop, $produtoList[array_search(max($produtoList), $produtoList)]);
+
+unset($produtoList[array_search(max($produtoList), $produtoList)]);
+
+array_push($nomeTop2, $nomeList[array_search(max($produtoList), $produtoList)]);
+array_push($produtoTop, $produtoList[array_search(max($produtoList), $produtoList)]);
+
+unset($produtoList[array_search(max($produtoList), $produtoList)]);
+
+array_push($nomeTop2, $nomeList[array_search(max($produtoList), $produtoList)]);
+array_push($produtoTop, $produtoList[array_search(max($produtoList), $produtoList)]); 
+
+// echo $produtoTop[0]."<br>";
+// echo $produtoTop[1]."<br>";
+// echo $produtoTop[2]."<br>";
+
+
+}
+
 // echo 'TOP 3: '.$nomeList[array_search(max($qtdList), $qtdList)]. ' x '.$qtdList[array_search(max($qtdList), $qtdList)];
 
 // echo $faturamento;
 }
+
+// echo $produtoTop[0]."<br>";
+// echo $produtoTop[1]."<br>";
+// echo $produtoTop[2]."<br>";
 
 ?>
 
@@ -173,15 +220,15 @@ button:hover {
 
     </div>
 
-      <div class="col-3">De: 
+      <div class="col-3">
         <input name="data1" type="month" style="height:60px; width: 250px"></div>
 
-      <div class="col-3">Até: 
+      <div class="col-3">
         <input name="data2" type="month" style="height:60px; width: 250px">
       </div>
 
       <div class="col-1">
-        <button class="btn-lg btn-outline-primary" type="submit" name="submit" style="height:60px;">Ok</button>
+        <button class="btn-lg btn-outline" type="submit" name="submit" style="height:60px;">Ok</button>
       </div>
 
     </form>
@@ -196,7 +243,7 @@ button:hover {
     <div class="col-1"></div>
 
   <div class="col-4">
-    <h2>Faturamento Mensal</h2>
+    <h2>Faturamento Produto</h2>
     <br>
     <canvas id="myChart" width="200" height="200"></canvas>
   </div>
@@ -212,15 +259,6 @@ button:hover {
   </div>
 
   <div class="col-1"></div>
-
-
-
-
- <a href="painel.php"><button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-top: 70px">Voltar</button></a>
-
-
- <a href="painel.php"><button class="btn btn-lg btn-outline-secondary" style="float:right; width:120px; margin-top: 70px">Voltar</button></a>
-
   
   </div>
 </div>
@@ -230,38 +268,26 @@ button:hover {
 
 <script>
 
+// APORTES
 new Chart(document.getElementById("myChart"), {
-  type: 'bar',
+  type: 'pie',
   data: {
-    labels: [1,2,3,4,5,6,7,8,9,10,11,12],
-    datasets: [
-      {
-        label: "Faturamento",
-        backgroundColor: "#3e95cd",
-        data: [5500, 7000, 6500, 4700, 4400, 5900]
-      }
-
-    ]
-  },
-  options: {
-    title: {
-      display: false,
-    },
-    legend: {
-      display: false,
-    },
-    scales: {
-      yAxes: [{
-      id: 'A',
-      type: 'linear',
-      position: 'left',
-      ticks: {
-        min: 0,
-        max: 10000
-      }
-    }]
-    }
-  }
+  labels: [
+    '<?php echo $nomeTop2[0]; ?>',
+    '<?php echo $nomeTop2[1]; ?>',
+    '<?php echo $nomeTop2[2]; ?>'
+  ],
+  datasets: [{
+    label: 'My First Dataset',
+    data: ['<?php echo $produtoTop[0]; ?>', '<?php echo $produtoTop[1]; ?>', '<?php echo $produtoTop[2]; ?>'],
+    backgroundColor: [
+      'blue',
+      'rgb(54, 162, 235)',
+      'grey'
+    ],
+    hoverOffset: 4
+  }]
+}
 });
 
 

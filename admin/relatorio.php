@@ -57,26 +57,24 @@ autorizacao_super();
     <div class="row">
 
     	 <div class="col-5">
-        <br>
         <h1><i class="fas fa-chart-pie"></i> Relatório de Vendas</h1>
       </div>
 
-      <div class="col-3">De: 
+      <div class="col-3">
         <input name="data1" type="month" style="height:60px; width: 250px">
       </div>
 
-      <div class="col-3">Até: 
+      <div class="col-3"> 
         <input name="data2" type="month" style="height:60px; width: 250px">
       </div>
 
       <div class="col-1">
-        <br>
-        <button class="btn-lg btn-outline-primary" type="submit" name="submit" style="height:60px">Ok</button>
+        <button class="btn-lg btn-outline" type="submit" name="submit" style="height:60px">Ok</button>
       </div>
 
   </form>
 
-    <br><br><br><br>
+    <br><br><br>
 
     <hr>
 
@@ -165,8 +163,6 @@ autorizacao_super();
 
   	</div>
 
- <a href="painel.php"><button class="btn btn-lg btn-outline-secondary" style="float:right; width:120px; margin-top: 20px">Voltar</button></a>
-  
   </div>
 </div>
 </body>
