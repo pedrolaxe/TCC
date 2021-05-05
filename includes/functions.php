@@ -26,8 +26,8 @@ function insert_comanda() {
   $query  = "SELECT * FROM comanda WHERE nome = '$nome' AND status='aberto'";
 
 
-  $q = $con->query($query);
-
+  $q = $con->prepare($query);
+  $q->execute();
   if($q->rowCount() > 0){
     echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A comanda Já Existe!</center></div>';
   } else{
