@@ -31,7 +31,7 @@ function insert_comanda() {
 
 
   $q = $con->query($query);
-  if($q->rowCount() > 0){
+  if($q->num_rows > 0){
     echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A comanda Já Existe!</center></div>';
   } else{
     $query  = "INSERT INTO comanda (nome, status, desconto) ";
