@@ -58,7 +58,7 @@ function trocar_comanda() {
   $nome_aux = '';
 
   # CONFERIR SE A comanda EXISTE
-  $query  = "SELECT * FROM comanda WHERE nome = '$nome'";
+  $query  = "SELECT * FROM comanda WHERE nome = '$nome' AND status = 'aberto'";
   $result = $con->query($query);
 
   while ($row = $result->fetch() ) {

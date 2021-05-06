@@ -161,6 +161,8 @@ autorizacao_super();
 
         </table>
 
+        <br><br>
+
   	</div>
 
   </div>

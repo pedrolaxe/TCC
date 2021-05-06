@@ -8,14 +8,24 @@ autorizacao_super();
 if (isset($_POST['submit'])) {
   // insert_config();
 
-  $empresa    = $_POST['empresa'];
-  $impressora = $_POST['impressora'];
-  $logo       = $_POST['logo'];
+  $query  = "SELECT * FROM CONFIG";
+  $q = $con->query($query);
+    $empresa    = $_POST['empresa'];
+    $impressora = $_POST['impressora'];
+    $logo       = $_POST['logo'];
+  if($q->rowCount() > 0){
 
-  $query  = "INSERT INTO config (nome_empresa, nome_impressora, logo) ";
-  $query .= "VALUES ('$empresa', '$impressora', '$logo')";
-  $result = $con->query($query);
+    $query  = "UPDATE config SET nome_empresa='$empresa', nome_impressora='$impressora', logo='$logo' WHERE id_config='1' ";
 
+    
+  } else {
+
+    $query  = "INSERT INTO config (id_config, nome_empresa, nome_impressora, logo) ";
+    $query .= "VALUES ('1' ,'$empresa', '$impressora', '$logo')";
+
+  }
+
+    $result = $con->query($query);
 }
 
 # SELECIONAR TABLE CONFIG
@@ -88,6 +98,8 @@ while ($row = $result->fetch() ) {
         <button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
 
       </form>
+
+      <br><br><br><br>
   	
 
   	</div>
