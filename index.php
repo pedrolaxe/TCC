@@ -11,7 +11,7 @@ $_SESSION['auth_super'] = false;
 # SELECIONANDO COLABORADORES PARA SABER SE EXISTE ALGUM ADMINISTRADOR
 $query  = "SELECT * FROM COLABORADOR WHERE tipo='administrador'";
 $q = $con->query($query);
-if($q->rowCount() == 0){
+if($q->num_rows == 0){
   header("Location: " . LINK_SITE . "cadastro.php");
 }
 
