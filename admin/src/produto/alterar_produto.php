@@ -6,6 +6,12 @@ include "../../../includes/functions.php";
 
 autorizacao_super();
 
+$is_admin = ID_userisadmin($_SESSION['user_id']);
+
+if(!$is_admin) {
+  header("Location: " . LINK_SITE );
+}
+
 if (isset($_POST['submit'])) {
   $id    = anti_injection($_POST['id']);
   $nome  = anti_injection($_POST['nome_produto']);

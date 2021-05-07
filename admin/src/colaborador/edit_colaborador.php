@@ -5,6 +5,12 @@ include "../../../includes/functions.php";
 
 autorizacao_super();
 
+$is_admin = ID_userisadmin($_SESSION['user_id']);
+
+if(!$is_admin) {
+  header("Location: " . LINK_SITE );
+}
+
 if (isset($_POST['submit'])) {
     $idf        = anti_injection($_POST['id_user']);
     $login      = anti_injection($_POST['login']);
@@ -30,11 +36,11 @@ if (isset($_GET['id_colaborador'])) {
     $id_colaborador = $_GET['id_colaborador'];
 
     $query  = "SELECT * FROM colaborador WHERE id_colaborador = $id_colaborador";
-    $result = mysqli_query($con, $query);
+    $result = $con->query($query);
 
     foreach($result as $row) {
         //$id    = $row['id_func'];
-        $login  = $row['login'];
+        $login = $row['login'];
         $email = $row['email'];
         $tipo  = $row['tipo'];
     }

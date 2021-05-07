@@ -7,6 +7,12 @@ include "../../../includes/functions.php";
 
 autorizacao_super();
 
+$is_admin = ID_userisadmin($_SESSION['user_id']);
+
+if(!$is_admin) {
+  header("Location: " . LINK_SITE );
+}
+
 if (isset($_GET['delete_produto'])) {
   $id = anti_injection($_GET['delete_produto']);
   delete_produto($id);

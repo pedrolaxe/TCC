@@ -5,6 +5,12 @@ include "../../../includes/functions.php";
 
 autorizacao_super();
 
+$is_admin = ID_userisadmin($_SESSION['user_id']);
+
+if(!$is_admin) {
+  header("Location: " . LINK_SITE );
+}
+
 if (isset($_POST['submit'])) {
   insert_produto();
 }

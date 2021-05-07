@@ -5,6 +5,8 @@ include "../../../includes/functions.php";
 
 autorizacao_super();
 
+$is_admin = ID_userisadmin($_SESSION['user_id']);
+
 if (isset($_GET['id'])) {
   $id = $_GET['id'];
 
@@ -33,9 +35,9 @@ if (isset($_GET['delete_pedido'])) {
 }
 
 
-if (isset($_GET['deletar_comanda'])) {
-  $id = $_GET['deletar_comanda'];
-  delete_comanda($id);
+if (isset($_GET['cancelar_comanda'])) {
+  $id = $_GET['cancelar_comanda'];
+  cancel_comanda($id);
 }
 
 if (isset($_POST['submit'])) {
@@ -137,7 +139,7 @@ if (isset($_POST['submit'])) {
 
               echo
               '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, '.', ',') . '
-              <i data-bs-toggle="modal" data-bs-target="#exampleModal2" class="fas fa-trash" style="padding-left:0.3em"></i></b></li>';
+              </b></li>';
 
               $total += $qtd * $preco;
             }
@@ -179,16 +181,22 @@ if (isset($_POST['submit'])) {
 
 
       <a href="trocar_comanda.php?id=' . $id . '">
-        <button style="margin-left:6px; width: 10em" class="btn-lg btn-outline-success">Trocar Comanda</button>
+        <button style="margin-left:6px; width: 10.4em" class="btn-lg btn-outline-success">Trocar Comanda</button>
+      </a>';
+
+      if($is_admin) {
+
+        echo '<a href="desconto.php?id=' . $id . '">
+        <button style="display:inline; width: 7.9em;" type="button" class="btn-lg btn-outline-dark">Desconto</button>
       </a>
 
-        <a href="desconto.php?id=' . $id . '">
-        <button style="display:inline; width: 7.8em" type="button" class="btn-lg btn-outline-dark">Desconto</button>
-      </a>
+      <button style="margin-top:5px;width: 10.4em" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Cancelar Comanda</button>';
 
-      <button style="margin-top:5px;width: 10em" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Deletar Comanda</button>
+      }
 
-      ';
+        
+
+      
 
           ?>
 
@@ -204,7 +212,7 @@ if (isset($_POST['submit'])) {
       <div class="modal-dialog">
         <div class="modal-content" style="background-color: #DEF2F1;">
           <div class="modal-header">
-            <h4 class="modal-title" id="exampleModalLabel">Deletar comanda</h4>
+            <h4 class="modal-title" id="exampleModalLabel">Cancelar Comanda</h4>
             <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -212,29 +220,7 @@ if (isset($_POST['submit'])) {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
-            <a href="comanda.php?deletar_comanda='<?php echo $id ?>'"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- CONFIRMAÇÂO PARA DELETAR PEDIDO -->
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content" style="background-color: #DEF2F1;">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Deletar Produto</h5>
-            <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            Tem certeza disso?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
-            <a href="comanda.php?delete_pedido='<?php echo $id_pedido ?>'&id_comanda='<?php echo $id_comanda ?>'"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
+            <a href="comanda.php?cancelar_comanda='<?php echo $id ?>'"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
           </div>
         </div>
       </div>

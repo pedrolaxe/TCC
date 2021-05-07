@@ -5,15 +5,28 @@ include "../includes/functions.php";
 
 autorizacao_super();
 
+$is_admin = ID_userisadmin($_SESSION['user_id']);
+
+if(!$is_admin) {
+  header("Location: " . LINK_SITE );
+}
+
 if (isset($_POST['submit'])) {
 
   $faturamento = 0;
+  $existe_pedido = false;
+
   $qtdList  = [];
   $nomeList = [];
   $precoList = [];
 
   $data1 = $_POST['data1'];
   $data2 = $_POST['data2'];
+
+  if($data1 > $data2) {
+    echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Primeira Data Não Pode Ser Maior Que A Segunda</center></div>';
+    $existe_pedido = true;
+  }
 
 $query  = "
 
@@ -41,7 +54,7 @@ foreach($result as $row) {
     $qtd          = $row['quantidade'];
     $preco        = $row['preco'];
 
-    $data_pedido = date("Y-m", strtotime($data_pedido));
+    $data_pedido = date("Y-m-d", strtotime($data_pedido));
 
 
     if ($data_pedido >= $data1 && $data_pedido <= $data2) {
@@ -60,7 +73,6 @@ foreach($result as $row) {
         $qtdList[$search] = $qtd + $qtdList[$search];
 
       } else {
-
 
         array_push($nomeList, $nome_produto);
         array_push($qtdList, $qtd);
@@ -98,7 +110,8 @@ $produtoTop = [];
 // echo '<pre>'; print_r($nomeList); echo '</pre>';
 // echo 'TOP 1: '.$nomeList[array_search(max($qtdList), $qtdList)]. ' x '.$qtdList[array_search(max($qtdList), $qtdList)];
 
-if($qtdList) {
+if(sizeof($qtdList) >= 3) {
+
 
 array_push($nomeTop, $nomeList[array_search(max($qtdList), $qtdList)]);
 array_push($qtdTop, $qtdList[array_search(max($qtdList), $qtdList)]);
@@ -149,18 +162,27 @@ array_push($produtoTop, $produtoList[array_search(max($produtoList), $produtoLis
 // echo $produtoTop[0]."<br>";
 // echo $produtoTop[1]."<br>";
 // echo $produtoTop[2]."<br>";
+$existe_pedido = true;
 
 
+} elseif(sizeof($qtdList) > 0) {
+  echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Cadastre Mais Produtos Nessa Data</center></div>';
+  $existe_pedido = true;
 }
 
 // echo 'TOP 3: '.$nomeList[array_search(max($qtdList), $qtdList)]. ' x '.$qtdList[array_search(max($qtdList), $qtdList)];
 
 // echo $faturamento;
+
+if (!$existe_pedido) {
+  echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Pedidos Nessa Data</center></div>';
+}
 }
 
 // echo $produtoTop[0]."<br>";
 // echo $produtoTop[1]."<br>";
 // echo $produtoTop[2]."<br>";
+
 
 ?>
 
@@ -216,15 +238,15 @@ button:hover {
   <div class="row">
 
     <div class="col-4">
-  	  <h1><i class="fas fa-chart-pie"></i> Estatísticas</h1>
+  	  <h1>Top Produtos</h1>
 
     </div>
 
       <div class="col-3">
-        <input name="data1" type="month" style="height:60px; width: 250px"></div>
+        <input name="data1" type="date" style="height:60px; width: 250px"></div>
 
       <div class="col-3">
-        <input name="data2" type="month" style="height:60px; width: 250px">
+        <input name="data2" type="date" style="height:60px; width: 250px">
       </div>
 
       <div class="col-1">
@@ -243,7 +265,7 @@ button:hover {
     <div class="col-1"></div>
 
   <div class="col-4">
-    <h2>Faturamento Produto</h2>
+    <?php if(isset($_POST['submit'])) echo '<h2 align="center">Faturamento Produto</h2>'; ?>
     <br>
     <canvas id="myChart" width="200" height="200"></canvas>
   </div>
@@ -253,7 +275,7 @@ button:hover {
   </div>
 
   <div class="col-4">
-    <h2>Produtos Mais Vendidos</h2>
+    <?php if(isset($_POST['submit'])) echo '<h2 align="center">Produtos Mais Vendidos</h2>'; ?>
     <br>
     <canvas id="aportes" width="200" height="200"></canvas>
   </div>

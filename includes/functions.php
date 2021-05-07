@@ -29,10 +29,6 @@ function insert_comanda() {
   $q = $con->query($query);
   if($q->rowCount() > 0){
     echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Comanda Já Existe!</center></div>';
-
-  if($q->num_rows > 0){
-    echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A comanda Já Existe!</center></div>';
-
   } else{
     $query  = "INSERT INTO comanda (nome, status, desconto) ";
     $query .= "VALUES ('$nome', '$status', '$desconto')";
@@ -178,13 +174,8 @@ function trocar_comanda() {
 
     delete_comanda($id_comanda1);
 
-    $userIsAdmin = ID_userisadmin($_SESSION['user_id']);
+    header('Location: ' . LINK_SITE . 'admin/comandas.php');
 
-    if ($userIsAdmin) {
-      header('Location: ' . LINK_SITE . 'admin/comandas.php');
-    } else {
-      header('Location: ' . LINK_SITE . 'comandas.php');
-    }
   }
 
   # SE A comanda NÃO EXISTIR...
@@ -204,13 +195,15 @@ function fechar_comanda($id, $total) {
   global $con;
 
   # VERIFICAR SE colaborador É ADMIN PARA DIRECIONAR PARA O CAMINHO CERTO
-  $userIsAdmin = ID_userisadmin($_SESSION['user_id']);
+  // $userIsAdmin = ID_userisadmin($_SESSION['user_id']);
 
-  if ($userIsAdmin) {
-    include "../../../impressao.php";
-  } else {
-    include "../../impressao.php";
-  }
+  // if ($userIsAdmin) {
+  //   include "../../../impressao.php";
+  // } else {
+  //   include "../../impressao.php";
+  // }
+
+  include "../../../impressao.php";
 
   $query  = "SELECT * FROM comanda WHERE id_comanda = $id";
   $result = $con->query($query);
@@ -275,11 +268,8 @@ function fechar_comanda($id, $total) {
     cut();
   } catch (Exception $e) { }
 
-  if ($userIsAdmin) {
     header('Location: ' . LINK_SITE . 'admin/comandas.php?impressora='.$impressora);
-  } else {
-    header('Location: ' . LINK_SITE . 'comandas.php?impressora='.$impressora);
-  }
+
 
 }
 
@@ -302,6 +292,17 @@ function delete_comanda($id) {
   $result = $con->query($query2);
 
   $query  = "DELETE FROM comanda WHERE id_comanda = $id";
+  $result = $con->query($query);
+
+  header('Location: ' . LINK_SITE . 'admin/comandas.php');
+}
+
+function cancel_comanda($id) {
+  global $con;
+
+  $status = 'cancelado';
+
+  $query = "UPDATE comanda SET status='$status' WHERE id_comanda=$id";
   $result = $con->query($query);
 
   header('Location: ' . LINK_SITE . 'admin/comandas.php');
@@ -363,14 +364,6 @@ function delete_colaborador($id) {
     }
   }else{
     echo "Nao pode remover admin!";
-  }
-}
-
-function autorizacao() {
-  $auth = $_SESSION['auth'];
-
-  if (!$auth) {
-    header("Location: " . LINK_SITE );
   }
 }
 

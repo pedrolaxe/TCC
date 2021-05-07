@@ -1,14 +1,15 @@
 <?php
+
 include 'includes/functions.php';
 
 # SE HOUVER ADMINISTRADOR REDIRECIONAR PARA O INDEX
 $query  = "SELECT * FROM colaborador WHERE tipo='administrador'";
 $q = $con->query($query);
-if ($q->num_rows > 0) {
+if($q->rowCount() > 0){
   header("Location: " . LINK_SITE . "index.php");
 }
 # CADASTRO DO ADMIN
-if (isset($_POST['submit'])) {
+if(isset($_POST['submit'])) {
   cadastro_colaborador();
 }
 
@@ -16,7 +17,6 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Sistema Restaurante</title>
 
@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
   <?php include 'includes/head.php' ?>
 
   <!-- Bootstrap core CSS -->
-  <link href="<?= LINK_SITE; ?>css/bootstrap.min.css" rel="stylesheet">
+  <link href="<?=LINK_SITE;?>css/bootstrap.min.css" rel="stylesheet">
 
   <!-- CSS -->
   <link href="assets/css/signin.css" rel="stylesheet">
@@ -38,16 +38,13 @@ if (isset($_POST['submit'])) {
       <h1>Cadastro</h1>
 
       <label for="inputEmail" class="visually-hidden">Login</label>
-      <input type="text" id="inputEmail" class="form-control" name="login" placeholder="Login" required autofocus>
-      
+      <input type="text" id="inputEmail" class="form-control" name="login" placeholder="Login" autocomplete="off" required autofocus>
       <label for="inputPassword" class="visually-hidden">Senha</label>
       <input type="password" id="inputPassword" class="form-control" placeholder="Senha" name="senha" required>
-      
       <label for="inputPassword" class="visually-hidden">Confirmação Senha</label>
       <input type="password" id="inputPassword" class="form-control" name="conf_senha" placeholder="Confirmação de Senha" required>
-      
       <label for="inputEmail" class="visually-hidden">Email</label>
-      <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email" required>
+      <input type="email" id="inputEmail" class="form-control" name="email" autocomplete="off" placeholder="Email" required>
       <input type="text" id="" class="form-control" name="tipo" placeholder="Email" value="administrador" hidden>
 
       <br>
@@ -56,5 +53,4 @@ if (isset($_POST['submit'])) {
     </form>
   </main>
 </body>
-
 </html>

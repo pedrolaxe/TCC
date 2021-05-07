@@ -11,7 +11,7 @@ $_SESSION['auth_super'] = false;
 # SELECIONANDO COLABORADORES PARA SABER SE EXISTE ALGUM ADMINISTRADOR
 $query  = "SELECT * FROM COLABORADOR WHERE tipo='administrador'";
 $q = $con->query($query);
-if($q->num_rows == 0){
+if($q->rowCount() == 0){
   header("Location: " . LINK_SITE . "cadastro.php");
 }
 
@@ -50,16 +50,13 @@ if (isset($_POST['submit'])) {
 
       # DANDO PERMISSÃO E REDIRECIONANDO O USUÁRIO
     } else {
-      $_SESSION['login'] = $db_login;
-      if ($tipo == 'administrador') {
-        $_SESSION['auth_super'] = true;
-        $_SESSION['login_usuario'] = $db_login;
-        header("location: " . LINK_SITE . "admin/comandas.php?user_id=" . $user_id);
-      } else {
-        $_SESSION['auth'] = true;
-        $_SESSION['login_usuario'] = $db_login;
-        header("location: " . LINK_SITE . "comandas.php?user_id=" . $user_id);
-      }
+      $_SESSION['user_id']         = $user_id;
+      $_SESSION['login']        = $db_login;
+      $_SESSION['auth_super']   = true;
+      $_SESSION['tipo_usuario'] = $tipo;
+
+      header("location: " . LINK_SITE . "admin/comandas.php?user_id=" . $user_id);
+      
     }
   }
 }
@@ -86,7 +83,7 @@ if (isset($_POST['submit'])) {
       <h1>Login</h1>
 
       <label for="inputEmail" class="visually-hidden">Login</label>
-      <input name="login" type="text" id="inputEmail" class="form-control" placeholder="Login" required autofocus>
+      <input name="login" type="text" id="inputEmail" class="form-control" placeholder="Login" autocomplete="off" required autofocus>
       <label for="inputPassword" class="visually-hidden">Senha</label>
       <input name="senha" type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
 

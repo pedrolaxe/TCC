@@ -1,6 +1,15 @@
 <?php
 
+session_start();
 include '../../../includes/functions.php';
+
+autorizacao_super();
+
+$is_admin = ID_userisadmin($_SESSION['user_id']);
+
+if(!$is_admin) {
+  header("Location: " . LINK_SITE );
+}
 
 if (isset($_POST['submit'])) {
   cadastro_colaborador();
@@ -31,14 +40,14 @@ if (isset($_POST['submit'])) {
       <h1>Cadastro de Colaborador</h1>
 
       <label for="inputEmail" class="visually-hidden">Login</label>
-      <input type="text" id="inputEmail" class="form-control" name="login" placeholder="Login" required autofocus>
+      <input type="text" id="inputEmail" class="form-control" name="login" placeholder="Login" autocomplete="off" required autofocus>
       <label for="inputPassword" class="visually-hidden">Senha</label>
       <input type="password" id="inputPassword" class="form-control" placeholder="Senha" name="senha" required>
       <label for="inputPassword" class="visually-hidden">Confirmação Senha</label>
       <input type="password" id="inputPassword" class="form-control" name="conf_senha" placeholder="Confirmação de Senha" required>
       <label for="inputEmail" class="visually-hidden">Email</label>
-      <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email" required>
-      <input type="text" id="" class="form-control" name="tipo" placeholder="Email" value="funcionario" hidden>
+      <input type="email" id="inputEmail" class="form-control" name="email" autocomplete="off" placeholder="Email" required>
+      <input type="text" class="form-control" name="tipo" value="colaborador" hidden>
 
       <br>
 
