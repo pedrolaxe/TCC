@@ -7,6 +7,12 @@ include "../../../includes/functions.php";
 
 autorizacao_super();
 
+$is_admin = ID_userisadmin($_SESSION['user_id']);
+
+if(!$is_admin) {
+  header("Location: " . LINK_SITE );
+}
+
 if (isset($_GET['delete_colaborador'])) {
   $id = $_GET['delete_colaborador'];
 
@@ -48,7 +54,7 @@ if (isset($_GET['edit_colaborador'])) {
 
     <div class="row">
       <div class="col-6">
-        <h1>Funcionários</h1>
+        <h1>Colaboradores</h1>
         <br>
         <table class="styled-table">
           <thead>
@@ -62,7 +68,7 @@ if (isset($_GET['edit_colaborador'])) {
 
             <?php
 
-            $query  = "SELECT * FROM colaborador WHERE tipo = 'funcionario' ORDER BY login ASC";
+            $query  = "SELECT * FROM colaborador WHERE tipo = 'colaborador' ORDER BY login ASC";
             $result = $con->query($query);
 
             foreach($result as $row) {

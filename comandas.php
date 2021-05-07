@@ -3,7 +3,7 @@
 session_start();
 include "includes/functions.php";
 
-autorizacao();
+autorizacao_super();
 
 # ARMAZENAR USER ID PARA CONTROLE DE ACESSO
 if (isset($_GET['user_id'])) {

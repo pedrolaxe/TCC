@@ -5,6 +5,12 @@ include "../includes/functions.php";
 
 autorizacao_super();
 
+$is_admin = ID_userisadmin($_SESSION['user_id']);
+
+if(!$is_admin) {
+  header("Location: " . LINK_SITE );
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -61,11 +67,11 @@ autorizacao_super();
       </div>
 
       <div class="col-3">
-        <input name="data1" type="month" style="height:60px; width: 250px">
+        <input name="data1" type="date" style="height:60px; width: 250px">
       </div>
 
       <div class="col-3"> 
-        <input name="data2" type="month" style="height:60px; width: 250px">
+        <input name="data2" type="date" style="height:60px; width: 250px">
       </div>
 
       <div class="col-1">
@@ -82,7 +88,11 @@ autorizacao_super();
 
   	<div class="col-12">
 
-      <table class="styled-table" style="width: 100%">
+      <?php
+
+      if(isset($_POST['submit'])) {
+
+      echo '<table class="styled-table" style="width: 100%">
           <thead>
             <tr>
               <th>Pedido</th>
@@ -90,19 +100,22 @@ autorizacao_super();
               <th>Nome</th>
               <th>Produto</th>
               <th>Quantidade</th>
+              <th>Status</th>
               <th>Hora</th>
               <th>Data</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody>';
 
-            <?php
-
-            if(isset($_POST['submit'])) {
+            $existe_pedido = false;
 
 
             $data1 = $_POST['data1'];
             $data2 = $_POST['data2'];
+
+            if($data1 > $data2) {
+
+            }
 
             $query  = "
 
@@ -121,7 +134,7 @@ autorizacao_super();
 
             $status = $row['status'];
   
-            if($status == 'fechado') { 
+            if($status == 'fechado' || $status == "cancelado") { 
 
               $id_comanda   = $row['id_comanda'];
               $id_pedido    = $row['id_pedido'];
@@ -132,9 +145,11 @@ autorizacao_super();
               // $data[0] é data e $data[1] é hora
               $data         = explode(' ',trim($row['data'])); 
 
-              $data_aux = date("Y-m", strtotime($data[1]));
+              $data_aux = date("Y-m-d", strtotime($data[0]));
 
               if ($data_aux >= $data1 && $data_aux <= $data2) {
+
+                $existe_pedido = true;
 
             ?>
               <tr>
@@ -143,19 +158,28 @@ autorizacao_super();
                 <td><?php echo ucfirst($nome) ?></td>
                 <td><?php echo $nome_produto ?></td>
                 <td><?php echo $qtd ?></td>
+                <td><?php echo ucfirst($status) ?></td>
                 <td><?php echo $data[1] ?></td>
                 <td><?php echo $data[0] ?></td>
               </tr>
 
             <?php } else {
               # MELHORAR MENSAGEM
-              echo "<tr><td>Não Existem Pedidos Nessa Data</td>";
-              echo "<td></td><td></td><td></td><td></td><td></td><td></td>";
-              echo "</tr>";
-              break;
+              // echo "<tr><td></td>";
+              // echo "<td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
+              // echo "</tr>";
+              
+              // break;
             }
 
-            } } } ?>
+            } }
+
+              if (!$existe_pedido) {
+                echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Pedidos Nessa Data</center></div><br>';
+              }
+
+
+             } ?>
 
           </tbody>
 

@@ -5,6 +5,12 @@ include "../includes/functions.php";
 
 autorizacao_super();
 
+$is_admin = ID_userisadmin($_SESSION['user_id']);
+
+if(!$is_admin) {
+  header("Location: " . LINK_SITE );
+}
+
 if (isset($_POST['submit'])) {
   // insert_config();
 
@@ -91,8 +97,8 @@ while ($row = $result->fetch() ) {
         <label for="Logo"><i style="font-size: 24px; font-weight: bolder">Logo da Empresa</i></label><br><br>
         <input class="form-control logo" type="file" id="img" name="logo" accept="image/*"><br>
         <label><i style="font-size: 24px; font-weight: bolder">Outras Informações</i></label><br><br>
-        <input class="form-control" value="<?php if (isset($empresa)) echo $empresa; ?>" type="text" name="empresa" placeholder="Nome da Empresa">
-        <input class="form-control" value="<?php if (isset($impressora)) echo $impressora; ?>" type="text" name="impressora" placeholder="Nome da Impressora">
+        <input class="form-control" value="<?php if (isset($empresa)) echo $empresa; ?>" type="text" name="empresa" autocomplete="off" placeholder="Nome da Empresa">
+        <input class="form-control" value="<?php if (isset($impressora)) echo $impressora; ?>" type="text" name="impressora" autocomplete="off" placeholder="Nome da Impressora">
 
         <br>
         <button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
