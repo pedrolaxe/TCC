@@ -11,6 +11,39 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
+$existe_pedido = false;
+
+if(isset($_POST['submit'])) {
+
+            $data1 = $_POST['data1'];
+            $data2 = $_POST['data2'];
+
+
+            if($data1 > $data2) {
+              echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Primeira Data Não Pode Ser Maior Que A Segunda</center></div>';
+              $existe_pedido = true;
+            }
+
+
+            if($data1 > $data2) {
+
+            }
+
+            $query  = "
+
+                  SELECT * FROM PEDIDO 
+                  INNER JOIN PRODUTO ON 
+                  PEDIDO.id_produto = PRODUTO.id_produto 
+                  INNER JOIN COMANDA ON 
+                  PEDIDO.id_comanda = COMANDA.id_comanda 
+                  ORDER BY ABS(id_pedido)
+                  
+            ";
+
+
+            $result = $con->query($query);
+          }
+
 ?>
 
 <!DOCTYPE html>
@@ -67,11 +100,11 @@ if(!$is_admin) {
       </div>
 
       <div class="col-3">
-        <input name="data1" type="date" style="height:60px; width: 250px">
+        <input name="data1" type="date" value="<?php if(isset($data1)) echo $data1; else echo date("Y-m-d"); ?>" style="height:60px; width: 250px">
       </div>
 
       <div class="col-3"> 
-        <input name="data2" type="date" style="height:60px; width: 250px">
+        <input name="data2" type="date" value="<?php if(isset($data2)) echo $data2; else echo date("Y-m-d"); ?>" style="height:60px; width: 250px">
       </div>
 
       <div class="col-1">
@@ -88,11 +121,7 @@ if(!$is_admin) {
 
   	<div class="col-12">
 
-      <?php
-
-      if(isset($_POST['submit'])) {
-
-      echo '<table class="styled-table" style="width: 100%">
+      <table class="styled-table" style="width: 100%">
           <thead>
             <tr>
               <th>Pedido</th>
@@ -100,41 +129,26 @@ if(!$is_admin) {
               <th>Nome</th>
               <th>Produto</th>
               <th>Quantidade</th>
-              <th>Status</th>
               <th>Hora</th>
               <th>Data</th>
             </tr>
           </thead>
-          <tbody>';
+          <tbody>
 
-            $existe_pedido = false;
+      <?php
 
+      $submit_ok = false;
 
-            $data1 = $_POST['data1'];
-            $data2 = $_POST['data2'];
+      if(isset($_POST['submit'])) {
 
-            if($data1 > $data2) {
-
-            }
-
-            $query  = "
-
-                  SELECT * FROM PEDIDO 
-                  INNER JOIN PRODUTO ON 
-                  PEDIDO.id_produto = PRODUTO.id_produto 
-                  INNER JOIN COMANDA ON 
-                  PEDIDO.id_comanda = COMANDA.id_comanda
-                  
-            ";
-
-
-            $result = $con->query($query);
+            # flag
+            $submit_ok = true;
 
             foreach($result as $row) { 
 
             $status = $row['status'];
   
-            if($status == 'fechado' || $status == "cancelado") { 
+            if($status == 'fechado') { 
 
               $id_comanda   = $row['id_comanda'];
               $id_pedido    = $row['id_pedido'];
@@ -158,7 +172,6 @@ if(!$is_admin) {
                 <td><?php echo ucfirst($nome) ?></td>
                 <td><?php echo $nome_produto ?></td>
                 <td><?php echo $qtd ?></td>
-                <td><?php echo ucfirst($status) ?></td>
                 <td><?php echo $data[1] ?></td>
                 <td><?php echo $data[0] ?></td>
               </tr>
@@ -179,7 +192,77 @@ if(!$is_admin) {
               }
 
 
-             } ?>
+            }
+
+
+            if (!$submit_ok) {
+
+
+
+              $query  = "
+
+                  SELECT * FROM PEDIDO 
+                  INNER JOIN PRODUTO ON 
+                  PEDIDO.id_produto = PRODUTO.id_produto 
+                  INNER JOIN COMANDA ON 
+                  PEDIDO.id_comanda = COMANDA.id_comanda 
+                  ORDER BY ABS(id_pedido)
+                  
+              ";
+
+
+              $result = $con->query($query);
+
+              foreach($result as $row) { 
+
+            $status = $row['status'];
+  
+            if($status == 'fechado') { 
+
+              $id_comanda   = $row['id_comanda'];
+              $id_pedido    = $row['id_pedido'];
+              $nome         = $row['nome'];
+              $nome_produto = $row['nome_produto'];
+              $qtd          = $row['quantidade'];
+
+              // $data[0] é data e $data[1] é hora
+              $data         = explode(' ',trim($row['data'])); 
+
+              $data_aux = date("Y-m-d", strtotime($data[0]));
+
+              if ($data_aux == date("Y-m-d")) {
+
+                $existe_pedido = true;
+
+            ?>
+              <tr>
+                <td><?php echo $id_pedido ?></td>
+                <td><?php echo $id_comanda ?></td>
+                <td><?php echo ucfirst($nome) ?></td>
+                <td><?php echo $nome_produto ?></td>
+                <td><?php echo $qtd ?></td>
+                <td><?php echo $data[1] ?></td>
+                <td><?php echo $data[0] ?></td>
+              </tr>
+
+            <?php } else {
+              # MELHORAR MENSAGEM
+              // echo "<tr><td></td>";
+              // echo "<td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
+              // echo "</tr>";
+              
+              // break;
+            }
+
+            } }
+
+              if (!$existe_pedido) {
+                echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Pedidos Nessa Data</center></div><br>';
+              }
+              
+             }
+
+              ?>
 
           </tbody>
 

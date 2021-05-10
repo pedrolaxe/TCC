@@ -11,6 +11,12 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
+if(isset($_GET['usuario_existe'])) {
+  if($_GET['usuario_existe']) {
+    echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Usuário Já Existe!</center></div>';
+  }
+}
+
 if (isset($_POST['submit'])) {
     $idf        = anti_injection($_POST['id_user']);
     $login      = anti_injection($_POST['login']);
@@ -32,19 +38,21 @@ if (isset($_POST['submit'])) {
 }
 
 # SELECIONAR colaborador PARA SER ALTERADO
-if (isset($_GET['id_colaborador'])) {
-    $id_colaborador = $_GET['id_colaborador'];
+try {
+  if (isset($_GET['id_colaborador'])) {
+      $id_colaborador = $_GET['id_colaborador'];
 
-    $query  = "SELECT * FROM colaborador WHERE id_colaborador = $id_colaborador";
-    $result = $con->query($query);
+      $query  = "SELECT * FROM colaborador WHERE id_colaborador = $id_colaborador";
+      $result = $con->query($query);
 
-    foreach($result as $row) {
-        //$id    = $row['id_func'];
-        $login = $row['login'];
-        $email = $row['email'];
-        $tipo  = $row['tipo'];
-    }
-}
+      foreach($result as $row) {
+          //$id    = $row['id_func'];
+          $login = $row['login'];
+          $email = $row['email'];
+          $tipo  = $row['tipo'];
+      }
+  }
+} catch(Expression $e) {}
 
 ?>
 
@@ -77,9 +85,10 @@ if (isset($_GET['id_colaborador'])) {
         </div>';
       } elseif(@$_GET['error']==2){
         echo '
-        <div class="alert alert-primary" role="alert">
-          Senhas não estão iguais
-        </div>';
+        <div class="alert alert-danger" role="alert">
+          Senhas Diferentes!
+        </div>
+        <br>';
       }
         
       ?>
