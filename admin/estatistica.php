@@ -11,8 +11,12 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
-if (isset($_POST['submit'])) {
+if(!isset($_POST['submit'])) {
+  $data1 = date("Y-m-d");
+  $data2 = date("Y-m-d");
+}
 
+// if (isset($_POST['submit'])) {
   $faturamento = 0;
   $existe_pedido = false;
 
@@ -20,13 +24,22 @@ if (isset($_POST['submit'])) {
   $nomeList = [];
   $precoList = [];
 
+  if(isset($_POST['data1']) AND isset($_POST['data2'])) {
+
   $data1 = $_POST['data1'];
   $data2 = $_POST['data2'];
 
-  if($data1 > $data2) {
+  if (empty($data1) || empty($data2)) {
+    echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Preencha as Datas</center></div>';
+    $existe_pedido = true;
+  }
+
+  elseif($data1 > $data2) {
     echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Primeira Data Não Pode Ser Maior Que A Segunda</center></div>';
     $existe_pedido = true;
   }
+
+}
 
 $query  = "
 
@@ -78,20 +91,6 @@ foreach($result as $row) {
         array_push($qtdList, $qtd);
         array_push($precoList, $preco);
       }
-
-
-      // echo $nome_produto.'<br>';
-      // echo $qtd.'<br>';
-      // echo $preco.'<br><br>';
-
-
-
-      # FATURAMENTO MENSAL
-     
-      # FOR PARA CALCULAR FATURAMENTO DE CADA MES
-      // for() {
-
-      // }
 
     } else {
       # MELHORAR MENSAGEM
@@ -177,7 +176,7 @@ $existe_pedido = true;
 if (!$existe_pedido) {
   echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Pedidos Nessa Data</center></div>';
 }
-}
+// }
 
 // echo $produtoTop[0]."<br>";
 // echo $produtoTop[1]."<br>";
@@ -243,10 +242,10 @@ button:hover {
     </div>
 
       <div class="col-3">
-        <input name="data1" type="date" style="height:60px; width: 250px"></div>
+        <input name="data1" type="date" style="height:60px; width: 250px" value="<?php if(isset($data1)) echo $data1; else echo date("Y-m-d"); ?>"></div>
 
       <div class="col-3">
-        <input name="data2" type="date" style="height:60px; width: 250px">
+        <input name="data2" type="date" value="<?php if(isset($data2)) echo $data2; else echo date("Y-m-d"); ?>" style="height:60px; width: 250px">
       </div>
 
       <div class="col-1">
@@ -265,7 +264,7 @@ button:hover {
     <div class="col-1"></div>
 
   <div class="col-4">
-    <?php if(isset($_POST['submit'])) echo '<h2 align="center">Faturamento Produto</h2>'; ?>
+    <h2 align="center">Faturamento Produto</h2>
     <br>
     <canvas id="myChart" width="200" height="200"></canvas>
   </div>
@@ -275,7 +274,7 @@ button:hover {
   </div>
 
   <div class="col-4">
-    <?php if(isset($_POST['submit'])) echo '<h2 align="center">Produtos Mais Vendidos</h2>'; ?>
+    <h2 align="center">Produtos Mais Vendidos</h2>
     <br>
     <canvas id="aportes" width="200" height="200"></canvas>
   </div>

@@ -54,7 +54,7 @@ button:hover {
   <br>
   <div class="row">
 
-  	<h1>⚙️ Área do Administrador</h1>
+  	<h1>⚙️ Área do Gerente</h1>
 
     <br><br><br>
 

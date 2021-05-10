@@ -322,7 +322,13 @@ function cadastro_colaborador() {
   $tipo              = anti_injection($_POST['tipo']);
 
 
-  if ($senha != $confirmacao_senha) {
+  # VERIFICAR SE comanda JÁ EXISTE
+  $query  = "SELECT * FROM colaborador WHERE login = '$login'";
+
+  $q = $con->query($query);
+  if($q->rowCount() > 0) {
+    echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Usuário Já Existe!</center></div>';
+  } elseif ($senha != $confirmacao_senha) {
 
     # MELHORAR MENSAGEM
     echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert">Senhas Diferentes!</div>';
@@ -342,7 +348,21 @@ function cadastro_colaborador() {
 function alterar_colaborador($idf, $login, $email, $senha) {
   global $con;
 
-  $senhacrip = md5($senha);
+  # VERIFICAR SE comanda JÁ EXISTE
+  $query  = "SELECT * FROM colaborador WHERE login = '$login' AND id_colaborador != '$idf'";
+
+  $q = $con->query($query);
+  if($q->rowCount() > 0) {
+    header('Location: ' . LINK_SITE . 'admin/src/colaborador/edit_colaborador.php?id_colaborador='.$idf.'&usuario_existe=true');
+  } else {
+
+    $senhacrip = md5($senha);
+
+    $query = "UPDATE colaborador SET login='$login', senha='$senhacrip', email='$email' WHERE id_colaborador='$idf' AND tipo='colaborador'";
+    $result = $con->query($query);
+    if(!$result) {
+      echo '<script>alert("falhou")</script>';
+    }
 
   $query = "UPDATE colaborador SET login='$login', senha='$senhacrip', email='$email' WHERE id_colaborador='$idf' AND tipo='colaborador'";
   $result = $con->query($query);
@@ -395,8 +415,18 @@ function insert_produto() {
   $tipo  = $_POST['tipo'];
   $preco = $_POST['preco'];
 
-  $query  = "INSERT INTO produto (nome_produto, tipo, preco) ";
-  $query .= "VALUES ('$nome', '$tipo', '$preco')";
+  # VERIFICAR SE PRODUTO JÁ EXISTE
+  $query  = "SELECT * FROM PRODUTO WHERE nome_produto = '$nome'";
+
+  $q = $con->query($query);
+  if($q->rowCount() > 0) {
+    echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Produto Já Existe!</center></div>';
+  } else {
+
+    $query  = "INSERT INTO produto (nome_produto, tipo, preco) ";
+    $query .= "VALUES ('$nome', '$tipo', '$preco')";
+
+    $result = $con->query($query);
 
   $result = $con->query($query);
   if($result){
@@ -407,10 +437,19 @@ function insert_produto() {
 function alterar_produto($id, $nome, $tipo, $preco) {
   global $con;
 
-  $query = "UPDATE produto SET nome_produto = '$nome', tipo = '$tipo', preco = '$preco' WHERE id_produto = $id";
-  $result = $con->query($query);
-  if($result){
-    header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
+  # VERIFICAR SE comanda JÁ EXISTE
+  $query  = "SELECT * FROM PRODUTO WHERE nome_produto = '$nome' AND id_produto != $id";
+
+  $q = $con->query($query);
+  if($q->rowCount() > 0) {
+    echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Produto Já Existe!</center></div>';
+  } else {
+
+    $query = "UPDATE produto SET nome_produto = '$nome', tipo = '$tipo', preco = '$preco' WHERE id_produto = $id";
+    $result = $con->query($query);
+    if($result){
+      header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
+    }
   }
 }
 
