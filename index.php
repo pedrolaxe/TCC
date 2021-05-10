@@ -10,9 +10,16 @@ $_SESSION['auth_super'] = false;
 
 # SELECIONANDO COLABORADORES PARA SABER SE EXISTE ALGUM ADMINISTRADOR
 $query  = "SELECT * FROM COLABORADOR WHERE tipo='administrador'";
+
 $q = $con->query($query);
 if($q->rowCount() == 0){
   header("Location: " . LINK_SITE . "cadastro.php");
+
+$q = $con->prepare($query);
+$q->execute();
+if($q->rowCount() == 0){
+ header("Location: " . LINK_SITE . "cadastro.php");
+
 }
 
 # TENTATIVA DE LOGIN PARA A PAGINA DO ADMIN OU FUNCIONARIO

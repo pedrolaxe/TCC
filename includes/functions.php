@@ -26,9 +26,14 @@ function insert_comanda() {
   $query  = "SELECT * FROM comanda WHERE nome = '$nome' AND status='aberto'";
 
 
-  $q = $con->query($query);
+  $q = $con->prepare($query);
+  $q->execute();
   if($q->rowCount() > 0){
+
     echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Comanda Já Existe!</center></div>';
+
+    echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A comanda Já Existe!</center></div>';
+
   } else{
     $query  = "INSERT INTO comanda (nome, status, desconto) ";
     $query .= "VALUES ('$nome', '$status', '$desconto')";
@@ -257,16 +262,10 @@ function fechar_comanda($id, $total) {
   $query = "UPDATE COMANDA SET status ='fechado' WHERE id_comanda = $id";
   $result = $con->query($query);
 
-
-  // $query2 = "DELETE FROM PEDIDO WHERE id_comanda = $id";
-  // $result = $con->query($query2);
-  // $query  = "DELETE FROM comanda WHERE id_comanda = $id";
-  // $result = $con->query($query);
-
   try {
     $impressora = imprimir_conta($soma, $qtd_array, $nome_array, $qtdPreco_array, $nome, $desconto);
     cut();
-  } catch (Exception $e) { }
+  } catch (Exception $e) {}
 
     header('Location: ' . LINK_SITE . 'admin/comandas.php?impressora='.$impressora);
 
@@ -364,6 +363,10 @@ function alterar_colaborador($idf, $login, $email, $senha) {
     if(!$result) {
       echo '<script>alert("falhou")</script>';
     }
+
+  $query = "UPDATE colaborador SET login='$login', senha='$senhacrip', email='$email' WHERE id_colaborador='$idf' AND tipo='colaborador'";
+  $result = $con->query($query);
+  if($result) {
     header('Location: ' . LINK_SITE . 'admin/src/colaborador/colaboradores.php');
   }
 }
@@ -403,9 +406,6 @@ function ID_userisadmin($id) {
   }
 }
 
-######################################################
-
-
 # PRODUTO
 
 function insert_produto() {
@@ -428,6 +428,8 @@ function insert_produto() {
 
     $result = $con->query($query);
 
+  $result = $con->query($query);
+  if($result){
     header('Location: ' . LINK_SITE . 'admin/src/produto/add_produto.php?produto_criado=true');
   }
 }
@@ -463,12 +465,6 @@ function delete_produto($id) {
 
   header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
 }
-
-#####################################################
-
-
-# PEDIDO
-
 function delete_pedido($id_pedido, $id_comanda) {
   global $con;
 
@@ -478,9 +474,6 @@ function delete_pedido($id_pedido, $id_comanda) {
     header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id=' . $id_comanda);
   }
 }
-
-
-#####################################################
 
 function Send_recover($email,$codigo){
 	//Set Infos
@@ -505,7 +498,7 @@ function Send_recover($email,$codigo){
 		if($email !="" && $codigo !=""){
 			mail($email, $assunto, $mensagem, $headers);
 	  }
-  }
+}
 
 function Expira_code($codigo){
 	global $con;
