@@ -371,6 +371,8 @@ function alterar_colaborador($idf, $login, $email, $senha) {
   }
 }
 
+}
+
 function delete_colaborador($id) {
   global $con;
   if(ID_userisadmin($id)==false) {
@@ -428,8 +430,7 @@ function insert_produto() {
 
     $result = $con->query($query);
 
-  $result = $con->query($query);
-  if($result){
+  } if($result){
     header('Location: ' . LINK_SITE . 'admin/src/produto/add_produto.php?produto_criado=true');
   }
 }
