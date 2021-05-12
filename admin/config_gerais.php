@@ -22,16 +22,23 @@ if (isset($_POST['submit'])) {
   if($q->rowCount() > 0){
 
     $query  = "UPDATE config SET nome_empresa='$empresa', nome_impressora='$impressora', logo='$logo' WHERE id_config='1' ";
+    $result = $con->query($query);
 
+    echo '<div style="width:17em; margin:0 auto;" class="alert alert-success">Informações Salvas Com Sucesso</div>';
     
   } else {
 
     $query  = "INSERT INTO config (id_config, nome_empresa, nome_impressora, logo) ";
     $query .= "VALUES ('1' ,'$empresa', '$impressora', '$logo')";
+    $result = $con->query($query);
 
+    echo '<div style="width:17em; margin:0 auto;" class="alert alert-success">Informações Salvas Com Sucesso</div>';
   }
 
-    $result = $con->query($query);
+  
+  
+
+
 }
 
 # SELECIONAR TABLE CONFIG
@@ -70,6 +77,16 @@ while ($row = $result->fetch() ) {
       /*width: auto;*/
     }
 
+      .btn-outline {
+    border: .2em solid black !important;
+  }
+
+  .btn-outline:hover {
+    border: .2em solid white;
+    background-color: black;
+    color: white;
+  }
+
   </style>
 
 </head>
@@ -101,7 +118,7 @@ while ($row = $result->fetch() ) {
         <input class="form-control" value="<?php if (isset($impressora)) echo $impressora; ?>" type="text" name="impressora" autocomplete="off" placeholder="Nome da Impressora">
 
         <br>
-        <button class="btn btn-lg btn-outline" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
+        <button class="btn btn-lg btn-outline-primary" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
 
       </form>
 

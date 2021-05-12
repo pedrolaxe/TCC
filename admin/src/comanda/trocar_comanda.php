@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
     <label for="inputEmail" class="visually-hidden">Trocar Comanda</label>
     <input name="nome" type="text" class="form-control" placeholder="Trocar Para" autocomplete="off" required autofocus>
     <br>
-    <button class="w-100 btn btn-lg btn-primary" type="submit" name='submit'>Trocar Comanda</button>
+    <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Trocar Comanda</button>
     <br><br>
   </form>
 </main>

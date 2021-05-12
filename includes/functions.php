@@ -32,8 +32,6 @@ function insert_comanda() {
 
     echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Comanda Já Existe!</center></div>';
 
-    echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A comanda Já Existe!</center></div>';
-
   } else{
     $query  = "INSERT INTO comanda (nome, status, desconto) ";
     $query .= "VALUES ('$nome', '$status', '$desconto')";
@@ -320,6 +318,10 @@ function cadastro_colaborador() {
   $confirmacao_senha = anti_injection($_POST['conf_senha']);
   $email             = anti_injection($_POST['email']);
   $tipo              = anti_injection($_POST['tipo']);
+  $nome              = anti_injection($_POST['nome']);
+  $cpf               = anti_injection($_POST['cpf']);
+  $rg                = anti_injection($_POST['rg']);
+  $tel               = anti_injection($_POST['telefone']);
 
 
   # VERIFICAR SE comanda JÁ EXISTE
@@ -336,16 +338,18 @@ function cadastro_colaborador() {
 
     $senha = md5($senha);
 
-    $query  = "INSERT INTO colaborador (login, senha, email, tipo, codigo, codexp) ";
-    $query .= "VALUES ('$login', '$senha', '$email', '$tipo', '', false)";
+    $query  = "INSERT INTO colaborador (login, senha, email, tipo, codigo, codexp, nome_colaborador, cpf, rg, telefone) ";
+    $query .= "VALUES ('$login', '$senha', '$email', '$tipo', '', false, '$nome', '$cpf', '$rg', '$tel')";
     $result = $con->query($query);
-    if($result) {
-      header("Location: " . LINK_SITE . "admin/src/colaborador/colaboradores.php");
-    }
+
+    echo '<div style="width:15em; margin:0 auto;" class="alert alert-success">Usuário Criado Com Sucesso</div>';
+    // if($result) {
+    //   header("Location: " . LINK_SITE . "admin/src/colaborador/colaboradores.php");
+    // }
   }
 }
 
-function alterar_colaborador($idf, $login, $email, $senha) {
+function alterar_colaborador($idf, $login, $email, $senha, $nome, $cpf, $rg, $tel) {
   global $con;
 
   # VERIFICAR SE comanda JÁ EXISTE
@@ -358,16 +362,13 @@ function alterar_colaborador($idf, $login, $email, $senha) {
 
     $senhacrip = md5($senha);
 
-    $query = "UPDATE colaborador SET login='$login', senha='$senhacrip', email='$email' WHERE id_colaborador='$idf' AND tipo='colaborador'";
+    $query = "UPDATE colaborador SET login='$login', senha='$senhacrip', email='$email', nome_colaborador='$nome', cpf='$cpf', rg='$rg', telefone='$tel' WHERE id_colaborador='$idf' AND tipo='colaborador'";
     $result = $con->query($query);
     if(!$result) {
       echo '<script>alert("falhou")</script>';
-    }
-
-  $query = "UPDATE colaborador SET login='$login', senha='$senhacrip', email='$email' WHERE id_colaborador='$idf' AND tipo='colaborador'";
-  $result = $con->query($query);
-  if($result) {
-    header('Location: ' . LINK_SITE . 'admin/src/colaborador/colaboradores.php');
+    } else {
+      echo '<div style="width:15em; margin:0 auto;" class="alert alert-success">Usuário Alterado Com Sucesso</div>';
+    // header('Location: ' . LINK_SITE . 'admin/src/colaborador/colaboradores.php');
   }
 }
 
@@ -413,9 +414,10 @@ function ID_userisadmin($id) {
 function insert_produto() {
   global $con;
 
-  $nome  = $_POST['nome_produto'];
-  $tipo  = $_POST['tipo'];
-  $preco = $_POST['preco'];
+  $nome      = $_POST['nome_produto'];
+  $tipo      = $_POST['tipo'];
+  $preco     = $_POST['preco'];
+  $descricao = $_POST['descricao'];
 
   # VERIFICAR SE PRODUTO JÁ EXISTE
   $query  = "SELECT * FROM PRODUTO WHERE nome_produto = '$nome'";
@@ -425,17 +427,17 @@ function insert_produto() {
     echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Produto Já Existe!</center></div>';
   } else {
 
-    $query  = "INSERT INTO produto (nome_produto, tipo, preco) ";
-    $query .= "VALUES ('$nome', '$tipo', '$preco')";
+    $query  = "INSERT INTO produto (nome_produto, tipo, preco, descricao) ";
+    $query .= "VALUES ('$nome', '$tipo', '$preco', '$descricao')";
 
     $result = $con->query($query);
 
-  } if($result){
     header('Location: ' . LINK_SITE . 'admin/src/produto/add_produto.php?produto_criado=true');
-  }
+
+  } 
 }
 
-function alterar_produto($id, $nome, $tipo, $preco) {
+function alterar_produto($id, $nome, $tipo, $preco, $descricao) {
   global $con;
 
   # VERIFICAR SE comanda JÁ EXISTE
@@ -446,11 +448,11 @@ function alterar_produto($id, $nome, $tipo, $preco) {
     echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Produto Já Existe!</center></div>';
   } else {
 
-    $query = "UPDATE produto SET nome_produto = '$nome', tipo = '$tipo', preco = '$preco' WHERE id_produto = $id";
+    $query = "UPDATE produto SET nome_produto = '$nome', tipo = '$tipo', preco = '$preco', descricao = '$descricao' WHERE id_produto = $id";
     $result = $con->query($query);
-    if($result){
-      header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
-    }
+      
+    header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
+
   }
 }
 

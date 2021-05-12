@@ -42,6 +42,31 @@ if (isset($_GET['edit_colaborador'])) {
 
   <!-- CSS -->
   <link href="<?=LINK_SITE;?>assets/css/produtos.css" rel="stylesheet">
+
+  <style type="text/css">
+      
+        .btn-outline {
+    border: .2em solid black !important;
+  }
+
+  .btn-outline:hover {
+    border: .2em solid white;
+    background-color: black;
+    color: white;
+  }
+
+  .styled-table {
+    /*min-width: 30vw;*/
+    width:80vw;
+    border-collapse: collapse;
+    /*margin: 5vh 0 0 35vw;*/
+    font-size: 0.9em;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+
+  </style>
+
 </head>
 
 <body>
@@ -53,13 +78,17 @@ if (isset($_GET['edit_colaborador'])) {
     <br>
 
     <div class="row">
-      <div class="col-6">
+      <div class="col-12">
         <h1>Colaboradores</h1>
         <br>
         <table class="styled-table">
           <thead>
             <tr>
               <th>Nome</th>
+              <th>Login</th>
+              <th>CPF</th>
+              <th>RG</th>
+              <th>Telefone</th>
               <th></th>
               <th></th>
             </tr>
@@ -74,14 +103,23 @@ if (isset($_GET['edit_colaborador'])) {
             foreach($result as $row) {
 
               $registro = true;
-              $id    = $row['id_colaborador'];
-              $tipo  = $row['tipo'];
-              $nome_produto  = $row['login'];
-              // $preco = $row['preco'];
+
+              $id     = $row['id_colaborador'];
+              $tipo   = $row['tipo'];
+              $nome   = $row['nome_colaborador'];
+              $login  = $row['login'];
+              $cpf    = $row['cpf'];
+              $rg     = $row['rg'];
+              $tel    = $row['telefone'];
 
             ?>
               <tr>
-                <td><?php echo $nome_produto ?></td>
+                <td><?php echo $nome ?></td>
+                <td><?php echo $login ?></td>
+                <td><?php echo $cpf ?></td>
+                <td><?php echo $rg ?></td>
+                <td><?php echo $tel ?></td>
+
                 <td style="text-align: right; padding-left: 0"><a href="edit_colaborador.php?id_colaborador=<?=$id;?>"><button class="btn btn-outline-dark"><i class="far fa-edit"></i></button></a></td>
 
                 <td style="text-align: right; padding-left: 0"><a href="colaboradores.php?delete_colaborador=<?=$id;?>"><button class="btn btn-outline-dark"><i class="fas fa-trash"></i></button></a></td>
@@ -94,7 +132,7 @@ if (isset($_GET['edit_colaborador'])) {
       </div>
     </div>
     <br>
-    <a href="../../painel.php"><button class="w-10 btn btn-lg btn-outline-secondary">Voltar</button></a>
+    <a href="../../painel.php"><button class="w-10 btn btn-lg btn-outline">Voltar</button></a>
   </div>
 </body>
 </html>

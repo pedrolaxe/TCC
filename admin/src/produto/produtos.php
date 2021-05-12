@@ -50,6 +50,16 @@ if (isset($_POST['submit'])) {
     }
 
 
+       .btn-outline {
+    border: .2em solid black !important;
+  }
+
+  .btn-outline:hover {
+    border: .2em solid white;
+    background-color: black;
+    color: white;
+  }
+
 
   </style>
 
@@ -69,7 +79,7 @@ if (isset($_POST['submit'])) {
 
         <form action="produtos.php" method="POST">
           <div class="input-group mb-4" style="width: 40vw ;padding: 0vw 4.5vw;">
-            <input name="procurar_produto" value="<?php if(isset($_POST['submit'])) echo $search; ?>" type="text" class="form-control" placeholder="">
+            <input name="procurar_produto" value="<?php if(isset($_POST['submit'])) echo $search; ?>" type="text" class="form-control" placeholder="" autocomplete="off">
             <button name="submit" class="btn btn-outline" type="submit" style="font-weight: bolder;">Procurar</button>
             <button class="btn btn-outline" type="submit" style="margin-left: .2em;font-weight: bolder;">Listar Tudo</button>
           </div>
@@ -81,6 +91,7 @@ if (isset($_POST['submit'])) {
               <th>Nome</th>
               <th>Preço</th>
               <th>Tipo</th>
+              <th>Descrição</th>
               <th></th>
               <th></th>
             </tr>
@@ -103,16 +114,18 @@ if (isset($_POST['submit'])) {
             foreach($result as $row) {
 
               $registro = true;
-              $id    = $row['id_produto'];
-              $tipo  = $row['tipo'];
+              $id            = $row['id_produto'];
+              $tipo          = $row['tipo'];
               $nome_produto  = $row['nome_produto'];
-              $preco = $row['preco'];
+              $preco         = $row['preco'];
+              $descricao     = $row['descricao'];
 
             ?>
               <tr>
                 <td><?php echo $nome_produto ?></td>
                 <td><?php echo $preco ?></td>
                 <td><?php echo $tipo ?></td>
+                <td><?php echo $descricao ?></td>
 
                 <td style="text-align: right; padding-left: 0"><a href="alterar_produto.php?id_produto=<?php echo $id; ?>"><button class="btn btn-outline-dark"><i class="far fa-edit"></i></button></a></td>
 

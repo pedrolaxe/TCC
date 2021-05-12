@@ -21,16 +21,34 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
  *  del testfile
  */
 
-function get_nome_estabelecimento() {
-    # SELECT nome_estabelecimento FROM configs WHERE id = 1;
-    $nome_estabelecimento = strtoupper("dêdal café");
+function get_nome_empresa() {
+    include "includes/db.php";
 
-    return $nome_estabelecimento;
+    $query = "SELECT * FROM config WHERE id_config = 1";
+    $result = $con->query($query);
+
+    foreach($result as $row) {
+
+        $nome_empresa = $row['nome_empresa'];
+    }
+
+    $nome_empresa = strtoupper($nome_empresa);
+
+    return $nome_empresa;
 }
 
 function get_nome_impressora() {
-    # SELECT nome_impressora FROM configs WHERE id = 1;
-    $connector = new WindowsPrintConnector("Bematech");
+    include "includes/db.php";
+
+    $query = "SELECT * FROM config WHERE id_config = 1";
+    $result = $con->query($query);
+
+    foreach($result as $row) {
+
+        $nome_impressora = $row['nome_impressora'];
+    }
+
+    $connector = new WindowsPrintConnector($nome_impressora);
     $printer = new Printer($connector);
 
     return $printer;
@@ -57,7 +75,7 @@ function imprimir_cozinha($nome, $qtd) {
 
 function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $nome, $desconto) {
   try {
-    $nome_estabelecimento = get_nome_estabelecimento();
+    $nome_empresa = get_nome_empresa();
     $printer = get_nome_impressora();
 
     # PARA APARECER 'comanda 01' EM VEZ DE 'comanda 1'
@@ -69,7 +87,7 @@ function imprimir_conta($total, $qtd_array, $nome_array, $qtdPreco_array, $nome,
     $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
     $printer -> setJustification(Printer::JUSTIFY_CENTER);
 
-    $printer -> text($nome_estabelecimento."\n\n");
+    $printer -> text($nome_empresa."\n\n");
 
     # TAMANHO NORMAL DA LETRA E ALINHANDO TEXTO PARA A ESQUERDA
     $printer -> selectPrintMode(Printer::MODE_FONT_A);

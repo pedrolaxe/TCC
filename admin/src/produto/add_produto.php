@@ -64,6 +64,16 @@ if (isset($_POST['submit'])) {
       border-color: #88BDBC;
       outline: 0;
     }
+
+         .btn-outline {
+    border: .2em solid black !important;
+  }
+
+  .btn-outline:hover {
+    border: .2em solid white;
+    background-color: black;
+    color: white;
+  }
   </style>
 </head>
 
@@ -102,10 +112,16 @@ if (isset($_POST['submit'])) {
       <label for="Preço" class="visually-hidden">Preço</label>
       <input name="preco" type="money" class="form-control" placeholder="Preço" autocomplete="off" required>
       <br>
+
+
+      <label for="Descrição" class="visually-hidden">Descrição</label>
+      <input name="descricao" type="text" class="form-control" placeholder="Descrição" autocomplete="off">
+
+      <br>
       <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Criar Produto</button>
       <br><br>
     </form>
-    <a href="../../painel.php"><button class="w-100 btn btn-lg btn-outline-secondary">Voltar</button></a>
+    <a href="../../painel.php"><button class="w-100 btn btn-lg btn-outline">Voltar</button></a>
   </main>
 
 </body>
