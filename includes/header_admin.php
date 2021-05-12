@@ -19,18 +19,18 @@ echo '
   <a class="h5 my-0 me-md-auto fw-normal titulo-header" href="#"><h4 style="margin-left: 1.5vw; font-weight: bold;"></h4></a> 
 
   <nav class="my-2 my-md-0 me-md-3" style="">
-  	<a class="p-2 text-dark" href="'.LINK_SITE.'admin/comandas.php"><i class="fas fa-2x fa-home"></i></a>';
+  	<a class="p-2 text-dark" href="'.LINK_SITE.'admin/comandas.php"><i class="fas fa-2x fa-home i-menu"></i></a>';
 
 
     if ( $_SESSION['tipo_usuario'] == 'administrador' ) {
 
-      echo '<a class="p-2 text-dark" style="margin-left:15px" href="'.LINK_SITE.'admin/painel.php"><i class="fas fa-2x fa-cogs"></i></a>';
+      echo '<a class="p-2 text-dark" style="margin-left:15px" href="'.LINK_SITE.'admin/painel.php"><i class="fas fa-2x fa-cogs i-menu"></i></a>';
 
     }
 
 
     echo '
-    <a class="p-2 text-dark" style="margin-left:15px" href="'.LINK_SITE.'"><i class="fas fa-2x fa-sign-out-alt"></i></a>
+    <a class="p-2 text-dark" style="margin-left:15px" href="'.LINK_SITE.'"><i class="fas fa-2x fa-sign-out-alt i-menu"></i></a>
   </nav>
 </header>
 

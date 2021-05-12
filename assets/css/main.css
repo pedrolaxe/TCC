@@ -22,8 +22,13 @@ a:hover {
 	
 }
 
+.btn {
+  cursor: default !important;
+}
+
 .btn-lg {
 	border: 3px solid;
+  cursor: default !important;
 	font-weight: bold !important;
 	background-color: #DEF2F1;
 }
@@ -35,6 +40,18 @@ a:hover {
 .btn-primary:hover {
 	background-color: #6E6658;
 	border: 3px solid #88BDBC;
+}
+
+input {
+  cursor: default;
+}
+
+a {
+  cursor: default;
+}
+
+.i-menu:hover {
+  color:white;
 }
 
 /* Mudar Brilho do Input quando está on focus */

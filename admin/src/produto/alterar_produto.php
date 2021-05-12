@@ -13,12 +13,13 @@ if(!$is_admin) {
 }
 
 if (isset($_POST['submit'])) {
-  $id    = anti_injection($_POST['id']);
-  $nome  = anti_injection($_POST['nome_produto']);
-  $tipo  = anti_injection($_POST['tipo']);
-  $preco = anti_injection($_POST['preco']);
+  $id        = anti_injection($_POST['id']);
+  $nome      = anti_injection($_POST['nome_produto']);
+  $tipo      = anti_injection($_POST['tipo']);
+  $preco     = anti_injection($_POST['preco']);
+  $descricao = anti_injection($_POST['descricao']);
   
-  alterar_produto($id, $nome, $tipo, $preco);
+  alterar_produto($id, $nome, $tipo, $preco, $descricao);
 } else { }
 
 # SELECIONAR PRODUTO PARA SER ALTERADO
@@ -29,10 +30,11 @@ if (isset($_GET['id_produto'])) {
   $result = $con->query($query);
 
   foreach($result as $row) { 
-    $id    = $row['id_produto'];
-    $nome  = $row['nome_produto'];
-    $tipo  = $row['tipo'];
-    $preco = $row['preco'];
+    $id        = $row['id_produto'];
+    $nome      = $row['nome_produto'];
+    $tipo      = $row['tipo'];
+    $preco     = $row['preco'];
+    $descricao = $row['descricao'];
   }
 }
 
@@ -84,7 +86,18 @@ select.minimal:focus {
   background-repeat: no-repeat;
   border-color: #88BDBC;
   outline: 0;
-}
+}    
+
+.btn-outline {
+    border: .2em solid black !important;
+  }
+
+  .btn-outline:hover {
+    border: .2em solid white;
+    background-color: black;
+    color: white;
+  }
+
 
 </style>
 </head>
@@ -96,7 +109,7 @@ select.minimal:focus {
 <main class="form-signin">
   <form action='alterar_produto.php' method='post'>
     <!-- <img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-    <h1>Alteraração Produto</h1>
+    <h1>Editar Produto</h1>
     <br>
     <input name="id" type="text" class="form-control" placeholder="Nome" autocomplete="off" value="<?php echo $id ?>" hidden>
     <label for="Nome" class="visually-hidden">Nome</label>
@@ -118,9 +131,16 @@ select.minimal:focus {
     <label for="Preço" class="visually-hidden">Preço</label>
     <input name="preco" type="money" class="form-control" placeholder="Preço" autocomplete="off" value="<?php echo $preco ?>" required>
     <br>
-    <button class="w-100 btn btn-lg btn-primary" type="submit" name='submit'>Alterar Produto</button>
+
+    <label for="Descrição" class="visually-hidden">Descrição</label>
+    <input name="descricao" type="text" class="form-control" placeholder="Descrição" autocomplete="off">
+
+    <br>
+
+    <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Alterar Produto</button>
     <br><br>
   </form>
+    <a href="<?= LINK_SITE; ?>admin/src/produto/produtos.php"><button class="w-100 btn btn-lg btn-outline">Voltar</button></a>
 </main>
   
 </body>

@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
     <label for="inputEmail" class="visually-hidden">Desconto</label>
     <input name="desconto" type="text" class="form-control" placeholder="Desconto (Ex: 10.50)" autocomplete="off" required autofocus>
     <br>
-    <button class="w-100 btn btn-lg btn-primary" type="submit" name='submit'>Gerar Desconto</button>
+    <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Gerar Desconto</button>
     <br><br>
   </form>
 </main>

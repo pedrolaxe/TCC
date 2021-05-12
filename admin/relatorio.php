@@ -71,13 +71,15 @@ if(isset($_POST['submit'])) {
       /*width: auto;*/
     }
 
-    button {
-      border: 3px solid !important;
-    }
+     .btn-outline {
+    border: .2em solid black !important;
+  }
 
-    button:hover {
-      border: 3px solid grey !important;
-    }
+  .btn-outline:hover {
+    border: .2em solid white;
+    background-color: black;
+    color: white;
+  }
 
   </style>
 

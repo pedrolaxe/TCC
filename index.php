@@ -14,7 +14,7 @@ $query  = "SELECT * FROM COLABORADOR WHERE tipo='administrador'";
 $q = $con->query($query);
 if($q->rowCount() == 0){
   header("Location: " . LINK_SITE . "cadastro.php");
-
+}
 $q = $con->prepare($query);
 $q->execute();
 if($q->rowCount() == 0){
@@ -82,6 +82,27 @@ if (isset($_POST['submit'])) {
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="assets/css/signin.css">
   <link rel="stylesheet" type="text/css" href="assets/css/main.css" media="screen" />
+
+  <style type="text/css">
+
+    .btn-outline-primary {
+    border: .2em solid;
+  }
+
+  .btn-outline {
+    border: .2em solid black !important;
+  }
+
+  .btn-outline:hover {
+    border: .2em solid white;
+    background-color: black;
+    color: white;
+  }
+
+
+  </style>
+
+
 </head>
 
 <body class="text-center">
@@ -97,7 +118,7 @@ if (isset($_POST['submit'])) {
       <button name="submit" class="w-100 btn btn-lg btn-outline-primary" type="submit">Entrar</button>
     </form>
 
-    <a href="forgot_pw.php"><button class="w-100 btn btn-lg btn-outline-secondary">Recuperar Senha</button></a>
+    <a href="forgot_pw.php"><button class="w-100 btn btn-lg btn-outline">Recuperar Senha</button></a>
   </main>
 </body>
 
