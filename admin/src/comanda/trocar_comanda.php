@@ -52,6 +52,7 @@ if (isset($_POST['submit'])) {
     <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Trocar Comanda</button>
     <br><br>
   </form>
+  <a href="comanda.php?id=<?php echo $id; ?>"><button class="w-100 btn btn-lg btn-outline">Voltar</button></a>
 </main>
 </body>
 </html>

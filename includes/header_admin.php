@@ -1,7 +1,7 @@
 <?php
 
 if(basename($_SERVER['PHP_SELF']) == 'comandas.php') {
-  $add_comanda = 
+  $extra = 
   '
   <form action="comandas.php" method="post" class="d-flex">
     <input class="form-control me-2" name="nome" type="text" placeholder="Abrir Comanda" aria-label="Search" autocomplete="off" required>
@@ -9,16 +9,31 @@ if(basename($_SERVER['PHP_SELF']) == 'comandas.php') {
   </form>
   ';
   # <b style="margin-left: 30px">'.$_SESSION['login_usuario'].' logado</b>
-} else { $add_comanda = ''; }
+// } elseif (basename($_SERVER['PHP_SELF']) == 'config_gerais.php' || isset($_POST['empresa'])) {
+
+//   $query  = "SELECT * FROM config";
+//   $result = $con->query($query);
+
+//     foreach($result as $row) {
+
+//       $nome = $row['nome_empresa'];
+//     }
+
+//     if(isset($_POST['empresa'])) {
+//       $nome = $_POST['empresa'];
+//     }
+
+//   $extra = "<strong>$nome</strong>";
+} else { $extra = ''; }
 
 echo '
 <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-3 mb-3 border-bottom shadow-sm" >
 
-  '.$add_comanda.'
+  '.$extra.'
 
   <a class="h5 my-0 me-md-auto fw-normal titulo-header" href="#"><h4 style="margin-left: 1.5vw; font-weight: bold;"></h4></a> 
 
-  <nav class="my-2 my-md-0 me-md-3" style="">
+  <nav class="my-2 my-md-0 me-md-3">
   	<a class="p-2 text-dark" href="'.LINK_SITE.'admin/comandas.php"><i class="fas fa-2x fa-home i-menu"></i></a>';
 
 

@@ -11,10 +11,6 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
-if (isset($_POST['submit'])) {
-  insert_produto();
-}
-
 
 ?>
 
@@ -87,6 +83,10 @@ if (isset($_POST['submit'])) {
       }
     }
 
+    if (isset($_POST['submit'])) {
+      insert_produto();
+    }
+
   ?>
 
   <main class="form-signin">
@@ -115,7 +115,8 @@ if (isset($_POST['submit'])) {
 
 
       <label for="Descrição" class="visually-hidden">Descrição</label>
-      <input name="descricao" type="text" class="form-control" placeholder="Descrição" autocomplete="off">
+      <textarea name="descricao" class="form-control" placeholder="Descrição" id="" style="height: 100px"></textarea>
+      <!-- <input name="descricao" type="text" class="form-control" placeholder="Descrição" autocomplete="off"> -->
 
       <br>
       <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Criar Produto</button>

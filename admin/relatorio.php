@@ -98,7 +98,8 @@ if(isset($_POST['submit'])) {
     <div class="row">
 
     	 <div class="col-5">
-        <h1><i class="fas fa-chart-pie"></i> Relatório de Vendas</h1>
+        <h1><i class="fas fa-chart-pie"></i> Relatório de Vendas</h1><br>
+        <h2></h2><br>
       </div>
 
       <div class="col-3">
@@ -130,7 +131,9 @@ if(isset($_POST['submit'])) {
               <th>Comanda</th>
               <th>Nome</th>
               <th>Produto</th>
-              <th>Quantidade</th>
+              <th>Qtd</th>
+              <th>Preço</th>
+              <th>Total</th>
               <th>Hora</th>
               <th>Data</th>
             </tr>
@@ -142,6 +145,8 @@ if(isset($_POST['submit'])) {
       $submit_ok = false;
 
       if(isset($_POST['submit'])) {
+
+            $faturamento = 0;
 
             # flag
             $submit_ok = true;
@@ -157,6 +162,7 @@ if(isset($_POST['submit'])) {
               $nome         = $row['nome'];
               $nome_produto = $row['nome_produto'];
               $qtd          = $row['quantidade'];
+              $preco        = $row['preco'];
 
               // $data[0] é data e $data[1] é hora
               $data         = explode(' ',trim($row['data'])); 
@@ -167,6 +173,8 @@ if(isset($_POST['submit'])) {
 
                 $existe_pedido = true;
 
+                $faturamento += $preco*$qtd;
+
             ?>
               <tr>
                 <td><?php echo $id_pedido ?></td>
@@ -174,6 +182,8 @@ if(isset($_POST['submit'])) {
                 <td><?php echo ucfirst($nome) ?></td>
                 <td><?php echo $nome_produto ?></td>
                 <td><?php echo $qtd ?></td>
+                <td><?php echo number_format($preco, 2, '.', ',') ?></td>
+                <td><?php echo number_format($preco*$qtd, 2, '.', ',') ?></td>
                 <td><?php echo $data[1] ?></td>
                 <td><?php echo $data[0] ?></td>
               </tr>
@@ -185,7 +195,7 @@ if(isset($_POST['submit'])) {
               // echo "</tr>";
               
               // break;
-            }
+                  }
 
             } }
 
@@ -199,7 +209,7 @@ if(isset($_POST['submit'])) {
 
             if (!$submit_ok) {
 
-
+              $faturamento = 0;
 
               $query  = "
 
@@ -211,7 +221,6 @@ if(isset($_POST['submit'])) {
                   ORDER BY ABS(id_pedido)
                   
               ";
-
 
               $result = $con->query($query);
 
@@ -226,6 +235,9 @@ if(isset($_POST['submit'])) {
               $nome         = $row['nome'];
               $nome_produto = $row['nome_produto'];
               $qtd          = $row['quantidade'];
+              $preco        = $row['preco'];
+
+
 
               // $data[0] é data e $data[1] é hora
               $data         = explode(' ',trim($row['data'])); 
@@ -236,6 +248,8 @@ if(isset($_POST['submit'])) {
 
                 $existe_pedido = true;
 
+                $faturamento += $preco*$qtd;
+
             ?>
               <tr>
                 <td><?php echo $id_pedido ?></td>
@@ -243,6 +257,8 @@ if(isset($_POST['submit'])) {
                 <td><?php echo ucfirst($nome) ?></td>
                 <td><?php echo $nome_produto ?></td>
                 <td><?php echo $qtd ?></td>
+                <td><?php echo number_format($preco, 2, '.', ',') ?></td>
+                <td><?php echo number_format($preco*$qtd, 2, '.', ',') ?></td>
                 <td><?php echo $data[1] ?></td>
                 <td><?php echo $data[0] ?></td>
               </tr>
@@ -277,4 +293,51 @@ if(isset($_POST['submit'])) {
   </div>
 </div>
 </body>
+
+<script type="text/javascript">
+
+  <?php
+
+    $query = "SELECT * FROM COMANDA";
+    $result = $con->query($query);
+
+    foreach($result as $row) { 
+
+      $status = $row['status'];
+    
+      if($status == 'fechado') { 
+
+        $id_comanda = $row['id_comanda'];
+        $desconto   = $row['desconto'];
+
+        $data       = $row['data_comanda']; 
+
+        $data = date("Y-m-d", strtotime($data));
+
+        if ($data == date("Y-m-d")) {
+          $faturamento -= $desconto;
+        }
+
+      }
+
+    }
+
+
+    $faturamento = number_format($faturamento, 2, '.', ',') 
+
+  ?>
+
+  let faturamento = document.querySelector("h2");
+
+  <?php if($faturamento != 0) { ?>
+
+    faturamento.textContent += 'Faturamento: R$ <?php echo $faturamento; ?>';
+
+  <?php } ?>
+
+
+
+</script>
+
+
 </html>

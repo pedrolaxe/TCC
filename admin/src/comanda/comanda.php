@@ -128,7 +128,7 @@ if (isset($_POST['submit'])) {
 
           foreach($result2 as $row) {
 
-            $id_comanda      = $row['id_comanda'];
+            $id_comanda   = $row['id_comanda'];
             $id_pedido    = $row['id_pedido'];
             $qtd          = $row['quantidade'];
             $nome_produto = $row['nome_produto'];
@@ -157,6 +157,11 @@ if (isset($_POST['submit'])) {
       <label>Desconto: </label>
       <input name="desconto" style="width:26%; border:0" value="R$ ' . $desconto . '" disabled>
 
+      <br>
+
+      <label>Pagamento Adiantado: </label>
+      <input name="" style="width:26%; border:0" value="R$ 50.00" disabled>
+
       <br><br>
       
       <input name="fechar_comanda" value="' . $id . '" hidden>
@@ -173,20 +178,22 @@ if (isset($_POST['submit'])) {
 
         </h2>
 
-      </div>
+      </div>';
 
-      <button style="float:left;" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
+      if($is_admin) {
+
+      echo '<button style="float:left;" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
 
         </form>
 
 
       <a href="trocar_comanda.php?id=' . $id . '">
         <button style="margin-left:6px; width: 10.4em" class="btn-lg btn-outline-success">Trocar Comanda</button>
-      </a>';
+      </a>
 
-      if($is_admin) {
+      
 
-        echo '<a href="desconto.php?id=' . $id . '">
+        <a href="desconto.php?id=' . $id . '">
         <button style="display:inline; width: 7.9em;" type="button" class="btn-lg btn-outline-dark">Desconto</button>
       </a>
 
