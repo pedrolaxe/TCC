@@ -15,6 +15,7 @@ $q = $con->query($query);
 if($q->rowCount() == 0){
   header("Location: " . LINK_SITE . "cadastro.php");
 }
+
 $q = $con->prepare($query);
 $q->execute();
 if($q->rowCount() == 0){
