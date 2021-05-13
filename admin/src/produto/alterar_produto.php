@@ -12,16 +12,6 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
-if (isset($_POST['submit'])) {
-  $id        = anti_injection($_POST['id']);
-  $nome      = anti_injection($_POST['nome_produto']);
-  $tipo      = anti_injection($_POST['tipo']);
-  $preco     = anti_injection($_POST['preco']);
-  $descricao = anti_injection($_POST['descricao']);
-  
-  alterar_produto($id, $nome, $tipo, $preco, $descricao);
-} else { }
-
 # SELECIONAR PRODUTO PARA SER ALTERADO
 if (isset($_GET['id_produto'])) {
   $id_produto = $_GET['id_produto'];
@@ -109,6 +99,21 @@ select.minimal:focus {
 <main class="form-signin">
   <form action='alterar_produto.php' method='post'>
     <!-- <img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
+
+    <?php
+
+      if (isset($_POST['submit'])) {
+        $id        = anti_injection($_POST['id']);
+        $nome      = anti_injection($_POST['nome_produto']);
+        $tipo      = anti_injection($_POST['tipo']);
+        $preco     = anti_injection($_POST['preco']);
+        $descricao = anti_injection($_POST['descricao']);
+        
+        alterar_produto($id, $nome, $tipo, $preco, $descricao);
+      } else { }
+
+    ?>
+
     <h1>Editar Produto</h1>
     <br>
     <input name="id" type="text" class="form-control" placeholder="Nome" autocomplete="off" value="<?php echo $id ?>" hidden>
@@ -133,7 +138,8 @@ select.minimal:focus {
     <br>
 
     <label for="Descrição" class="visually-hidden">Descrição</label>
-    <input name="descricao" type="text" class="form-control" placeholder="Descrição" autocomplete="off">
+    <textarea name="descricao" class="form-control" placeholder="Descrição" id="" style="height: 100px"><?php echo $descricao; ?></textarea>
+    <!-- <input name="descricao" type="text" class="form-control" placeholder="Descrição" autocomplete="off"> -->
 
     <br>
 

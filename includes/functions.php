@@ -33,8 +33,10 @@ function insert_comanda() {
     echo '<div style="margin:0" class="alert alert-danger" role="alert"><center>A Comanda Já Existe!</center></div>';
 
   } else{
-    $query  = "INSERT INTO comanda (nome, status, desconto) ";
-    $query .= "VALUES ('$nome', '$status', '$desconto')";
+    $hora_inicio = date("H:i:s");
+    $data = date('Y-m-d');
+    $query  = "INSERT INTO comanda (nome, status, desconto, hora_inicio, data_comanda) ";
+    $query .= "VALUES ('$nome', '$status', '$desconto', '$hora_inicio', '$data')";
     $con->query($query);
   }
 }
@@ -217,6 +219,9 @@ function fechar_comanda($id, $total) {
     $nome   = $row['nome'];
     $status   = $row['status'];
     $desconto = $row['desconto'];
+    $hora_inicio = $row['hora_inicio'];
+
+
   }
 
   $qtd_array      = [];
@@ -239,7 +244,7 @@ function fechar_comanda($id, $total) {
 
   foreach($result2 as $row) {
 
-    $id_comanda      = $row['id_comanda'];
+    $id_comanda   = $row['id_comanda'];
     $id_pedido    = $row['id_pedido'];
     $qtd          = $row['quantidade'];
     $nome_produto = $row['nome_produto'];
@@ -256,8 +261,10 @@ function fechar_comanda($id, $total) {
     }
   }
 
+  $hora_fim = date("H:i:s");
 
-  $query = "UPDATE COMANDA SET status ='fechado' WHERE id_comanda = $id";
+
+  $query = "UPDATE COMANDA SET status ='fechado', hora_fim = '$hora_fim' WHERE id_comanda = $id";
   $result = $con->query($query);
 
   try {
@@ -299,7 +306,9 @@ function cancel_comanda($id) {
 
   $status = 'cancelado';
 
-  $query = "UPDATE comanda SET status='$status' WHERE id_comanda=$id";
+  $hora_fim = date("H:i:s");
+
+  $query = "UPDATE comanda SET status='$status', hora_fim = '$hora_fim' WHERE id_comanda=$id";
   $result = $con->query($query);
 
   header('Location: ' . LINK_SITE . 'admin/comandas.php');
@@ -368,6 +377,7 @@ function alterar_colaborador($idf, $login, $email, $senha, $nome, $cpf, $rg, $te
       echo '<script>alert("falhou")</script>';
     } else {
       echo '<div style="width:15em; margin:0 auto;" class="alert alert-success">Usuário Alterado Com Sucesso</div>';
+
     // header('Location: ' . LINK_SITE . 'admin/src/colaborador/colaboradores.php');
   }
 }
@@ -450,8 +460,10 @@ function alterar_produto($id, $nome, $tipo, $preco, $descricao) {
 
     $query = "UPDATE produto SET nome_produto = '$nome', tipo = '$tipo', preco = '$preco', descricao = '$descricao' WHERE id_produto = $id";
     $result = $con->query($query);
+
+    echo '<div style="width:15em; margin:0 auto;" class="alert alert-success" role="alert"><center>Produto Modificado Com Sucesso!</center></div>';
       
-    header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
+    // header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
 
   }
 }

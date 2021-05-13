@@ -12,7 +12,7 @@ if (isset($_GET['user_id'])) {
 
 if (isset($_GET['impressora'])) {
   if($_GET['impressora'] ==  false) {
-    echo '<div margin:0 auto;" class="alert alert-danger" role="alert"><center>A Impressora Não Está Configurada</center></div>';
+    echo '<div style="margin:0 auto;" class="alert alert-warning" role="alert"><center>A Impressora Não Está Configurada</center></div>';
   }
 }
 

@@ -11,10 +11,6 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
-if (isset($_POST['submit'])) {
-  cadastro_colaborador();
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +51,14 @@ if (isset($_POST['submit'])) {
 
   <main class="form-signin">
     <form action="add_colaborador.php" method="POST">
+
+      <?php 
+
+        if (isset($_POST['submit'])) {
+          cadastro_colaborador();
+        } 
+        
+      ?>
 
       <h1>Cadastro de Colaborador</h1>
 
