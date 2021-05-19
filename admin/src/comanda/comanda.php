@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>comanda</title>
+  <title>Comanda</title>
   <link rel="icon" href="assets/img/logo.jpg">
 
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
@@ -156,11 +156,6 @@ if (isset($_POST['submit'])) {
 
       <label>Desconto: </label>
       <input name="desconto" style="width:26%; border:0" value="R$ ' . $desconto . '" disabled>
-
-      <br>
-
-      <label>Pagamento Adiantado: </label>
-      <input name="" style="width:26%; border:0" value="R$ 50.00" disabled>
 
       <br><br>
       

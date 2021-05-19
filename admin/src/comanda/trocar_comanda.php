@@ -9,15 +9,6 @@ if (isset($_GET['id'])) {
   $id = $_GET['id']; 
 }
 
-if (isset($_GET['changed'])) {
-
-  $changed = $_GET['changed'];
-  if($changed) {
-    // MELHORAR MENSAGEM
-    echo "NÃO PODE MUDAR PARA A MESMA COMANDA";
-  } 
-}
-
 if (isset($_POST['submit'])) {
   trocar_comanda();
 } 
@@ -39,7 +30,21 @@ if (isset($_POST['submit'])) {
 
 <body class="text-center">
 
-<?php include '../../../includes/header_admin.php'; ?>
+<?php 
+
+  include '../../../includes/header_admin.php'; 
+
+  # CASO O USUARIO ESCOLHA A MESMA COMANDA
+  if (isset($_GET['changed'])) {
+
+    $changed = $_GET['changed'];
+    if($changed) {
+      // MELHORAR MENSAGEM
+      echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>Não Pode Mudar Para A Mesma Comanda</center></div>';
+    } 
+  }
+
+?>
     
 <main class="form-signin">
   <form action='trocar_comanda.php' method='post'>
@@ -52,7 +57,7 @@ if (isset($_POST['submit'])) {
     <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Trocar Comanda</button>
     <br><br>
   </form>
-  <a href="comanda.php?id=<?php echo $id; ?>"><button class="w-100 btn btn-lg btn-outline">Voltar</button></a>
+  <a href="comanda.php?id=<?php echo $id; ?>"><button class="w-100 btn btn-lg btn-outline-dark">Voltar</button></a>
 </main>
 </body>
 </html>
