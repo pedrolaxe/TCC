@@ -266,7 +266,7 @@ button:hover {
   <div class="col-4">
     <h2 align="center">Faturamento Produto</h2>
     <br>
-    <canvas id="myChart" width="200" height="200"></canvas>
+    <canvas id="faturamento_produto" width="200" height="200"></canvas>
   </div>
 
   <div class="col-2">
@@ -291,7 +291,7 @@ button:hover {
 <script>
 
 // APORTES
-new Chart(document.getElementById("myChart"), {
+new Chart(document.getElementById("faturamento_produto"), {
   type: 'pie',
   data: {
   labels: [

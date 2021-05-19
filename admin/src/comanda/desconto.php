@@ -11,7 +11,6 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
-
 if (isset($_GET['id'])) {
   $id = $_GET['id']; 
 }
@@ -37,7 +36,18 @@ if (isset($_POST['submit'])) {
 
 <body class="text-center">
 
-<?php include '../../../includes/header_admin.php'; ?>
+<?php include '../../../includes/header_admin.php'; 
+
+  # CAPTURAR ERRO CASO O USUARIO USE VIRGULA EM VEZ DE PONTO NO DESCONTO OU USE CARACTERES INVÁLIDOS
+  if (isset($_GET['erro_desconto'])) {
+
+    $erro_desconto = $_GET['erro_desconto'];
+    if($erro_desconto) {
+      echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>Use Ponto e Não Virgula</center></div>';
+    } 
+  }
+
+?>
     
 <main class="form-signin">
   <form action='desconto.php' method='post'>
@@ -50,7 +60,7 @@ if (isset($_POST['submit'])) {
     <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Gerar Desconto</button>
     <br><br>
   </form>
-  <a href="comanda.php?id=<?php echo $id; ?>"><button class="w-100 btn btn-lg btn-outline">Voltar</button></a>
+  <a href="comanda.php?id=<?php echo $id; ?>"><button class="w-100 btn btn-lg btn-outline-dark">Voltar</button></a>
 </main>
 </body>
 </html>
