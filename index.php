@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
       $_SESSION['auth_super']   = true;
       $_SESSION['tipo_usuario'] = $tipo;
 
-      header("location: " . LINK_SITE . "admin/comandas.php?user_id=" . $user_id);
+      header("location: " . LINK_SITE . "admin/comandas.php");
       
     }
   }

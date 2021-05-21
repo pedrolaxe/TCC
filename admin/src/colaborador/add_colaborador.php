@@ -73,7 +73,7 @@ if(!$is_admin) {
 
       <br>
 
-      <input type="text" id="" class="form-control" name="nome" placeholder="Nome" autocomplete="off">      
+      <input type="text" id="" class="form-control" name="nome" placeholder="Nome" autocomplete="off" required>      
       <input type="text" id="" class="form-control" name="cpf" placeholder="CPF" autocomplete="off">
       <input type="text" id="" class="form-control" name="rg" placeholder="RG" autocomplete="off">
       <input type="text" id="" class="form-control" name="telefone" placeholder="Telefone" autocomplete="off">

@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
   foreach($result as $row) {
     $registro = true;
     $id       = $row['id_comanda'];
-    $nome   = $row['nome'];
+    $nome     = $row['nome'];
     $desconto = $row['desconto'];
 
     // if (strlen($nome) == 1) {

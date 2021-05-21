@@ -136,7 +136,7 @@ if(!$is_admin) {
 
       <br>
 
-      <input type="text" id="" class="form-control" name="nome" placeholder="Nome" value="<?=$nome; ?>" autocomplete="off"> 
+      <input type="text" id="" class="form-control" name="nome" placeholder="Nome" value="<?=$nome; ?>" autocomplete="off" required> 
       <input type="text" id="" class="form-control" name="cpf" placeholder="CPF" value="<?=$cpf; ?>" autocomplete="off">
       <input type="text" id="" class="form-control" name="rg" placeholder="RG" value="<?=$rg; ?>" autocomplete="off">
       <input type="text" id="" class="form-control" name="telefone" placeholder="Telefone" value="<?=$tel; ?>" autocomplete="off">
