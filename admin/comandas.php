@@ -6,9 +6,9 @@ include "../includes/functions.php";
 autorizacao_super();
 
 # ARMAZENAR USER ID PARA CONTROLE DE ACESSO
-if (isset($_GET['user_id'])) {
-  $_SESSION['user_id'] = $_GET['user_id'];
-} else { }
+// if (isset($_GET['user_id'])) {
+//   $_SESSION['user_id'] = $_GET['user_id'];
+// } else { }
 
 if (isset($_GET['impressora'])) {
   if($_GET['impressora'] ==  false) {
