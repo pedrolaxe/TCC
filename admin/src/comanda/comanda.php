@@ -27,11 +27,11 @@ if (isset($_GET['id'])) {
   }
 }
 
-if (isset($_GET['delete_pedido'])) {
-  $id_pedido  = $_GET['delete_pedido'];
+if (isset($_GET['cancelar_pedido'])) {
+  $id_pedido     = $_GET['cancelar_pedido'];
   $id_comanda    = $_GET['id_comanda'];
 
-  delete_pedido($id_pedido, $id_comanda);
+  cancel_pedido($id_pedido, $id_comanda);
 }
 
 
@@ -139,7 +139,7 @@ if (isset($_POST['submit'])) {
 
               echo
               '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, '.', ',') . '
-              </b></li>';
+              <i data-bs-toggle="modal" data-bs-target="#exampleModal2" class="fas fa-trash" style="padding-left:0.3em"></i></li>';
 
               $total += $qtd * $preco;
             }
@@ -164,12 +164,18 @@ if (isset($_POST['submit'])) {
       <input name="nome" value="' . $nome . '" hidden>
 
       <div class="form-check form-switch" style="float:right;">  
+
+        <h4 style="float:right; font-style: italic; font-weight: bold">
+
+        Subtotal <b id="total">' . number_format($total-$desconto, 2, '.', ',') . '</b>
+
+        </h4>
        
         <br><br>
 
         <h2 style="float:right; font-style: italic; font-weight: bold">
 
-        R$ <b id="total">' . number_format($total, 2, '.', ',') . '</b>
+        Total <b id="total">' . number_format(($total-$desconto)*1.1, 2, '.', ',') . '</b>
 
         </h2>
 
@@ -188,7 +194,7 @@ if (isset($_POST['submit'])) {
 
       
 
-        <a href="desconto.php?id=' . $id . '">
+        <a href="desconto.php?id=' . $id . '&total='. $total * 1.1 . '">
         <button style="display:inline; width: 7.9em;" type="button" class="btn-lg btn-outline-dark">Desconto</button>
       </a>
 
@@ -223,6 +229,28 @@ if (isset($_POST['submit'])) {
           <div class="modal-footer">
             <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
             <a href="comanda.php?cancelar_comanda='<?php echo $id ?>'"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CONFIRMAÇÂO PARA DELETAR PEDIDO -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #DEF2F1;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cancelar Produto</h5>
+            <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Tem certeza disso?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
+            <a href="comanda.php?cancel_pedido=<?php echo $id_pedido ?>&id_mesa=<?php echo $id ?>"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
           </div>
         </div>
       </div>

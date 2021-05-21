@@ -15,6 +15,10 @@ if (isset($_GET['id'])) {
   $id = $_GET['id']; 
 }
 
+if (isset($_GET['total'])) {
+  $total = $_GET['total']; 
+}
+
 if (isset($_POST['submit'])) {
   insert_desconto();
 } 
@@ -39,11 +43,19 @@ if (isset($_POST['submit'])) {
 <?php include '../../../includes/header_admin.php'; 
 
   # CAPTURAR ERRO CASO O USUARIO USE VIRGULA EM VEZ DE PONTO NO DESCONTO OU USE CARACTERES INVÁLIDOS
-  if (isset($_GET['erro_desconto'])) {
+  if (isset($_GET['erro_desconto']) && $_GET['erro_desconto'] == true) {
 
     $erro_desconto = $_GET['erro_desconto'];
     if($erro_desconto) {
       echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>Use Ponto e Não Virgula</center></div>';
+    } 
+  }
+
+  if (isset($_GET['desconto_alto']) && $_GET['desconto_alto'] == true) {
+
+    $desconto_alto = $_GET['desconto_alto'];
+    if($desconto_alto) {
+      echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Desconto Não Pode Ser Maior Que O Total</center></div>';
     } 
   }
 
@@ -56,6 +68,7 @@ if (isset($_POST['submit'])) {
     <br>
     <label for="inputEmail" class="visually-hidden">Desconto</label>
     <input name="desconto" type="text" class="form-control" placeholder="Desconto (Ex: 10.50)" autocomplete="off" required autofocus>
+    <input name="total" value="<?php echo $total ?>" type="text" class="form-control" hidden>
     <br>
     <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Gerar Desconto</button>
     <br><br>
