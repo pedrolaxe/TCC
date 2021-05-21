@@ -290,14 +290,21 @@ function insert_desconto() {
 
   $id_comanda  = $_POST['id'];
   $desconto    = $_POST['desconto'];
+  $total       = $_POST['total'];
 
-  $query = "UPDATE comanda SET desconto='$desconto' WHERE id_comanda='$id_comanda'";
+  if($desconto > $total) {
+    header('Location: ' . LINK_SITE . 'admin/src/comanda/desconto.php?id='.$id_comanda . '&desconto_alto=true&total=' . $total);
+  } else {
 
-  try {
-    $result = $con->query($query);
-    header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id_comanda);
-  } catch(Exception $e) {
-    header('Location: ' . LINK_SITE . 'admin/src/comanda/desconto.php?id='.$id_comanda . "&erro_desconto=true");
+
+    $query = "UPDATE comanda SET desconto='$desconto' WHERE id_comanda='$id_comanda'";
+
+    try {
+      $result = $con->query($query);
+      header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id_comanda);
+    } catch(Exception $e) {
+      header('Location: ' . LINK_SITE . 'admin/src/comanda/desconto.php?id='.$id_comanda . "&erro_desconto=true");
+    }
   }
 
   // header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id_comanda);
