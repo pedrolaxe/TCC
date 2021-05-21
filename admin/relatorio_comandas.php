@@ -24,19 +24,10 @@ if(isset($_POST['submit'])) {
               $existe_pedido = true;
             }
 
-            $query  = "
-
-                  SELECT * FROM PEDIDO 
-                  INNER JOIN PRODUTO ON 
-                  PEDIDO.id_produto = PRODUTO.id_produto 
-                  INNER JOIN COMANDA ON 
-                  PEDIDO.id_comanda = COMANDA.id_comanda 
-                  ORDER BY ABS(id_pedido)
-                  
-            ";
-
+            $query  = "SELECT * FROM COMANDA";
 
             $result = $con->query($query);
+
           }
 
 ?>
@@ -76,6 +67,10 @@ if(isset($_POST['submit'])) {
     color: white;
   }
 
+  i:hover {
+    color: black;
+  }
+
   </style>
 
 </head>
@@ -88,12 +83,12 @@ if(isset($_POST['submit'])) {
 <div class='container'>
   <br>
 
-  <form action='relatorio.php' method='post'>
+  <form action='relatorio_comandas.php' method='post'>
 
     <div class="row">
 
     	 <div class="col-5">
-        <h1><i class="fas fa-chart-pie"></i> Relatório de Vendas</h1><br>
+        <h1>Relatório de Comandas</h1><br>
         <h2></h2><br>
       </div>
 
@@ -122,15 +117,11 @@ if(isset($_POST['submit'])) {
       <table class="styled-table" style="width: 100%">
           <thead>
             <tr>
-              <th>Pedido</th>
-              <th>Comanda</th>
-              <th>Nome</th>
-              <th>Produto</th>
-              <th>Qtd</th>
-              <th>Preço</th>
-              <th>Total</th>
-              <th>Hora</th>
+              <th>Nome Comanda</th>
               <th>Data</th>
+              <th>Chegada</th>
+              <th>Saída</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -153,34 +144,28 @@ if(isset($_POST['submit'])) {
             if($status == 'fechado') { 
 
               $id_comanda   = $row['id_comanda'];
-              $id_pedido    = $row['id_pedido'];
               $nome         = $row['nome'];
-              $nome_produto = $row['nome_produto'];
-              $qtd          = $row['quantidade'];
-              $preco        = $row['preco'];
+              $data         = $row['data_comanda'];
+              $chegada      = $row['hora_inicio'];
+              $saida        = $row['hora_fim'];              
+    
 
               // $data[0] é data e $data[1] é hora
-              $data         = explode(' ',trim($row['data'])); 
+              // $data         = explode(' ',trim($row['data_comanda'])); 
 
-              $data_aux = date("Y-m-d", strtotime($data[0]));
+              $data_aux = date("Y-m-d", strtotime($data));
 
               if ($data_aux >= $data1 && $data_aux <= $data2) {
 
                 $existe_pedido = true;
 
-                $faturamento += $preco*$qtd;
-
             ?>
               <tr>
-                <td><?php echo $id_pedido ?></td>
-                <td><?php echo $id_comanda ?></td>
                 <td><?php echo ucfirst($nome) ?></td>
-                <td><?php echo $nome_produto ?></td>
-                <td><?php echo $qtd ?></td>
-                <td><?php echo number_format($preco, 2, '.', ',') ?></td>
-                <td><?php echo number_format($preco*$qtd, 2, '.', ',') ?></td>
-                <td><?php echo $data[1] ?></td>
-                <td><?php echo $data[0] ?></td>
+                <td><?php echo $data ?></td>
+                <td><?php echo $chegada ?></td>
+                <td><?php echo $saida ?></td>
+                <td><a href="src/comanda/comanda_registro.php?id='<?php echo $id_comanda ?>'"><i class="fas fa-2x fa-address-card"></i></a></td>
               </tr>
 
             <?php } else {
@@ -195,7 +180,7 @@ if(isset($_POST['submit'])) {
             } }
 
               if (!$existe_pedido) {
-                echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Pedidos Nessa Data</center></div><br>';
+                echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Comandas Nessa Data</center></div><br>';
               }
 
 
@@ -204,18 +189,7 @@ if(isset($_POST['submit'])) {
 
             if (!$submit_ok) {
 
-              $faturamento = 0;
-
-              $query  = "
-
-                  SELECT * FROM PEDIDO 
-                  INNER JOIN PRODUTO ON 
-                  PEDIDO.id_produto = PRODUTO.id_produto 
-                  INNER JOIN COMANDA ON 
-                  PEDIDO.id_comanda = COMANDA.id_comanda 
-                  ORDER BY ABS(id_pedido)
-                  
-              ";
+              $query  = "SELECT * FROM COMANDA";
 
               $result = $con->query($query);
 
@@ -226,36 +200,28 @@ if(isset($_POST['submit'])) {
             if($status == 'fechado') { 
 
               $id_comanda   = $row['id_comanda'];
-              $id_pedido    = $row['id_pedido'];
               $nome         = $row['nome'];
-              $nome_produto = $row['nome_produto'];
-              $qtd          = $row['quantidade'];
-              $preco        = $row['preco'];
-
-
+              $data         = $row['data_comanda'];
+              $chegada      = $row['hora_inicio'];
+              $saida        = $row['hora_fim'];
+            
 
               // $data[0] é data e $data[1] é hora
-              $data         = explode(' ',trim($row['data'])); 
+              // $data         = explode(' ',trim($row['data'])); 
 
-              $data_aux = date("Y-m-d", strtotime($data[0]));
+              $data_aux = date("Y-m-d", strtotime($data));
 
               if ($data_aux == date("Y-m-d")) {
 
                 $existe_pedido = true;
 
-                $faturamento += $preco*$qtd;
-
             ?>
               <tr>
-                <td><?php echo $id_pedido ?></td>
-                <td><?php echo $id_comanda ?></td>
                 <td><?php echo ucfirst($nome) ?></td>
-                <td><?php echo $nome_produto ?></td>
-                <td><?php echo $qtd ?></td>
-                <td><?php echo number_format($preco, 2, '.', ',') ?></td>
-                <td><?php echo number_format($preco*$qtd, 2, '.', ',') ?></td>
-                <td><?php echo $data[1] ?></td>
-                <td><?php echo $data[0] ?></td>
+                <td><?php echo $data ?></td>
+                <td><?php echo $chegada ?></td>
+                <td><?php echo $saida ?></td>
+                <td><a href="src/comanda/comanda_registro.php?id='<?php echo $id_comanda ?>'"><i class="fas fa-2x fa-address-card"></i></a></td>
               </tr>
 
             <?php } else {
@@ -270,7 +236,7 @@ if(isset($_POST['submit'])) {
             } }
 
               if (!$existe_pedido) {
-                echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Pedidos Nessa Data</center></div><br>';
+                echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Comandas Nessa Data</center></div><br>';
               }
               
              }
@@ -289,50 +255,6 @@ if(isset($_POST['submit'])) {
 </div>
 </body>
 
-<script type="text/javascript">
-
-  <?php
-
-    $query = "SELECT * FROM COMANDA";
-    $result = $con->query($query);
-
-    foreach($result as $row) { 
-
-      $status = $row['status'];
-    
-      if($status == 'fechado') { 
-
-        $id_comanda = $row['id_comanda'];
-        $desconto   = $row['desconto'];
-
-        $data       = $row['data_comanda']; 
-
-        $data = date("Y-m-d", strtotime($data));
-
-        if ($data == date("Y-m-d")) {
-          $faturamento -= $desconto;
-        }
-
-      }
-
-    }
-
-
-    $faturamento = number_format($faturamento, 2, '.', ',') 
-
-  ?>
-
-  let faturamento = document.querySelector("h2");
-
-  <?php if($faturamento != 0) { ?>
-
-    faturamento.textContent += 'Faturamento: R$ <?php echo $faturamento; ?>';
-
-  <?php } ?>
-
-
-
-</script>
 
 
 </html>

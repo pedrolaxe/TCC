@@ -67,6 +67,7 @@ button:hover {
 
   	<a href="config_gerais.php"><button class="btn-lg btn-outline">Configurações Gerais</button></a><br><br>
   	<a href="relatorio.php"><button class="btn-lg btn-outline">Relatório de Vendas</button></a><br><br>
+    <a href="relatorio_comandas.php"><button class="btn-lg btn-outline">Relatório de Comandas</button></a>
   	</div>
 
   	<div class="col-4">
