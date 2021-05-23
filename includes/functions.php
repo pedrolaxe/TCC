@@ -294,9 +294,9 @@ function insert_desconto() {
 
   if($desconto > $total) {
     header('Location: ' . LINK_SITE . 'admin/src/comanda/desconto.php?id='.$id_comanda . '&desconto_alto=true&total=' . $total);
+  } elseif($desconto < 0) {
+    header('Location: ' . LINK_SITE . 'admin/src/comanda/desconto.php?id='.$id_comanda . '&desconto_negativo=true&total=' . $total);
   } else {
-
-
     $query = "UPDATE comanda SET desconto='$desconto' WHERE id_comanda='$id_comanda'";
 
     try {
@@ -379,10 +379,10 @@ function cadastro_colaborador() {
   }
 }
 
-function alterar_colaborador($idf, $login, $email, $senha, $nome, $cpf, $rg, $tel) {
+function alterar_colaborador($idf, $login, $email, $nome, $cpf, $rg, $tel) {
   global $con;
 
-  # VERIFICAR SE comanda JÁ EXISTE
+  # VERIFICAR SE COLABORADOR JÁ EXISTE
   $query  = "SELECT * FROM colaborador WHERE login = '$login' AND id_colaborador != '$idf'";
 
   $q = $con->query($query);
@@ -390,9 +390,9 @@ function alterar_colaborador($idf, $login, $email, $senha, $nome, $cpf, $rg, $te
     header('Location: ' . LINK_SITE . 'admin/src/colaborador/edit_colaborador.php?id_colaborador='.$idf.'&usuario_existe=true');
   } else {
 
-    $senhacrip = md5($senha);
+    // $senhacrip = md5($senha);
 
-    $query = "UPDATE colaborador SET login='$login', senha='$senhacrip', email='$email', nome_colaborador='$nome', cpf='$cpf', rg='$rg', telefone='$tel' WHERE id_colaborador='$idf' AND tipo='colaborador'";
+    $query = "UPDATE colaborador SET login='$login', email='$email', nome_colaborador='$nome', cpf='$cpf', rg='$rg', telefone='$tel' WHERE id_colaborador='$idf' AND tipo='colaborador'";
     $result = $con->query($query);
     if(!$result) {
       echo '<script>alert("falhou")</script>';
@@ -403,6 +403,25 @@ function alterar_colaborador($idf, $login, $email, $senha, $nome, $cpf, $rg, $te
   }
 }
 
+}
+
+function alterar_senha_colaborador($idf, $novaSenha) {
+  global $con;
+
+  # VERIFICAR SE COLABORADOR JÁ EXISTE
+  $query  = "SELECT * FROM colaborador WHERE id_colaborador != '$idf'";
+
+  $senhacrip = md5($novaSenha);
+
+  $query = "UPDATE colaborador SET senha = '$senhacrip' WHERE id_colaborador='$idf' AND tipo='colaborador'";
+  $result = $con->query($query);
+  if(!$result) {
+    echo '<script>alert("falhou")</script>';
+  } else {
+    echo '<div style="width:15em; margin:0 auto;" class="alert alert-success">Senha Alterada Com Sucesso</div>';
+
+  // header('Location: ' . LINK_SITE . 'admin/src/colaborador/colaboradores.php');
+  }
 }
 
 function delete_colaborador($id) {

@@ -30,7 +30,7 @@ if(!$is_admin) {
 
   <style type="text/css">
     
-         .btn-outline {
+  .btn-outline {
     border: .2em solid black !important;
   }
 
@@ -79,24 +79,35 @@ if(!$is_admin) {
           $idf        = anti_injection($_POST['id_user']);
           $login      = anti_injection($_POST['login']);
           $email      = anti_injection($_POST['email']);
-          $senha      = anti_injection($_POST['senha']);
-          $conf_senha = anti_injection($_POST['conf_senha']);
+          // $senha      = anti_injection($_POST['senha']);
+          // $conf_senha = anti_injection($_POST['conf_senha']);
           $nome       = anti_injection($_POST['nome']);
           $cpf        = anti_injection($_POST['cpf']);
           $rg         = anti_injection($_POST['rg']);
           $tel        = anti_injection($_POST['telefone']);
 
 
-          if( empty($login) || empty($email) || empty($senha) || empty($conf_senha) ){
+          // if( empty($login) || empty($email) || empty($senha) || empty($conf_senha) ){
+          //   $link_atual = LINK_SITE."admin/src/colaborador/edit_colaborador.php?id_colaborador=".$idf."";
+          //   header("Location: ".$link_atual."&error=1");
+          // } 
+
+          if( empty($login) || empty($email) || empty($nome) ){
             $link_atual = LINK_SITE."admin/src/colaborador/edit_colaborador.php?id_colaborador=".$idf."";
             header("Location: ".$link_atual."&error=1");
-          } elseif($senha != $conf_senha){
-            $link_atual = LINK_SITE."admin/src/colaborador/edit_colaborador.php?id_colaborador=".$idf."";
-            header("Location: ".$link_atual."&error=2");
-          }
+          } 
 
-          if($senha == $conf_senha && !empty($login) && !empty($email) && !empty($senha) && !empty($conf_senha) ){
-            alterar_colaborador($idf, $login, $email, $senha, $nome, $cpf, $rg, $tel);
+          // elseif($senha != $conf_senha){
+          //   $link_atual = LINK_SITE."admin/src/colaborador/edit_colaborador.php?id_colaborador=".$idf."";
+          //   header("Location: ".$link_atual."&error=2");
+          // }
+
+          // if($senha == $conf_senha && !empty($login) && !empty($email) && !empty($senha) && !empty($conf_senha) ){
+          //   alterar_colaborador($idf, $login, $email, $senha, $nome, $cpf, $rg, $tel);
+          // } 
+
+          if(!empty($login) && !empty($email)){
+            alterar_colaborador($idf, $login, $email, $nome, $cpf, $rg, $tel);
           } 
       }
 
@@ -125,21 +136,25 @@ if(!$is_admin) {
 
       <h1>Editar Colaborador</h1>
       <br>
-      <label for="inputEmail" class="visually-hidden">Login</label>
+      <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Login</label>
       <input type="text" id="inputEmail" class="form-control" name="login" placeholder="Login" value="<?=$login; ?>" required autofocus>
-      <label for="inputPassword" class="visually-hidden">Senha</label>
+<!--       <label for="inputPassword" class="">Senha</label>
       <input type="password" id="inputPassword" class="form-control" placeholder="Senha" name="senha" required>
-      <label for="inputPassword" class="visually-hidden">Confirmação Senha</label>
-      <input type="password" id="inputPassword" class="form-control" name="conf_senha" placeholder="Confirmação de Senha" required>
-      <label for="inputEmail" class="visually-hidden">Email</label>
+      <label for="inputPassword" class="">Confirmação Senha</label>
+      <input type="password" id="inputPassword" class="form-control" name="conf_senha" placeholder="Confirmação de Senha" required> -->
+      <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Email</label>
       <input type="email" id="inputEmail" class="form-control" name="email" value="<?=$email; ?>" placeholder="Email" required>
 
       <br>
 
+      <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Nome</label>
       <input type="text" id="" class="form-control" name="nome" placeholder="Nome" value="<?=$nome; ?>" autocomplete="off" required> 
-      <input type="text" id="" class="form-control" name="cpf" placeholder="CPF" value="<?=$cpf; ?>" autocomplete="off">
-      <input type="text" id="" class="form-control" name="rg" placeholder="RG" value="<?=$rg; ?>" autocomplete="off">
-      <input type="text" id="" class="form-control" name="telefone" placeholder="Telefone" value="<?=$tel; ?>" autocomplete="off">
+      <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">CPF</label>
+      <input type="text" id="cpf" class="form-control" name="cpf" placeholder="CPF" value="<?=$cpf; ?>" autocomplete="off">
+      <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">RG</label>
+      <input type="text" id="rg" class="form-control" name="rg" placeholder="RG" value="<?=$rg; ?>" autocomplete="off">
+      <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Telefone</label>
+      <input type="text" id="phone" class="form-control" name="telefone" placeholder="Telefone" value="<?=$tel; ?>" autocomplete="off">
 
       <br>
 
@@ -151,8 +166,33 @@ if(!$is_admin) {
       <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name="submit">Salvar</button>
     </form>
     <br>
+
+    <a href="<?= LINK_SITE; ?>admin/src/colaborador/alterar_senha_colaborador.php?id_colaborador=<?php echo $_GET['id_colaborador'] ?>"><button class="w-100 btn btn-lg btn-outline">Alterar Senha</button></a>
+    <br><br>
+
     <a href="<?= LINK_SITE; ?>admin/src/colaborador/colaboradores.php"><button class="w-100 btn btn-lg btn-outline">Voltar</button></a>
     <br><br>
   </main>
 </body>
+
+<!-- Mascara -->
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/jquery-1.2.6.pack.js"></script>
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/jquery.maskedinput-1.1.4.pack.js"/></script>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $("#cpf").mask("999.999.999-99");
+  });
+
+  $(document).ready(function(){
+    $("#phone").mask("(99) 9999-9999");
+  });
+
+  $(document).ready(function(){
+    $("#rg").mask("99.999.999-9");
+  });
+
+</script>
+
 </html>

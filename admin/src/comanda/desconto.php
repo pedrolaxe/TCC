@@ -59,6 +59,14 @@ if (isset($_POST['submit'])) {
     } 
   }
 
+  if (isset($_GET['desconto_negativo']) && $_GET['desconto_negativo'] == true) {
+
+    $desconto_alto = $_GET['desconto_negativo'];
+    if($desconto_alto) {
+      echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Desconto Não Pode Ser Negativo</center></div>';
+    } 
+  }
+
 ?>
     
 <main class="form-signin">
