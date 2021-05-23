@@ -165,7 +165,7 @@ if(isset($_POST['submit'])) {
                 <td><?php echo $data ?></td>
                 <td><?php echo $chegada ?></td>
                 <td><?php echo $saida ?></td>
-                <td><a href="src/comanda/comanda_registro.php?id='<?php echo $id_comanda ?>'"><i class="fas fa-2x fa-address-card"></i></a></td>
+                <td><a href="src/comanda/comanda_registro.php?id=<?php echo $id_comanda ?>&chegada=<?php echo $chegada ?>&saida=<?php echo $saida ?>&data=<?php echo $data_aux ?>"><i class="fas fa-2x fa-address-card"></i></a></td>
               </tr>
 
             <?php } else {
@@ -221,7 +221,7 @@ if(isset($_POST['submit'])) {
                 <td><?php echo $data ?></td>
                 <td><?php echo $chegada ?></td>
                 <td><?php echo $saida ?></td>
-                <td><a href="src/comanda/comanda_registro.php?id='<?php echo $id_comanda ?>'"><i class="fas fa-2x fa-address-card"></i></a></td>
+                <td><a href="src/comanda/comanda_registro.php?id=<?php echo $id_comanda ?>&chegada=<?php echo $chegada ?>&saida=<?php echo $saida ?>&data=<?php echo $data_aux ?>"><i class="fas fa-2x fa-address-card"></i></a></td>
               </tr>
 
             <?php } else {

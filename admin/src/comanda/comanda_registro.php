@@ -133,13 +133,13 @@ if (isset($_POST['submit'])) {
             $qtd          = $row['quantidade'];
             $nome_produto = $row['nome_produto'];
             $preco        = $row['preco'];
-
+            $data         = explode(' ',trim($row['data'])); 
 
             if ($id == $id_comanda) {
 
               echo
               '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, '.', ',') . '
-              </b></li>';
+              ( ' . substr($data[1], 0, -3) . ' )</b></li>';
 
               $total += $qtd * $preco;
             }
@@ -154,36 +154,59 @@ if (isset($_POST['submit'])) {
      
       <form action="comanda.php" method="POST">
 
-      <label>Desconto: </label>
-      <input name="desconto" style="width:26%; border:0" value="R$ ' . $desconto . '" disabled>
-
-      <br>
-
-      <label>Status: </label>
-      <input name="status" style="width:26%; border:0" value="' . ucfirst($status) . '" disabled>
-
-      <br><br>
-      
-      <input name="fechar_comanda" value="' . $id . '" hidden>
-      <input name="total" value="' . $total . '" hidden>
-      <input name="nome" value="' . $nome . '" hidden>
-
       <div class="form-check form-switch" style="float:right;">  
        
+        <h4 style="float:right; font-style: italic; font-weight: bold">
+
+        Subtotal <b id="">' . number_format($total, 2, '.', ',') . '</b>
+
+        </h4>
+       
+        <br>
+
+        <h5 style="float:right; font-style: italic; font-weight: bold">
+
+        Serviço <b id="">' . number_format($total*0.1, 2, '.', ',') . '</b>
+
+        </h5>
+
+        <br>
+
+        <h5 style="float:right; font-style: italic; font-weight: bold">
+
+        Desconto <b id="">' . number_format($desconto, 2, '.', ',') . '</b>
+
+        </h5>
+
         <br><br>
 
         <h2 style="float:right; font-style: italic; font-weight: bold">
 
-        R$ <b id="total">' . number_format($total, 2, '.', ',') . '</b>
+        Total <b id="total">' . number_format($total*1.1-$desconto, 2, '.', ',') . '</b>
 
         </h2>
 
-      </div>';
+      </div>
 
+       <label>Status: </label>
+      <input name="status" style="width:26%; border:0" value="' . ucfirst($status) . '" disabled>
 
-        
+      <br>
 
-      
+      <label>Data: </label>
+      <input name="status" style="width:26%; border:0" value="' . $_GET['data'] . '" disabled>
+
+      <br>
+
+      <label>Chegada: </label>
+      <input name="status" style="width:26%; border:0" value="' . substr($_GET['chegada'], 0, -3) . '" disabled>
+
+      <br>
+
+      <label>Saída:   </label>
+      <input name="status" style="width:26%; border:0" value="' . substr($_GET['saida'], 0, -3) . '" disabled>
+
+      ';
 
           ?>
 
