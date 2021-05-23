@@ -28,10 +28,9 @@ if(!$is_admin) {
   <link href="<?=LINK_SITE;?>assets/css/form.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="<?=LINK_SITE;?>assets/css/main.css" media="screen" />
 
-
   <style type="text/css">
     
-         .btn-outline {
+  .btn-outline {
     border: .2em solid black !important;
   }
 
@@ -74,9 +73,9 @@ if(!$is_admin) {
       <br>
 
       <input type="text" id="" class="form-control" name="nome" placeholder="Nome" autocomplete="off" required>      
-      <input type="text" id="" class="form-control" name="cpf" placeholder="CPF" autocomplete="off">
-      <input type="text" id="" class="form-control" name="rg" placeholder="RG" autocomplete="off">
-      <input type="text" id="" class="form-control" name="telefone" placeholder="Telefone" autocomplete="off">
+      <input type="text" id="cpf" class="form-control" name="cpf" placeholder="CPF" autocomplete="off">
+      <input type="text" id="rg" class="form-control" name="rg" placeholder="RG" autocomplete="off">
+      <input type="text" id="phone" class="form-control" name="telefone" placeholder="Telefone" autocomplete="off">
 
 
 
@@ -92,4 +91,26 @@ if(!$is_admin) {
     <br><br>
   </main>
 </body>
+
+<!-- Mascara -->
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/jquery-1.2.6.pack.js"></script>
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/jquery.maskedinput-1.1.4.pack.js"/></script>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $("#cpf").mask("999.999.999-99");
+  });
+
+  $(document).ready(function(){
+    $("#phone").mask("(99) 9999-9999");
+  });
+
+  $(document).ready(function(){
+    $("#rg").mask("99.999.999-9");
+  });
+
+</script>
+
+
 </html>

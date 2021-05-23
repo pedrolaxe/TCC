@@ -153,11 +153,6 @@ if (isset($_POST['submit'])) {
           '
      
       <form action="comanda.php" method="POST">
-
-      <label>Desconto: </label>
-      <input name="desconto" style="width:26%; border:0" value="R$ ' . $desconto . '" disabled>
-
-      <br><br>
       
       <input name="fechar_comanda" value="' . $id . '" hidden>
       <input name="total" value="' . $total . '" hidden>
@@ -167,15 +162,31 @@ if (isset($_POST['submit'])) {
 
         <h4 style="float:right; font-style: italic; font-weight: bold">
 
-        Subtotal <b id="total">' . number_format($total-$desconto, 2, '.', ',') . '</b>
+        Subtotal <b id="">' . number_format($total, 2, '.', ',') . '</b>
 
         </h4>
        
+        <br>
+
+        <h5 style="float:right; font-style: italic; font-weight: bold">
+
+        Serviço <b id="">' . number_format($total*0.1, 2, '.', ',') . '</b>
+
+        </h5>
+
+        <br>
+
+        <h5 style="float:right; font-style: italic; font-weight: bold">
+
+        Desconto <b id="">' . number_format($desconto, 2, '.', ',') . '</b>
+
+        </h5>
+
         <br><br>
 
         <h2 style="float:right; font-style: italic; font-weight: bold">
 
-        Total <b id="total">' . number_format(($total-$desconto)*1.1, 2, '.', ',') . '</b>
+        Total <b id="total">' . number_format($total*1.1-$desconto, 2, '.', ',') . '</b>
 
         </h2>
 
