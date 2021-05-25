@@ -188,7 +188,7 @@ if (!$existe_pedido) {
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Relatório</title>
+	<title>Top Produtos</title>
 
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../includes/head.php' ?>
@@ -232,7 +232,7 @@ button:hover {
 <div class='container'>
   <br>
 
-  <form action='estatistica.php' method='post'>
+  <form action='top_produtos.php' method='post'>
 
   <div class="row">
 

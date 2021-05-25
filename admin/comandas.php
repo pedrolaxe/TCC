@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
                 <?php
 
                 echo '<h2><a href="' . LINK_SITE . 'admin/src/comanda/comanda.php?id=' . $id . '">' . ucfirst($nome) . '</a>
-              <a href="' . LINK_SITE . 'admin/src/pedido/pedido.php?id=' . $id . '" style="float:right">+</a></h2>';
+              <a href="' . LINK_SITE . 'admin/src/pedido/pedido2.php?id=' . $id . '" style="float:right">+</a></h2>';
 
                 ?>
 

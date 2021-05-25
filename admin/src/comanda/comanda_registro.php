@@ -138,8 +138,7 @@ if (isset($_POST['submit'])) {
             if ($id == $id_comanda) {
 
               echo
-              '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, '.', ',') . '
-              ( ' . substr($data[1], 0, -3) . ' )</b></li>';
+              '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, '.', ',') . '</b></li>';
 
               $total += $qtd * $preco;
             }

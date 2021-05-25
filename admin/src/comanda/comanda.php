@@ -139,7 +139,7 @@ if (isset($_POST['submit'])) {
 
               echo
               '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, '.', ',') . '
-              <i data-bs-toggle="modal" data-bs-target="#exampleModal2" class="fas fa-trash" style="padding-left:0.3em"></i></li>';
+              <i data-bs-toggle="modal" data-bs-target="#exampleModal2" class="fas fa-trash" style="padding-left:0.3em"></i></b></li>';
 
               $total += $qtd * $preco;
             }
@@ -158,7 +158,7 @@ if (isset($_POST['submit'])) {
       <input name="total" value="' . $total . '" hidden>
       <input name="nome" value="' . $nome . '" hidden>
 
-      <div class="form-check form-switch" style="float:right;">  
+      <div class="form-check form-switch" style="float:right;">
 
         <h4 style="float:right; font-style: italic; font-weight: bold">
 
@@ -174,7 +174,7 @@ if (isset($_POST['submit'])) {
 
         </h5>
 
-        <br>
+        <br><br> 
 
         <h5 style="float:right; font-style: italic; font-weight: bold">
 
@@ -182,7 +182,7 @@ if (isset($_POST['submit'])) {
 
         </h5>
 
-        <br><br>
+        <br><br><br> 
 
         <h2 style="float:right; font-style: italic; font-weight: bold">
 
@@ -194,19 +194,19 @@ if (isset($_POST['submit'])) {
 
       if($is_admin) {
 
-      echo '<button style="float:left;" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
+      echo '<button style="float:left;width: 10.4em" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
 
         </form>
 
 
       <a href="trocar_comanda.php?id=' . $id . '">
-        <button style="margin-left:6px; width: 10.4em" class="btn-lg btn-outline-success">Trocar Comanda</button>
+        <button style="margin-top:5px; width: 10.4em" class="btn-lg btn-outline-success">Trocar Comanda</button>
       </a>
 
       
 
         <a href="desconto.php?id=' . $id . '&total='. $total * 1.1 . '">
-        <button style="display:inline; width: 7.9em;" type="button" class="btn-lg btn-outline-dark">Desconto</button>
+        <button style="display:inline; margin-top:5px; width: 10.4em;" type="button" class="btn-lg btn-outline-dark">Desconto</button>
       </a>
 
       <button style="margin-top:5px;width: 10.4em" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Cancelar Comanda</button>';
