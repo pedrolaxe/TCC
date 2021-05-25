@@ -109,10 +109,6 @@ if (isset($_POST['submit_carrinho'])) {
 
 
         if (isset($_POST['submit']) || isset($_POST['submit_tudo'])) {
-
-
-        
-
                   
                   $search = anti_injection($_POST['procurar_produto']);
 
@@ -143,7 +139,7 @@ if (isset($_POST['submit_carrinho'])) {
 
                   $registro = true;
                   $id_produto    = $row['id_produto'];
-                  $tipo          = $row['tipo'];
+                  // $tipo          = $row['tipo'];
                   $nome_produto  = $row['nome_produto'];
                   $preco         = $row['preco'];
                   $descricao     = $row['descricao'];
@@ -201,7 +197,7 @@ if (isset($_POST['submit_carrinho'])) {
 
                 $registro = true;
                 $id_produto    = $row['id_produto'];
-                $tipo          = $row['tipo'];
+                // $tipo          = $row['tipo'];
                 $nome_produto  = $row['nome_produto'];
                 $preco         = $row['preco'];
                 $descricao     = $row['descricao'];

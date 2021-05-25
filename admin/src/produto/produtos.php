@@ -94,7 +94,7 @@ if (isset($_POST['submit'])) {
             <tr>
               <th>Nome</th>
               <th>Preço</th>
-              <th>Tipo</th>
+              <!-- <th>Tipo</th> -->
               <th>Descrição</th>
               <th></th>
               <th></th>
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
 
               $registro = true;
               $id            = $row['id_produto'];
-              $tipo          = $row['tipo'];
+              // $tipo          = $row['tipo'];
               $nome_produto  = $row['nome_produto'];
               $preco         = $row['preco'];
               $descricao     = $row['descricao'];
@@ -128,7 +128,7 @@ if (isset($_POST['submit'])) {
               <tr>
                 <td><?php echo $nome_produto ?></td>
                 <td><?php echo $preco ?></td>
-                <td><?php echo $tipo ?></td>
+
                 <td><?php echo $descricao ?></td>
 
                 <td style="text-align: right; padding-left: 0"><a href="alterar_produto.php?id_produto=<?php echo $id; ?>"><button class="btn btn-outline-dark"><i class="far fa-edit"></i></button></a></td>
