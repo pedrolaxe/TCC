@@ -93,7 +93,7 @@ if(isset($_POST['submit'])) {
     <div class="row">
 
     	 <div class="col-5">
-        <h1><i class="fas fa-chart-pie"></i> Relatório de Vendas</h1><br>
+        <h1>Relatório de Vendas</h1><br>
         <h2></h2><br>
       </div>
 

@@ -86,6 +86,11 @@ if (isset($_POST['submit_carrinho'])) {
 
       <div class="col-5" style="padding:0 !important">
 
+        <h1 style="padding: 0vw 4.5vw;">Adicionar Pedido</h1>
+        <h2 style="padding: 0vw 4.5vw;"><?php echo "Nome: ".ucfirst($nome_comanda) ?></h2> 
+        
+        <br>       
+
         <form action="pedido2.php?id=<?php echo $id ?>" method="POST">
           <div class="input-group mb-4" style="padding: 0vw 4.5vw;">
             <input name="procurar_produto" value="<?php if(isset($_POST['submit'])) echo $search; ?>" type="text" class="form-control" placeholder="" autocomplete="off">
@@ -106,16 +111,7 @@ if (isset($_POST['submit_carrinho'])) {
         if (isset($_POST['submit']) || isset($_POST['submit_tudo'])) {
 
 
-        echo '<table class="styled-table">
-          <thead>
-            <tr>
-              <th>Qtd</th>
-              <th>Produto</th>
-              <th>Preço</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>';
+        
 
                   
                   $search = anti_injection($_POST['procurar_produto']);
@@ -123,10 +119,25 @@ if (isset($_POST['submit_carrinho'])) {
                   if (isset($_POST['submit'])) {
                     $query  = "SELECT * FROM produto WHERE nome_produto LIKE '%$search%' ORDER BY nome_produto ASC";
                   } elseif (isset($_POST['submit_tudo'])) {
-                    $query  = "SELECT * FROM produto";
+                    $query  = "SELECT * FROM produto ORDER BY nome_produto ASC";
                   }
 
                   $result = $con->query($query);
+
+                  if($result->rowCount() > 0) {
+
+                    echo '<table class="styled-table">
+                    <thead>
+                      <tr>
+                        <th>Qtd</th>
+                        <th>Produto</th>
+                        <th>Preço</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>';
+
+                  } else { echo '<h1>Sem Resultado</h1>'; }
 
                 foreach($result as $row) {
 
