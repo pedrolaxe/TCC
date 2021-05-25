@@ -44,7 +44,7 @@ if(isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Relatório</title>
+	<title>Relatório de Vendas</title>
 
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../includes/head.php' ?>
@@ -88,7 +88,7 @@ if(isset($_POST['submit'])) {
 <div class='container'>
   <br>
 
-  <form action='relatorio.php' method='post'>
+  <form action='relatorio_vendas.php' method='post'>
 
     <div class="row">
 

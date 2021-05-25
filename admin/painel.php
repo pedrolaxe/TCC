@@ -66,7 +66,7 @@ button:hover {
   	<i class="fas fa-4x fa-chart-pie"></i><br><br><br>
 
   	<a href="config_gerais.php"><button class="btn-lg btn-outline">Configurações Gerais</button></a><br><br>
-  	<a href="relatorio.php"><button class="btn-lg btn-outline">Relatório de Vendas</button></a><br><br>
+  	<a href="relatorio_vendas.php"><button class="btn-lg btn-outline">Relatório de Vendas</button></a><br><br>
     <a href="relatorio_comandas.php"><button class="btn-lg btn-outline">Relatório de Comandas</button></a>
   	</div>
 
@@ -75,7 +75,7 @@ button:hover {
 
   	<a href="src/produto/produtos.php"><button class="btn-lg btn-outline">Produtos</button></a>
   	<a href="src/produto/add_produto.php"><button class="btn-lg btn-outline-success">+</button></a><br><br>
-    <a href="estatistica.php"><button class="btn-lg btn-outline">Top Produtos</button></a>
+    <a href="top_produtos.php"><button class="btn-lg btn-outline">Top Produtos</button></a>
 
   	</div>
 
