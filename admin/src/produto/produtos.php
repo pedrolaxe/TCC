@@ -77,8 +77,12 @@ if (isset($_POST['submit'])) {
 
       <div class="col-12">
 
+        <h1 style="padding: 0vw 3.5vw;">Produtos</h1>
+
+        <br>
+
         <form action="produtos.php" method="POST">
-          <div class="input-group mb-4" style="width: 40vw ;padding: 0vw 4.5vw;">
+          <div class="input-group mb-4" style="width: 40vw ;padding: 0vw 3.5vw;">
             <input name="procurar_produto" value="<?php if(isset($_POST['submit'])) echo $search; ?>" type="text" class="form-control" placeholder="" autocomplete="off">
             <button name="submit" class="btn btn-outline" type="submit" style="font-weight: bolder;">Procurar</button>
             <button class="btn btn-outline" type="submit" style="margin-left: .2em;font-weight: bolder;">Listar Tudo</button>

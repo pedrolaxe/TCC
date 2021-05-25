@@ -105,19 +105,20 @@ while ($row = $result->fetch() ) {
 
     ?>
 
-  	<h1>⚙️ Configurações Gerais</h1>
+  	<!-- <h1>⚙️ Configurações Gerais</h1> -->
+    <h1>Configurações Gerais</h1>
 
     <br><br><br>
 
   	<hr>
 
-  	<br><br>
+  	<br>
 
   	<div class="col-6">
 
       <form action="config_gerais.php" method="POST">
-        <label for="Logo"><i style="font-size: 24px; font-weight: bolder">Logo</i></label><br><br>
-        <input class="form-control logo" type="file" id="img" name="logo" accept="image/*"><br>
+        <!-- <label for="Logo"><i style="font-size: 24px; font-weight: bolder">Logo</i></label><br><br>
+        <input class="form-control logo" type="file" id="img" name="logo" accept="image/*"><br> -->
         <label><i style="font-size: 24px; font-weight: bolder">Nome da Empresa</i></label><br><br>
         <input class="form-control" value="<?php if (isset($empresa)) echo $empresa; ?>" type="text" name="empresa" autocomplete="off">
         <label><i style="font-size: 24px; font-weight: bolder">Nome da Impressora</i></label><br><br>
