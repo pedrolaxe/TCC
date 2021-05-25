@@ -22,7 +22,7 @@ if (isset($_GET['id_produto'])) {
   foreach($result as $row) { 
     $id        = $row['id_produto'];
     $nome      = $row['nome_produto'];
-    $tipo      = $row['tipo'];
+    // $tipo      = $row['tipo'];
     $preco     = $row['preco'];
     $descricao = $row['descricao'];
   }
@@ -105,11 +105,11 @@ select.minimal:focus {
       if (isset($_POST['submit'])) {
         $id        = anti_injection($_POST['id']);
         $nome      = anti_injection($_POST['nome_produto']);
-        $tipo      = anti_injection($_POST['tipo']);
+        // $tipo      = anti_injection($_POST['tipo']);
         $preco     = anti_injection($_POST['preco']);
         $descricao = anti_injection($_POST['descricao']);
         
-        alterar_produto($id, $nome, $tipo, $preco, $descricao);
+        alterar_produto($id, $nome, $preco, $descricao);
       } else { }
 
     ?>
@@ -120,7 +120,7 @@ select.minimal:focus {
     <label for="Nome" class="visually-hidden">Nome</label>
     <input name="nome_produto" type="text" class="form-control" placeholder="Nome" autocomplete="off" value="<?php echo $nome ?>" required autofocus>
     <br>
-    <label for="Tipo" class="visually-hidden">Tipo</label>
+    <!-- <label for="Tipo" class="visually-hidden">Tipo</label>
     <select name="tipo" placeholder="Tipo" class="form-control minimal" value="<?php echo $tipo ?>" required>
       
       <option value="" disabled selected>Tipo</option>
@@ -132,7 +132,7 @@ select.minimal:focus {
       <option value="desconto">Desconto</option>
 
     </select>
-    <br>
+    <br> -->
     <label for="Preço" class="visually-hidden">Preço</label>
     <input name="preco" type="money" class="form-control" placeholder="Preço" autocomplete="off" value="<?php echo $preco ?>" required>
     <br>

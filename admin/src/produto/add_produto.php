@@ -97,7 +97,7 @@ if(!$is_admin) {
       <label for="Nome" class="visually-hidden">Nome</label>
       <input name="nome_produto" type="text" class="form-control" placeholder="Nome" autocomplete="off" required autofocus>
       <br>
-      <label for="Tipo" class="visually-hidden">Tipo</label>
+      <!-- <label for="Tipo" class="visually-hidden">Tipo</label>
       <select name="tipo" placeholder="Tipo" class="form-control minimal" required>
 
         <option value="" disabled selected>Tipo</option>
@@ -108,7 +108,7 @@ if(!$is_admin) {
         <option value="caldo">Caldos</option>
 
       </select>
-      <br>
+      <br> -->
       <label for="Preço" class="visually-hidden">Preço</label>
       <input name="preco" type="money" class="form-control" placeholder="Preço" autocomplete="off" required>
       <br>

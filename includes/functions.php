@@ -465,7 +465,7 @@ function insert_produto() {
   global $con;
 
   $nome      = $_POST['nome_produto'];
-  $tipo      = $_POST['tipo'];
+  // $tipo      = $_POST['tipo'];
   $preco     = $_POST['preco'];
   $descricao = $_POST['descricao'];
 
@@ -477,8 +477,8 @@ function insert_produto() {
     echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Produto Já Existe!</center></div>';
   } else {
 
-    $query  = "INSERT INTO produto (nome_produto, tipo, preco, descricao) ";
-    $query .= "VALUES ('$nome', '$tipo', '$preco', '$descricao')";
+    $query  = "INSERT INTO produto (nome_produto, preco, descricao) ";
+    $query .= "VALUES ('$nome', '$preco', '$descricao')";
 
     $result = $con->query($query);
 
@@ -487,7 +487,7 @@ function insert_produto() {
   } 
 }
 
-function alterar_produto($id, $nome, $tipo, $preco, $descricao) {
+function alterar_produto($id, $nome, $preco, $descricao) {
   global $con;
 
   # VERIFICAR SE comanda JÁ EXISTE
@@ -498,7 +498,7 @@ function alterar_produto($id, $nome, $tipo, $preco, $descricao) {
     echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Produto Já Existe!</center></div>';
   } else {
 
-    $query = "UPDATE produto SET nome_produto = '$nome', tipo = '$tipo', preco = '$preco', descricao = '$descricao' WHERE id_produto = $id";
+    $query = "UPDATE produto SET nome_produto = '$nome', preco = '$preco', descricao = '$descricao' WHERE id_produto = $id";
     $result = $con->query($query);
 
     echo '<div style="width:15em; margin:0 auto;" class="alert alert-success" role="alert"><center>Produto Modificado Com Sucesso!</center></div>';
