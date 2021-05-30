@@ -80,11 +80,11 @@ while ($row = $result->fetch() ) {
         
           $empresa    = $_POST['empresa'];
           $impressora = $_POST['impressora'];
-          $logo       = $_POST['logo'];
+          // $logo       = $_POST['logo'];
 
         if($q->rowCount() > 0){
 
-          $query  = "UPDATE config SET nome_empresa='$empresa', nome_impressora='$impressora', logo='$logo' WHERE id_config='1' ";
+          $query  = "UPDATE config SET nome_empresa='$empresa', nome_impressora='$impressora' WHERE id_config='1' ";
           $result = $con->query($query);
 
           echo '<div style="width:17em; margin:0 auto;" class="alert alert-success">Informações Salvas Com Sucesso</div>';

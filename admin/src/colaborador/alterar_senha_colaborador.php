@@ -82,12 +82,12 @@ if(!$is_admin) {
 
 
           if( empty($senha) || empty($conf_senha) ){
-            $link_atual = LINK_SITE."admin/src/colaborador/edit_colaborador.php?id_colaborador=".$idf."";
+            $link_atual = LINK_SITE."admin/src/colaborador/alterar_senha_colaborador.php?id_colaborador=".$idf."";
             header("Location: ".$link_atual."&error=1");
           } 
 
           elseif($senha != $conf_senha){
-            $link_atual = LINK_SITE."admin/src/colaborador/edit_colaborador.php?id_colaborador=".$idf."";
+            $link_atual = LINK_SITE."admin/src/colaborador/alterar_senha_colaborador.php?id_colaborador=".$idf."";
             header("Location: ".$link_atual."&error=2");
           }
 

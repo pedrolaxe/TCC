@@ -75,8 +75,25 @@ if (isset($_POST['submit'])) {
     <input name="id" value="<?php echo $id ?>" hidden>
     <br>
     <label for="inputEmail" class="visually-hidden">Desconto</label>
-    <input name="desconto" type="text" class="form-control" placeholder="Desconto (Ex: 10.50)" autocomplete="off" required autofocus>
+    <input name="desconto" type="text" class="form-control" placeholder="Desconto" autocomplete="off" required autofocus>
     <input name="total" value="<?php echo $total ?>" type="text" class="form-control" hidden>
+
+    <br>
+
+    <div class="form-check" style="margin-bottom: 0.5em">
+      <input name="descontoCheckBox" value="nominal" style="height:1em !important;" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+      <label style="float:left;" class="form-check-label" for="flexRadioDefault1">
+        Nominal
+      </label>
+    </div>
+    <div class="form-check">
+      <input name="descontoCheckBox" value="percentual" style="height:1em !important" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+      <label style="float:left" class="form-check-label" for="flexRadioDefault2">
+        Percentual
+      </label>
+    </div>
+
+
     <br>
     <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Gerar Desconto</button>
     <br><br>

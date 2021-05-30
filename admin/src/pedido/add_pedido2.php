@@ -106,7 +106,10 @@ foreach($result as $row) {
 
     }
 
-header('Location: '.LINK_SITE.'admin/comandas.php?impressora='.$impressora);
+header('Location: '.LINK_SITE.'admin/src/pedido/pedido2.php?id='.$id_comanda.'&pedido=feito');
+
+// header('Location: '.LINK_SITE.'admin/comandas.php?impressora='.$impressora);
+
 
 
 

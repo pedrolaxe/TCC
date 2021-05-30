@@ -288,9 +288,14 @@ function fechar_comanda($id, $total) {
 function insert_desconto() {
   global $con;
 
-  $id_comanda  = $_POST['id'];
-  $desconto    = $_POST['desconto'];
-  $total       = $_POST['total'];
+  $id_comanda    = $_POST['id'];
+  $desconto      = $_POST['desconto'];
+  $total         = $_POST['total'];
+  $descontoCheck = $_POST['descontoCheckBox'];
+
+  if($descontoCheck == "percentual") {
+    $desconto = $total*$desconto/100;
+  }
 
   if($desconto > $total) {
     header('Location: ' . LINK_SITE . 'admin/src/comanda/desconto.php?id='.$id_comanda . '&desconto_alto=true&total=' . $total);
