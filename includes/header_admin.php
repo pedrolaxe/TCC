@@ -24,6 +24,22 @@ if(basename($_SERVER['PHP_SELF']) == 'comandas.php') {
 //     }
 
 //   $extra = "<strong>$nome</strong>";
+} elseif(basename($_SERVER['PHP_SELF']) == 'painel.php') {
+
+ $query = "SELECT * FROM config WHERE id_config = 1";
+    $result = $con->query($query);
+
+    foreach($result as $row) {
+
+        $nome_empresa = $row['nome_empresa'];
+    }
+
+  $extra = '
+  <div class="d-flex" style="padding: 0% 8.5%;">
+    <h2>'.$nome_empresa.'</h2>
+  </div>
+  ';
+
 } else { $extra = ''; }
 
 echo '

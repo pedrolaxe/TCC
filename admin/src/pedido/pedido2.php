@@ -80,7 +80,17 @@ if (isset($_POST['submit_carrinho'])) {
   <?php include '../../../includes/header_admin.php'; ?>
 
   <div class='container-fluid'>
+
+
     <br>
+
+      <?php
+
+        if(isset($_GET['pedido']) && $_GET['pedido'] == "feito") {
+          echo '<div style="width:15em; margin:0 auto;" class="alert alert-success" role="alert"><center>O Pedido Foi Inserido</center></div>';
+        }
+
+      ?>
 
     <div class="row">
 
@@ -97,8 +107,13 @@ if (isset($_POST['submit_carrinho'])) {
 
             <button name="submit" class="btn btn-outline" type="submit" style="font-weight: bolder;">Procurar</button>
             <button name="submit_tudo" class="btn btn-outline" type="submit" style="margin-left: .2em;font-weight: bolder;">Listar Tudo</button>
+
           </div>
         </form>
+
+        <br>
+
+        <a style="padding: 0vw 4.5vw;" href="../../comandas.php"><button class="w-10 btn btn-lg btn-outline">Voltar</button></a>
 
       </div>
 

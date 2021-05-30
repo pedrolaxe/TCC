@@ -174,7 +174,7 @@ if (isset($_POST['submit'])) {
 
         </h5>
 
-        <br><br> 
+        <br>
 
         <h5 style="float:right; font-style: italic; font-weight: bold">
 
@@ -210,6 +210,17 @@ if (isset($_POST['submit'])) {
       </a>
 
       <button style="margin-top:5px;width: 10.4em" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Cancelar Comanda</button>';
+
+      } else {
+
+         echo '<button style="float:left;width: 10.4em" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
+
+        </form>
+
+
+      <a href="trocar_comanda.php?id=' . $id . '">
+        <button style="margin-top:5px; width: 10.4em" class="btn-lg btn-outline-success">Trocar Comanda</button>
+      </a>';
 
       }
 

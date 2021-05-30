@@ -89,7 +89,7 @@ if (isset($_POST['submit'])) {
           </div>
         </form>
 
-        <table class="styled-table">
+        <table class="styled-table" style="margin-bottom:3em">
           <thead>
             <tr>
               <th>Nome</th>
@@ -141,9 +141,6 @@ if (isset($_POST['submit'])) {
           </tbody>
         </table>
       </div>
-
-
-      
 
 </body>
 
