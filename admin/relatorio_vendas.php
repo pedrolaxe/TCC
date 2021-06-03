@@ -177,10 +177,10 @@ if(isset($_POST['submit'])) {
                 <td><?php echo ucfirst($nome) ?></td>
                 <td><?php echo $nome_produto ?></td>
                 <td><?php echo $qtd ?></td>
-                <td><?php echo number_format($preco, 2, '.', ',') ?></td>
-                <td><?php echo number_format($preco*$qtd, 2, '.', ',') ?></td>
-                <td><?php echo $data[1] ?></td>
-                <td><?php echo $data[0] ?></td>
+                <td><?php echo number_format($preco, 2, ',', '.') ?></td>
+                <td><?php echo number_format($preco*$qtd, 2, ',', '.') ?></td>
+                <td><?php echo substr($data[1], 0, -3) ?></td>
+                <td><?php echo date("d/m/Y", strtotime($data[0])) ?></td>
               </tr>
 
             <?php } else {
@@ -252,10 +252,10 @@ if(isset($_POST['submit'])) {
                 <td><?php echo ucfirst($nome) ?></td>
                 <td><?php echo $nome_produto ?></td>
                 <td><?php echo $qtd ?></td>
-                <td><?php echo number_format($preco, 2, '.', ',') ?></td>
-                <td><?php echo number_format($preco*$qtd, 2, '.', ',') ?></td>
-                <td><?php echo $data[1] ?></td>
-                <td><?php echo $data[0] ?></td>
+                <td><?php echo number_format($preco, 2, ',', '.') ?></td>
+                <td><?php echo number_format($preco*$qtd, 2, ',', '.') ?></td>
+                <td><?php echo substr($data[1], 0, -3) ?></td>
+                <td><?php echo date("d/m/Y", strtotime($data[0])) ?></td>
               </tr>
 
             <?php } else {
@@ -318,13 +318,13 @@ if(isset($_POST['submit'])) {
     }
 
 
-    $faturamento = number_format($faturamento, 2, '.', ',') 
+    $faturamento = number_format($faturamento, 2, ',', '.') 
 
   ?>
 
   let faturamento = document.querySelector("h2");
 
-  <?php if($faturamento != 0) { ?>
+  <?php if($faturamento != '0,00') { ?>
 
     faturamento.textContent += 'Faturamento: R$ <?php echo $faturamento; ?>';
 

@@ -25,6 +25,7 @@ if (isset($_GET['id_produto'])) {
     // $tipo      = $row['tipo'];
     $preco     = $row['preco'];
     $descricao = $row['descricao'];
+
   }
 }
 
@@ -108,9 +109,13 @@ select.minimal:focus {
         // $tipo      = anti_injection($_POST['tipo']);
         $preco     = anti_injection($_POST['preco']);
         $descricao = anti_injection($_POST['descricao']);
+
+        $preco = str_replace(',', '.', $preco);
         
         alterar_produto($id, $nome, $preco, $descricao);
       } else { }
+
+      $preco = str_replace('.', ',', $preco);
 
     ?>
 
@@ -158,7 +163,7 @@ select.minimal:focus {
 $(function() {
   $('[type=money]').maskMoney({
     thousands: '',
-    decimal: '.'
+    decimal: ','
   });
 })
 </script>

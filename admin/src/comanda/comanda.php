@@ -138,7 +138,7 @@ if (isset($_POST['submit'])) {
             if ($id == $id_comanda) {
 
               echo
-              '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, '.', ',') . '
+              '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, ',', '.') . '
               <i data-bs-toggle="modal" data-bs-target="#exampleModal2" class="fas fa-trash" style="padding-left:0.3em"></i></b></li>';
 
               $total += $qtd * $preco;
@@ -162,7 +162,7 @@ if (isset($_POST['submit'])) {
 
         <h4 style="float:right; font-style: italic; font-weight: bold">
 
-        Subtotal <b id="">' . number_format($total, 2, '.', ',') . '</b>
+        Subtotal <b id="">' . number_format($total, 2, ',', '.') . '</b>
 
         </h4>
        
@@ -170,23 +170,31 @@ if (isset($_POST['submit'])) {
 
         <h5 style="float:right; font-style: italic; font-weight: bold">
 
-        Serviço <b id="">' . number_format($total*0.1, 2, '.', ',') . '</b>
+        Serviço <b id="">' . number_format($total*0.1, 2, ',', '.') . '</b>
 
         </h5>
 
-        <br>
+        <br>';
 
-        <h5 style="float:right; font-style: italic; font-weight: bold">
+        if($desconto != 0) {
 
-        Desconto <b id="">' . number_format($desconto, 2, '.', ',') . '</b>
+          echo '
 
-        </h5>
+          <h5 style="float:right; font-style: italic; font-weight: bold">
+
+          Desconto <b id="">' . number_format($desconto, 2, ',', '.') . '</b>
+
+          </h5>';
+
+        }
+
+        echo '
 
         <br><br><br> 
 
         <h2 style="float:right; font-style: italic; font-weight: bold">
 
-        Total <b id="total">' . number_format($total*1.1-$desconto, 2, '.', ',') . '</b>
+        Total <b id="total">' . number_format($total*1.1-$desconto, 2, ',', '.') . '</b>
 
         </h2>
 

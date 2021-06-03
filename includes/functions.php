@@ -308,7 +308,7 @@ function insert_desconto() {
       $result = $con->query($query);
       header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id_comanda);
     } catch(Exception $e) {
-      header('Location: ' . LINK_SITE . 'admin/src/comanda/desconto.php?id='.$id_comanda . "&erro_desconto=true");
+      header('Location: ' . LINK_SITE . 'admin/src/comanda/desconto.php?id='.$id_comanda . "&erro_desconto=true&total=" . $total);
     }
   }
 
@@ -473,6 +473,9 @@ function insert_produto() {
   // $tipo      = $_POST['tipo'];
   $preco     = $_POST['preco'];
   $descricao = $_POST['descricao'];
+
+
+  $preco = str_replace(',', '.', $preco);
 
   # VERIFICAR SE PRODUTO JÁ EXISTE
   $query  = "SELECT * FROM PRODUTO WHERE nome_produto = '$nome'";

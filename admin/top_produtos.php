@@ -109,30 +109,25 @@ $produtoTop = [];
 // echo '<pre>'; print_r($nomeList); echo '</pre>';
 // echo 'TOP 1: '.$nomeList[array_search(max($qtdList), $qtdList)]. ' x '.$qtdList[array_search(max($qtdList), $qtdList)];
 
-if(sizeof($qtdList) >= 3) {
+if(sizeof($qtdList) >= 5) {
 
+$tamanho_qtdList = sizeof($qtdList);
+
+for ($i = 0; $i < $tamanho_qtdList; $i++) {
 
 array_push($nomeTop, $nomeList[array_search(max($qtdList), $qtdList)]);
 array_push($qtdTop, $qtdList[array_search(max($qtdList), $qtdList)]);
 
-# copia $qtdList
-$copia_qtdList = $qtdList;
-// echo $copia_qtdList;
+#copia $qtd_list
+if($i == 0) $copia_qtdList = $qtdList;
 
-unset($qtdList[array_search(max($qtdList), $qtdList)]);
+if($i != $tamanho_qtdList-1) unset($qtdList[array_search(max($qtdList), $qtdList)]);
 
-array_push($nomeTop, $nomeList[array_search(max($qtdList), $qtdList)]);
-array_push($qtdTop, $qtdList[array_search(max($qtdList), $qtdList)]); 
-
-// echo 'TOP 2: '.$nomeList[array_search(max($qtdList), $qtdList)]. ' x '.$qtdList[array_search(max($qtdList), $qtdList)];
-
-unset($qtdList[array_search(max($qtdList), $qtdList)]);
-
-array_push($nomeTop, $nomeList[array_search(max($qtdList), $qtdList)]);
-array_push($qtdTop, $qtdList[array_search(max($qtdList), $qtdList)]); 
+}
 
 
 $qtdList = $copia_qtdList;
+
 for ($i = 0; $i < sizeof($nomeList); $i++) {
 
   $produtoList[$i] = $qtdList[$i] * $precoList[$i];
@@ -145,18 +140,14 @@ for ($i = 0; $i < sizeof($nomeList); $i++) {
 $nomeTop2   = [];
 $produtoTop = [];
 
-array_push($nomeTop2, $nomeList[array_search(max($produtoList), $produtoList)]);
-array_push($produtoTop, $produtoList[array_search(max($produtoList), $produtoList)]);
+for ($i = 0; $i < sizeof($nomeList); $i++) {
 
-unset($produtoList[array_search(max($produtoList), $produtoList)]);
+  array_push($nomeTop2, $nomeList[array_search(max($produtoList), $produtoList)]);
+  array_push($produtoTop, $produtoList[array_search(max($produtoList), $produtoList)]);
 
-array_push($nomeTop2, $nomeList[array_search(max($produtoList), $produtoList)]);
-array_push($produtoTop, $produtoList[array_search(max($produtoList), $produtoList)]);
 
-unset($produtoList[array_search(max($produtoList), $produtoList)]);
-
-array_push($nomeTop2, $nomeList[array_search(max($produtoList), $produtoList)]);
-array_push($produtoTop, $produtoList[array_search(max($produtoList), $produtoList)]); 
+  if($i != $tamanho_qtdList-1) unset($produtoList[array_search(max($produtoList), $produtoList)]);
+}
 
 // echo $produtoTop[0]."<br>";
 // echo $produtoTop[1]."<br>";
@@ -164,7 +155,7 @@ array_push($produtoTop, $produtoList[array_search(max($produtoList), $produtoLis
 $existe_pedido = true;
 
 
-} elseif(sizeof($qtdList) > 0) {
+} elseif(sizeof($qtdList) > 0 && sizeof($qtdList) < 6) {
   echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Cadastre Mais Produtos Nessa Data</center></div>';
   $existe_pedido = true;
 }
@@ -259,13 +250,12 @@ button:hover {
 
   	<hr>
 
-  	<br><br>
+  	<br>
 
     <div class="col-1"></div>
 
   <div class="col-4">
-    <h2 align="center">Faturamento Produto</h2>
-    <br>
+    <h2 align="center">Faturamento - Produto</h2>
     <canvas id="faturamento_produto" width="200" height="200"></canvas>
   </div>
 
@@ -275,8 +265,7 @@ button:hover {
 
   <div class="col-4">
     <h2 align="center">Produtos Mais Vendidos</h2>
-    <br>
-    <canvas id="aportes" width="200" height="200"></canvas>
+    <canvas id="qtd_produto" width="200" height="200"></canvas>
   </div>
 
   <div class="col-1"></div>
@@ -290,50 +279,208 @@ button:hover {
 
 <script>
 
-// APORTES
-new Chart(document.getElementById("faturamento_produto"), {
-  type: 'pie',
-  data: {
+
+var canvas = document.getElementById("faturamento_produto");
+var ctx = canvas.getContext('2d');
+
+Chart.defaults.global.defaultFontColor = 'black';
+Chart.defaults.global.defaultFontSize = 14;
+var theHelp = Chart.helpers;
+
+var data = {
   labels: [
     '<?php echo $nomeTop2[0]; ?>',
     '<?php echo $nomeTop2[1]; ?>',
-    '<?php echo $nomeTop2[2]; ?>'
-  ],
+    '<?php echo $nomeTop2[2]; ?>',
+    '<?php echo $nomeTop2[3]; ?>',
+    '<?php echo $nomeTop2[4]; ?>'],
   datasets: [{
-    label: 'My First Dataset',
-    data: ['<?php echo $produtoTop[0]; ?>', '<?php echo $produtoTop[1]; ?>', '<?php echo $produtoTop[2]; ?>'],
+    fill: true,
     backgroundColor: [
       'blue',
       'rgb(54, 162, 235)',
-      'grey'
+      'grey',
+      'green',
+      'orange'
     ],
-    hoverOffset: 4
+    data: ['<?php echo $produtoTop[0]; ?>', '<?php echo $produtoTop[1] ?>', '<?php echo $produtoTop[2]; ?>', '<?php echo $produtoTop[3]; ?>', '<?php echo $produtoTop[4]; ?>'],
+    borderColor: ['black', 'black', 'black', 'black', 'black'],
+    borderWidth: [2, 2, 2, 2, 2]
   }]
-}
+};
+
+var options = {
+  title: {
+    display: false,
+    text: '',
+    position: 'top'
+  },
+
+  rotation: -0.7 * Math.PI,
+  legend: {
+    display: false,
+    
+    // generateLabels changes from chart to chart,  check the source, 
+    // this one is from the doughut :
+    // https://github.com/chartjs/Chart.js/blob/master/src/controllers/controller.doughnut.js#L42
+    labels: {
+      generateLabels: function(chart) {
+        var data = chart.data;
+        if (data.labels.length && data.datasets.length) {
+          return data.labels.map(function(label, i) {
+            var meta = chart.getDatasetMeta(0);
+            var ds = data.datasets[0];
+            var arc = meta.data[i];
+            var custom = arc && arc.custom || {};
+            var getValueAtIndexOrDefault = theHelp.getValueAtIndexOrDefault;
+            var arcOpts = chart.options.elements.arc;
+            var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+            var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+            var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+              return {
+              // And finally : 
+              // text: ds.data[i] + " " + label,
+              text: label,
+              fillStyle: fill,
+              strokeStyle: stroke,
+              lineWidth: bw,
+              hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+              index: i
+            };
+          });
+        }
+        return [];
+      }
+    }
+  }
+};
+
+// Chart declaration:
+var myPieChart = new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: options
 });
 
+var canvas = document.getElementById("qtd_produto");
+var ctx = canvas.getContext('2d');
 
-// APORTES
-new Chart(document.getElementById("aportes"), {
-  type: 'pie',
-  data: {
+Chart.defaults.global.defaultFontColor = 'black';
+Chart.defaults.global.defaultFontSize = 12;
+var theHelp = Chart.helpers;
+
+var data = {
   labels: [
     '<?php echo $nomeTop[0]; ?>',
     '<?php echo $nomeTop[1]; ?>',
-    '<?php echo $nomeTop[2]; ?>'
-  ],
+    '<?php echo $nomeTop[2]; ?>',
+    '<?php echo $nomeTop[3]; ?>',
+    '<?php echo $nomeTop[4]; ?>',],
   datasets: [{
-    label: 'My First Dataset',
-    data: ['<?php echo $qtdTop[0]; ?>', '<?php echo $qtdTop[1]; ?>', '<?php echo $qtdTop[2]; ?>'],
+    fill: true,
     backgroundColor: [
       'blue',
       'rgb(54, 162, 235)',
-      'grey'
+      'grey',
+      'green',
+      'orange'
     ],
-    hoverOffset: 4
+    data: ['<?php echo $qtdTop[0]; ?>', '<?php echo $qtdTop[1]; ?>', '<?php echo $qtdTop[2]; ?>', '<?php echo $qtdTop[3]; ?>', '<?php echo $qtdTop[4]; ?>'],
+    borderColor: ['black', 'black', 'black', 'black', 'black'],
+    borderWidth: [2, 2, 2, 2, 2]
   }]
-}
+};
+
+var options = {
+  title: {
+    display: false,
+    text: '',
+    position: 'top',
+
+  },
+
+  rotation: -0.7 * Math.PI,
+  legend: {
+    display: false,
+    
+    // generateLabels changes from chart to chart,  check the source, 
+    // this one is from the doughut :
+    // https://github.com/chartjs/Chart.js/blob/master/src/controllers/controller.doughnut.js#L42
+    labels: {
+      generateLabels: function(chart) {
+        var data = chart.data;
+        if (data.labels.length && data.datasets.length) {
+          return data.labels.map(function(label, i) {
+            var meta = chart.getDatasetMeta(0);
+            var ds = data.datasets[0];
+            var arc = meta.data[i];
+            var custom = arc && arc.custom || {};
+            var getValueAtIndexOrDefault = theHelp.getValueAtIndexOrDefault;
+            var arcOpts = chart.options.elements.arc;
+            var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+            var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+            var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+              return {
+              // And finally : 
+              // text: ds.data[i] + " " + label,
+              text: label,
+              fillStyle: fill,
+              strokeStyle: stroke,
+              lineWidth: bw,
+              hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+              index: i
+            };
+          });
+        }
+        return [];
+      }
+    }
+  }
+};
+
+var myPieChart = new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: options
 });
+
+
+// console.log(myPieChart.generateLegend());
+
+
+
+//Plugin from githubExample:
+//https://github.com/chartjs/Chart.js/blob/master/samples/data_labelling.html
+
+
+Chart.plugins.register({
+  afterDatasetsDraw: function(chartInstance, easing) {
+    // To only draw at the end of animation, check for easing === 1
+    var ctx = chartInstance.chart.ctx;
+    chartInstance.data.datasets.forEach(function(dataset, i) {
+      var meta = chartInstance.getDatasetMeta(i);
+      if (!meta.hidden) {
+        meta.data.forEach(function(element, index) {
+          // Draw the text in black, with the specified font
+          ctx.fillStyle = 'black';
+          var fontSize = 0;
+          var fontStyle = 'normal';
+          var fontFamily = 'Helvetica Neue';
+          ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+          // Just naively convert to string for now
+          var dataString = dataset.data[index].toString();
+          // Make sure alignment settings are correct
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          var padding = -10;
+          var position = element.tooltipPosition();
+          ctx.fillText(dataString + '', position.x, position.y - (fontSize / 2) - padding);
+        });
+      }
+    });
+  }
+});
+
 
 </script>
 </html>

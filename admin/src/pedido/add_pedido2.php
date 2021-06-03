@@ -55,6 +55,8 @@ foreach($result as $row) {
   $produto_qtd  = $row['quantidade'];
   $nome_produto = $row['nome_produto'];
 
+  
+
   // echo $comanda_id."<br>";
   // echo $produto_id."<br>";
   // echo $preco."<br>";
@@ -86,8 +88,6 @@ foreach($result as $row) {
 }
 
     if($produto_repetido == false) {
-
-      echo "oi";
 
       # CASO O PRODUTO NÃO EXISTA NA COMANDA
       $query2  = "SELECT * FROM PRODUTO WHERE id_produto = $id_produto";
