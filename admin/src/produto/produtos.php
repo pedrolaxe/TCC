@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
             ?>
               <tr>
                 <td><?php echo $nome_produto ?></td>
-                <td><?php echo $preco ?></td>
+                <td><?php echo number_format($preco, 2, ',', '.') ?></td>
 
                 <td><?php echo $descricao ?></td>
 

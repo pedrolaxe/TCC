@@ -24,7 +24,7 @@ if(isset($_POST['submit'])) {
               $existe_pedido = true;
             }
 
-            $query  = "SELECT * FROM COMANDA";
+            $query  = "SELECT * FROM COMANDA ORDER BY data_comanda DESC, hora_fim DESC";
 
             $result = $con->query($query);
 
@@ -121,6 +121,7 @@ if(isset($_POST['submit'])) {
               <th>Data</th>
               <th>Chegada</th>
               <th>Saída</th>
+              <th>Situação</th>
               <th></th>
             </tr>
           </thead>
@@ -141,7 +142,7 @@ if(isset($_POST['submit'])) {
 
             $status = $row['status'];
   
-            if($status == 'fechado') { 
+            if($status == 'fechado' || $status == 'cancelado') { 
 
               $id_comanda   = $row['id_comanda'];
               $nome         = $row['nome'];
@@ -162,9 +163,10 @@ if(isset($_POST['submit'])) {
             ?>
               <tr>
                 <td><?php echo ucfirst($nome) ?></td>
-                <td><?php echo $data ?></td>
-                <td><?php echo $chegada ?></td>
-                <td><?php echo $saida ?></td>
+                <td><?php echo date("d/m/Y", strtotime($data)) ?></td>
+                <td><?php echo substr($chegada, 0, -3) ?></td>
+                <td><?php echo substr($saida, 0, -3) ?></td>
+                <td><?php echo ucfirst($status) ?></td>
                 <td><a href="src/comanda/comanda_registro.php?id=<?php echo $id_comanda ?>&chegada=<?php echo $chegada ?>&saida=<?php echo $saida ?>&data=<?php echo $data_aux ?>"><i class="fas fa-2x fa-address-card"></i></a></td>
               </tr>
 
@@ -189,7 +191,7 @@ if(isset($_POST['submit'])) {
 
             if (!$submit_ok) {
 
-              $query  = "SELECT * FROM COMANDA";
+              $query  = "SELECT * FROM COMANDA ORDER BY hora_fim DESC";
 
               $result = $con->query($query);
 
@@ -197,7 +199,7 @@ if(isset($_POST['submit'])) {
 
             $status = $row['status'];
   
-            if($status == 'fechado') { 
+            if($status == 'fechado' || $status == 'cancelado') { 
 
               $id_comanda   = $row['id_comanda'];
               $nome         = $row['nome'];
@@ -218,9 +220,10 @@ if(isset($_POST['submit'])) {
             ?>
               <tr>
                 <td><?php echo ucfirst($nome) ?></td>
-                <td><?php echo $data ?></td>
-                <td><?php echo $chegada ?></td>
-                <td><?php echo $saida ?></td>
+                <td><?php echo date("d/m/Y", strtotime($data)) ?></td>
+                <td><?php echo substr($chegada, 0, -3) ?></td>
+                <td><?php echo substr($saida, 0, -3) ?></td>
+                <td><?php echo ucfirst($status) ?></td>
                 <td><a href="src/comanda/comanda_registro.php?id=<?php echo $id_comanda ?>&chegada=<?php echo $chegada ?>&saida=<?php echo $saida ?>&data=<?php echo $data_aux ?>"><i class="fas fa-2x fa-address-card"></i></a></td>
               </tr>
 

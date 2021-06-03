@@ -138,7 +138,7 @@ if (isset($_POST['submit'])) {
             if ($id == $id_comanda) {
 
               echo
-              '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, '.', ',') . '</b></li>';
+              '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, ',', '.') . '</b></li>';
 
               $total += $qtd * $preco;
             }
@@ -157,7 +157,7 @@ if (isset($_POST['submit'])) {
        
         <h4 style="float:right; font-style: italic; font-weight: bold">
 
-        Subtotal <b id="">' . number_format($total, 2, '.', ',') . '</b>
+        Subtotal <b id="">' . number_format($total, 2, ',', '.') . '</b>
 
         </h4>
        
@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
 
         <h5 style="float:right; font-style: italic; font-weight: bold">
 
-        Serviço <b id="">' . number_format($total*0.1, 2, '.', ',') . '</b>
+        Serviço <b id="">' . number_format($total*0.1, 2, ',', '.') . '</b>
 
         </h5>
 
@@ -173,7 +173,7 @@ if (isset($_POST['submit'])) {
 
         <h5 style="float:right; font-style: italic; font-weight: bold">
 
-        Desconto <b id="">' . number_format($desconto, 2, '.', ',') . '</b>
+        Desconto <b id="">' . number_format($desconto, 2, ',', '.') . '</b>
 
         </h5>
 
@@ -181,7 +181,7 @@ if (isset($_POST['submit'])) {
 
         <h2 style="float:right; font-style: italic; font-weight: bold">
 
-        Total <b id="total">' . number_format($total*1.1-$desconto, 2, '.', ',') . '</b>
+        Total <b id="total">' . number_format($total*1.1-$desconto, 2, ',', '.') . '</b>
 
         </h2>
 
@@ -193,7 +193,7 @@ if (isset($_POST['submit'])) {
       <br>
 
       <label>Data: </label>
-      <input name="status" style="width:26%; border:0" value="' . $_GET['data'] . '" disabled>
+      <input name="status" style="width:26%; border:0" value="' . date("d/m/Y", strtotime($_GET['data'])) . '" disabled>
 
       <br>
 

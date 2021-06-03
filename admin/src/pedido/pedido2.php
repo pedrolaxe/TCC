@@ -166,7 +166,7 @@ if (isset($_POST['submit_carrinho'])) {
 
                   <td><input name="qtd" type="number" value="0" min="0" style="width:3em"></td>
                   <td><input name="nome_produto" type="text" value="<?php echo $nome_produto ?>" style="width:10em; border: none;background-color:transparent;" readyonly></td>
-                  <td><input name="preco" type="text" value="<?php echo $preco ?>" style="width:3em; border: none;background-color:transparent;" readyonly></td>
+                  <td><input name="preco" type="text" value="<?php echo str_replace('.', ',', $preco) ?>" style="width:3em; border: none;background-color:transparent;" readyonly></td>
 
                   <td style="text-align: right; padding-left: 0">
                     <button name="submit_carrinho" class="btn btn-outline-success">
@@ -222,7 +222,7 @@ if (isset($_POST['submit_carrinho'])) {
 
                   <td><input name="qtd" value="<?php echo $qtd ?>" type="number" value="0" min="0" style="width:3em; border: none;background-color:transparent;" readonly></td>
                   <td><input name="nome_produto" value="<?php echo $nome_produto ?>" style="width:10em;; border: none;background-color:transparent;" readonly></td>
-                  <td><input name="preco" value="<?php echo $preco ?>" style="width:3.5em; border: none;background-color:transparent;" readonly></td>
+                  <td><input name="preco" value="<?php echo str_replace('.', ',', $preco) ?>" style="width:3.5em; border: none;background-color:transparent;" readonly></td>
                   <td></td>
 
                     <input name="id_produto" value="<?php echo $id_produto ?>" hidden>
@@ -240,7 +240,7 @@ if (isset($_POST['submit_carrinho'])) {
 
                   if(isset($qtd)) {
 
-                  echo number_format($preco*$qtd, 2, '.', ',');
+                  echo number_format($preco*$qtd, 2, ',', '.');
 
                 }
 

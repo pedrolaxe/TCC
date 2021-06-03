@@ -134,7 +134,7 @@ if(!$is_admin) {
   $(function() {
     $('[type=money]').maskMoney({
       thousands: '',
-      decimal: '.'
+      decimal: ','
     });
   })
 </script>
