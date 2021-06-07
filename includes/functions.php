@@ -327,17 +327,28 @@ function delete_comanda($id) {
   header('Location: ' . LINK_SITE . 'admin/comandas.php');
 }
 
-function cancel_comanda($id) {
+function cancel_comanda($id, $senha, $obs) {
   global $con;
 
-  $status = 'cancelado';
+  $senha = md5($senha);
 
-  $hora_fim = date("H:i:s");
+  $result = $con->query("SELECT * FROM colaborador WHERE tipo='administrador'");
 
-  $query = "UPDATE comanda SET status='$status', hora_fim = '$hora_fim' WHERE id_comanda=$id";
-  $result = $con->query($query);
+  foreach($result as $row) {
+    $senha_check = $row['senha'];
+  }
 
-  header('Location: ' . LINK_SITE . 'admin/comandas.php');
+  if($senha == $senha_check) {
+    $status = 'cancelado';
+    $hora_fim = date("H:i:s");
+
+    $query = "UPDATE comanda SET status='$status', hora_fim = '$hora_fim', observacao = '$obs' WHERE id_comanda=$id";
+    $result = $con->query($query);
+
+    header('Location: ' . LINK_SITE . 'admin/comandas.php');
+  } else {
+    header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id=' . $id . '&senha_incorreta=true');
+  }
 }
 
 ######################################################
