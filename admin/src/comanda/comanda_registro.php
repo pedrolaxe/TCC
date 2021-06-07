@@ -18,6 +18,7 @@ if (isset($_GET['id'])) {
     $id       = $row['id_comanda'];
     $nome     = $row['nome'];
     $desconto = $row['desconto'];
+    $obs      = $row['observacao'];
 
     // if (strlen($nome) == 1) {
     //   $nome = str_pad($nome, 2, '0', STR_PAD_LEFT);
@@ -25,27 +26,6 @@ if (isset($_GET['id'])) {
 
     $status = $row['status'];
   }
-}
-
-if (isset($_GET['delete_pedido'])) {
-  $id_pedido  = $_GET['delete_pedido'];
-  $id_comanda    = $_GET['id_comanda'];
-
-  delete_pedido($id_pedido, $id_comanda);
-}
-
-
-if (isset($_GET['cancelar_comanda'])) {
-  $id = $_GET['cancelar_comanda'];
-  cancel_comanda($id);
-}
-
-if (isset($_POST['submit'])) {
-  $id     = $_POST['fechar_comanda'];
-  $total  = $_POST['total'];
-  $nome = $_POST['nome'];
-
-  fechar_comanda($id, $total);
 }
 
 ?>
@@ -212,6 +192,13 @@ if (isset($_POST['submit'])) {
 
       <label>Saída:   </label>
       <input name="status" style="width:26%; border:0" value="' . substr($_GET['saida'], 0, -3) . '" disabled>
+
+
+      <br><br>
+      <hr>
+
+      <label><u>Observação:</u>   </label>
+      <p name="obs" style="border:0">'.$obs.'</p>
 
       ';
 

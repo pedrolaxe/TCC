@@ -35,17 +35,30 @@ if (isset($_GET['cancelar_pedido'])) {
 }
 
 
-if (isset($_GET['cancelar_comanda'])) {
-  $id = $_GET['cancelar_comanda'];
-  cancel_comanda($id);
-}
+// if (isset($_GET['cancelar_comanda'])) {
+//   $id = $_GET['cancelar_comanda'];
+//   cancel_comanda($id);
+// }
 
 if (isset($_POST['submit'])) {
-  $id     = $_POST['fechar_comanda'];
-  $total  = $_POST['total'];
-  $nome   = $_POST['nome'];
 
-  fechar_comanda($id, $total);
+  # FECHAR CONTA
+  if(isset($_POST['total'])) {
+    $id     = $_POST['id'];
+    $total  = $_POST['total'];
+    $nome   = $_POST['nome'];
+
+    fechar_comanda($id, $total);
+
+    # CANCELAR COMANDA
+  } elseif(isset($_POST['observacao'])) {
+    $id    = $_POST['id'];
+    $senha = $_POST['senha'];
+    $obs   = $_POST['observacao'];
+
+    cancel_comanda($id, $senha, $obs);
+  }
+
 }
 
 ?>
@@ -102,6 +115,16 @@ if (isset($_POST['submit'])) {
   <main class="container-fluid">
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <!-- <h1 class="display-4">comanda</h1> -->
+
+      <?php
+
+      if(isset($_GET['senha_incorreta']) && $_GET['senha_incorreta'] == true) {
+        echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>Senha Incorreta</center></div>';
+      }
+
+      ?>
+
+
     </div>
     <div class="card mb-4 shadow">
       <div class="card-header">
@@ -210,11 +233,11 @@ if (isset($_POST['submit'])) {
         <button style="display:inline; margin-top:5px; width: 10.4em;" type="button" class="btn-lg btn-outline-dark">Desconto</button>
       </a>
 
-      <button style="margin-top:5px;width: 10.4em" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Cancelar Comanda</button>';
+      <button style="margin-top:5px;width: 10.4em" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#cancelarComanda">Cancelar Comanda</button>';
 
       } else {
 
-         echo '<button style="float:left;width: 10.4em" class="btn-lg btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Fechar Conta</button>
+         echo '<button style="float:left;width: 10.4em" class="btn-lg btn-outline-primary" data-bs-toggle="modal" data-bs-target="#fecharConta">Fechar Conta</button>
 
 
 
@@ -232,29 +255,7 @@ if (isset($_POST['submit'])) {
     </div>
 
 
-    <!-- CONFIRMAÇÂO PARA DELETAR comanda -->
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content" style="background-color: #DEF2F1;">
-          <div class="modal-header">
-            <h4 class="modal-title" id="exampleModalLabel">Cancelar Comanda</h4>
-            <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            Tem certeza disso?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
-            <a href="comanda.php?cancelar_comanda='<?php echo $id ?>'"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- CONFIRMAÇÂO PARA DELETAR PEDIDO -->
+    <!-- CONFIRMAÇÂO PARA CANCELAR PEDIDO -->
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
@@ -296,7 +297,7 @@ if (isset($_POST['submit'])) {
             echo 
             '
 
-              <input name="fechar_comanda" value="' . $id . '" hidden>
+              <input name="id" value="' . $id . '" hidden>
               <input name="total" value="' . $total . '" hidden>
               <input name="nome" value="' . $nome . '" hidden>
 
@@ -315,32 +316,39 @@ if (isset($_POST['submit'])) {
     </div>
 
 
-    <!-- CONFIRMAÇÂO PARA FECHAR COMANDA -->
+    <!-- CONFIRMAÇÂO PARA CANCELAR COMANDA -->
 
     <!-- Modal -->
     <div class="modal fade" id="cancelarComanda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Cancelar Comanda</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                <input type="text" class="form-control" id="recipient-name">
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Send message</button>
-          </div>
+          <form action="comanda.php" method="POST">
+            <div class="modal-body">
+
+                <?php
+
+                echo '<input name="id" value="' . $id . '" hidden>';
+
+                ?>
+
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Senha do Administrador</label>
+                  <input type="password" name="senha" class="form-control" id="recipient-name">
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Observação</label>
+                  <textarea type="text" name="observacao" class="form-control" id="message-text" required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+              <button type="submit" name="submit" class="btn btn-primary">Sim</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
