@@ -169,13 +169,21 @@ if (isset($_POST['submit'])) {
 
         </h5>
 
-        <br>
+        <br>';
 
-        <h5 style="float:right; font-style: italic; font-weight: bold">
+        if($desconto != 0) {
 
-        Desconto <b id="">' . number_format($desconto, 2, ',', '.') . '</b>
+          echo '
 
-        </h5>
+          <h5 style="float:right; font-style: italic; font-weight: bold">
+
+          Desconto <b id="">' . number_format($desconto, 2, ',', '.') . '</b>
+
+          </h5>';
+
+        }
+
+        echo '
 
         <br><br>
 

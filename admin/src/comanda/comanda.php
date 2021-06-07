@@ -43,7 +43,7 @@ if (isset($_GET['cancelar_comanda'])) {
 if (isset($_POST['submit'])) {
   $id     = $_POST['fechar_comanda'];
   $total  = $_POST['total'];
-  $nome = $_POST['nome'];
+  $nome   = $_POST['nome'];
 
   fechar_comanda($id, $total);
 }
@@ -151,12 +151,6 @@ if (isset($_POST['submit'])) {
           echo
 
           '
-     
-      <form action="comanda.php" method="POST">
-      
-      <input name="fechar_comanda" value="' . $id . '" hidden>
-      <input name="total" value="' . $total . '" hidden>
-      <input name="nome" value="' . $nome . '" hidden>
 
       <div class="form-check form-switch" style="float:right;">
 
@@ -202,9 +196,8 @@ if (isset($_POST['submit'])) {
 
       if($is_admin) {
 
-      echo '<button style="float:left;width: 10.4em" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
+      echo '<button style="float:left;width: 10.4em" class="btn-lg btn-outline-primary" data-bs-toggle="modal" data-bs-target="#fecharConta">Fechar Conta</button>
 
-        </form>
 
 
       <a href="trocar_comanda.php?id=' . $id . '">
@@ -221,9 +214,8 @@ if (isset($_POST['submit'])) {
 
       } else {
 
-         echo '<button style="float:left;width: 10.4em" type="submit" name="submit" class="btn-lg btn-outline-primary">Fechar Conta</button>
+         echo '<button style="float:left;width: 10.4em" class="btn-lg btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Fechar Conta</button>
 
-        </form>
 
 
       <a href="trocar_comanda.php?id=' . $id . '">
@@ -231,9 +223,6 @@ if (isset($_POST['submit'])) {
       </a>';
 
       }
-
-        
-
       
 
           ?>
@@ -281,6 +270,76 @@ if (isset($_POST['submit'])) {
           <div class="modal-footer">
             <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
             <a href="comanda.php?cancel_pedido=<?php echo $id_pedido ?>&id_mesa=<?php echo $id ?>"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CONFIRMAÇÂO PARA DELETAR PEDIDO -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="fecharConta" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #DEF2F1;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Fechar Conta</h5>
+            <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Tem certeza disso?
+          </div>
+          <form action="comanda.php" method="POST">
+
+            <?php
+
+            echo 
+            '
+
+              <input name="fechar_comanda" value="' . $id . '" hidden>
+              <input name="total" value="' . $total . '" hidden>
+              <input name="nome" value="' . $nome . '" hidden>
+
+
+            '
+
+            ?>
+
+            <div class="modal-footer">
+              <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
+              <button class="btn-lg btn-outline-danger" name="submit" type="submit">Sim</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CONFIRMAÇÂO PARA FECHAR COMANDA -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="cancelarComanda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Recipient:</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Message:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Send message</button>
           </div>
         </div>
       </div>
