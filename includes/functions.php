@@ -539,6 +539,30 @@ function delete_produto($id) {
 
   header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
 }
+
+function cancel_pedido($id, $senha, $id_pedido) {
+  global $con;
+
+  $senha = md5($senha);
+
+  $result = $con->query("SELECT * FROM colaborador WHERE tipo='administrador'");
+
+  foreach($result as $row) {
+    $senha_check = $row['senha'];
+  }
+
+  if($senha == $senha_check) {
+    $status = 'cancelado';
+
+    $query = "UPDATE PEDIDO SET status_pedido='$status' WHERE id_pedido=$id_pedido";
+    $result = $con->query($query);
+
+    header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id=' . $id);
+  } else {
+    header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id=' . $id . '&senha_incorreta=true');
+  }
+}
+
 function delete_pedido($id_pedido, $id_comanda) {
   global $con;
 

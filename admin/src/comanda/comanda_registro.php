@@ -93,6 +93,7 @@ if (isset($_GET['id'])) {
           <?php
 
           $total = 0;
+          $flagCancelado = false;
 
           $query2  = "
 
@@ -113,14 +114,47 @@ if (isset($_GET['id'])) {
             $qtd          = $row['quantidade'];
             $nome_produto = $row['nome_produto'];
             $preco        = $row['preco'];
+            $status_pedido = $row['status_pedido'];
             $data         = explode(' ',trim($row['data'])); 
 
             if ($id == $id_comanda) {
 
-              echo
-              '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, ',', '.') . '</b></li>';
+              # Flag para escrever "Itens Cancelados"
+              if ($status_pedido == 'cancelado') {
+                $flagCancelado = true;
+              } else {
 
-              $total += $qtd * $preco;
+                echo
+                '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, ',', '.') . '</b></li>';
+
+                $total += $qtd * $preco;
+              }
+            }
+          }
+
+          if($flagCancelado == true) {
+            echo '<hr class="style-one">';
+            echo '<h3><u>Itens Cancelados</u></h3>';
+          }
+
+          $result2 = $con->query($query2);
+
+          foreach($result2 as $row) {
+
+            $id_comanda    = $row['id_comanda'];
+            $id_pedido     = $row['id_pedido'];
+            $qtd           = $row['quantidade'];
+            $nome_produto  = $row['nome_produto'];
+            $preco         = $row['preco'];
+            $status_pedido = $row['status_pedido'];
+
+
+            if ($id == $id_comanda && $status_pedido == 'cancelado') {
+
+              echo
+              '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '</li>';
+
+              
             }
           }
 
@@ -193,14 +227,16 @@ if (isset($_GET['id'])) {
       <label>Saída:   </label>
       <input name="status" style="width:26%; border:0" value="' . substr($_GET['saida'], 0, -3) . '" disabled>
 
-
-      <br><br>
-      <hr>
-
-      <label><u>Observação:</u>   </label>
-      <p name="obs" style="border:0">'.$obs.'</p>
-
       ';
+
+      if($obs != '') {
+        echo '
+        <br><br>
+        <hr>
+        <label><u>Observação:</u>   </label>
+        <p name="obs" style="border:0">'.$obs.'</p>
+        ';
+      }
 
           ?>
 

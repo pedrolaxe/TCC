@@ -106,12 +106,13 @@ if (isset($_POST['submit'])) {
                    $result2 = $con->query($query2);
 
                   foreach($result2 as $row) {
-                    $id_comanda      = $row['id_comanda'];
-                    $qtd          = $row['quantidade'];
-                    $nome_produto = $row['nome_produto'];
+                    $id_comanda    = $row['id_comanda'];
+                    $qtd           = $row['quantidade'];
+                    $nome_produto  = $row['nome_produto'];
+                    $status_pedido = $row['status_pedido'];
 
                     # VERIFICAR SE A comanda DA PRIMEIRA BUSCA É IGUAL A DA SEGUNDA PARA ADICIONAR OS PRODUTOS NA comanda CORRETA
-                    if ($id == $id_comanda) {
+                    if ($id == $id_comanda && $status_pedido != 'cancelado') {
                       echo '<li><b>' . $qtd . ' x </b>' . $nome_produto . '</li>';
                     }
                   }

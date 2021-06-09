@@ -49,11 +49,12 @@ $result = $con->query($query);
 # WHILE PARA VERIFICAR SE O PRODUTO JÁ EXISTE NA COMANDA
 foreach($result as $row) { 
 
-  $comanda_id   = $row['id_comanda'];
-  $produto_id   = $row['id_produto'];
-  $preco        = $row['preco'];
-  $produto_qtd  = $row['quantidade'];
-  $nome_produto = $row['nome_produto'];
+  $comanda_id    = $row['id_comanda'];
+  $produto_id    = $row['id_produto'];
+  $preco         = $row['preco'];
+  $produto_qtd   = $row['quantidade'];
+  $nome_produto  = $row['nome_produto'];
+  $status_pedido = $row['status_pedido'];
 
   
 
@@ -71,7 +72,7 @@ foreach($result as $row) {
     // echo "COMANDA YES";
 
     # VERIFICAR SE O PRODUTO JÁ EXISTA NA COMANDA
-    if($id_produto == $produto_id) {
+    if($id_produto == $produto_id && $status_pedido != 'cancelado') {
       echo "Produto YES";
 
       $qtd += $produto_qtd;
