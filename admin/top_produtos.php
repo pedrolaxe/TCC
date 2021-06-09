@@ -140,6 +140,8 @@ for ($i = 0; $i < sizeof($nomeList); $i++) {
 $nomeTop2   = [];
 $produtoTop = [];
 
+$maxProdutoList = max($produtoList);
+
 for ($i = 0; $i < sizeof($nomeList); $i++) {
 
   array_push($nomeTop2, $nomeList[array_search(max($produtoList), $produtoList)]);
@@ -316,6 +318,18 @@ var options = {
     position: 'top'
   },
 
+  scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                // OR //
+                beginAtZero: true   // minimum value will be 0.
+                
+            }
+        }]
+    },
+
   rotation: -0.7 * Math.PI,
   legend: {
     display: false,
@@ -399,6 +413,18 @@ var options = {
 
   },
 
+  scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                // OR //
+                beginAtZero: true,   // minimum value will be 0.
+  
+            }
+        }]
+    },
+
   rotation: -0.7 * Math.PI,
   legend: {
     display: false,
@@ -472,7 +498,7 @@ Chart.plugins.register({
           // Make sure alignment settings are correct
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          var padding = -10;
+          var padding = 0;
           var position = element.tooltipPosition();
           ctx.fillText(dataString + '', position.x, position.y - (fontSize / 2) - padding);
         });

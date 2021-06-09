@@ -152,19 +152,20 @@ if(isset($_POST['submit'])) {
   
             if($status == 'fechado') { 
 
-              $id_comanda   = $row['id_comanda'];
-              $id_pedido    = $row['id_pedido'];
-              $nome         = $row['nome'];
-              $nome_produto = $row['nome_produto'];
-              $qtd          = $row['quantidade'];
-              $preco        = $row['preco'];
+              $id_comanda    = $row['id_comanda'];
+              $id_pedido     = $row['id_pedido'];
+              $nome          = $row['nome'];
+              $nome_produto  = $row['nome_produto'];
+              $qtd           = $row['quantidade'];
+              $preco         = $row['preco'];
+              $status_pedido = $row['status_pedido'];
 
               // $data[0] é data e $data[1] é hora
               $data         = explode(' ',trim($row['data'])); 
 
               $data_aux = date("Y-m-d", strtotime($data[0]));
 
-              if ($data_aux >= $data1 && $data_aux <= $data2) {
+              if ($data_aux >= $data1 && $data_aux <= $data2 && $status_pedido != 'cancelado') {
 
                 $existe_pedido = true;
 
@@ -231,7 +232,7 @@ if(isset($_POST['submit'])) {
               $nome_produto = $row['nome_produto'];
               $qtd          = $row['quantidade'];
               $preco        = $row['preco'];
-
+              $status_pedido = $row['status_pedido'];
 
 
               // $data[0] é data e $data[1] é hora
@@ -239,7 +240,7 @@ if(isset($_POST['submit'])) {
 
               $data_aux = date("Y-m-d", strtotime($data[0]));
 
-              if ($data_aux == date("Y-m-d")) {
+              if ($data_aux == date("Y-m-d") && $status_pedido != 'cancelado') {
 
                 $existe_pedido = true;
 

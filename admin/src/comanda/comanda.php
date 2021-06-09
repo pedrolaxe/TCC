@@ -57,6 +57,14 @@ if (isset($_POST['submit'])) {
     $obs   = $_POST['observacao'];
 
     cancel_comanda($id, $senha, $obs);
+
+    # CANCELAR PEDIDO
+  } elseif(isset($_POST['id_pedido'])) {
+    $id        = $_POST['id'];
+    $senha     = $_POST['senha'];
+    $id_pedido = $_POST['id_pedido'];
+
+    cancel_pedido($id, $senha, $id_pedido);
   }
 
 }
@@ -97,7 +105,7 @@ if (isset($_POST['submit'])) {
       color: black;
     }
 
-    i.fa-trash:hover {
+    i.fa-times:hover {
       color: red !important;
     }
 
@@ -136,6 +144,7 @@ if (isset($_POST['submit'])) {
           <?php
 
           $total = 0;
+          $flagCancelado = false;
 
           $query2  = "
 
@@ -151,20 +160,53 @@ if (isset($_POST['submit'])) {
 
           foreach($result2 as $row) {
 
-            $id_comanda   = $row['id_comanda'];
-            $id_pedido    = $row['id_pedido'];
-            $qtd          = $row['quantidade'];
-            $nome_produto = $row['nome_produto'];
-            $preco        = $row['preco'];
+            $id_comanda    = $row['id_comanda'];
+            $id_pedido     = $row['id_pedido'];
+            $qtd           = $row['quantidade'];
+            $nome_produto  = $row['nome_produto'];
+            $preco         = $row['preco'];
+            $status_pedido = $row['status_pedido'];
 
 
             if ($id == $id_comanda) {
 
-              echo
-              '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, ',', '.') . '
-              <i data-bs-toggle="modal" data-bs-target="#exampleModal2" class="fas fa-trash" style="padding-left:0.3em"></i></b></li>';
+              # Flag para escrever "Itens Cancelados"
+              if ($status_pedido == 'cancelado') {
+                $flagCancelado = true;
+              } else {
 
-              $total += $qtd * $preco;
+                echo
+                '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, ',', '.') . '
+                <i data-id="'. $id_pedido .'" data-qtd="'. $qtd .'" data-nome_pedido="'. $nome_produto .'" data-bs-toggle="modal" data-bs-target="#cancelarPedido" class="fas fa-times" style="padding-left:0.3em"></i></b></li>';
+
+                $total += $qtd * $preco;
+              }
+            }
+          }
+
+          if($flagCancelado == true) {
+            echo '<hr class="style-one">';
+            echo '<h3><u>Itens Cancelados</u></h3>';
+          }
+
+          $result2 = $con->query($query2);
+
+          foreach($result2 as $row) {
+
+            $id_comanda    = $row['id_comanda'];
+            $id_pedido     = $row['id_pedido'];
+            $qtd           = $row['quantidade'];
+            $nome_produto  = $row['nome_produto'];
+            $preco         = $row['preco'];
+            $status_pedido = $row['status_pedido'];
+
+
+            if ($id == $id_comanda && $status_pedido == 'cancelado') {
+
+              echo
+              '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '</li>';
+
+              
             }
           }
 
@@ -254,30 +296,47 @@ if (isset($_POST['submit'])) {
       </div>
     </div>
 
-
     <!-- CONFIRMAÇÂO PARA CANCELAR PEDIDO -->
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal fade" id="cancelarPedido" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content" style="background-color: #DEF2F1;">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Cancelar Produto</h5>
-            <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="exampleModalLabel">Cancelar Pedido</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            Tem certeza disso?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
-            <a href="comanda.php?cancel_pedido=<?php echo $id_pedido ?>&id_mesa=<?php echo $id ?>"><button type="button" class="btn-lg btn-outline-danger">Sim</button></a>
-          </div>
+          <form action="comanda.php" method="POST">
+            <div class="modal-body">
+
+                <?php
+
+                echo '<input name="id" value="' . $id . '" hidden>';
+
+                ?>
+
+                <input type="text" name="id_pedido" class="form-control" id="id_pedido" hidden>
+
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Senha do Administrador</label>
+                  <input type="password" name="senha" class="form-control" id="recipient-name">
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Pedido</label>
+                  <input style="border:0; background-color: #DEF2F1; font-weight: bolder" type="text" class="form-control" id="pedido" readonly>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
+              <button type="submit" name="submit" class="btn-lg btn-outline-danger">Sim</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
 
 
-    <!-- CONFIRMAÇÂO PARA DELETAR PEDIDO -->
+    <!-- CONFIRMAÇÂO PARA FECHAR CONTA -->
 
     <!-- Modal -->
     <div class="modal fade" id="fecharConta" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
@@ -321,7 +380,7 @@ if (isset($_POST['submit'])) {
     <!-- Modal -->
     <div class="modal fade" id="cancelarComanda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: #DEF2F1;">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Cancelar Comanda</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -345,8 +404,8 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-              <button type="submit" name="submit" class="btn btn-primary">Sim</button>
+              <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
+              <button type="submit" name="submit" class="btn-lg btn-outline-danger">Sim</button>
             </div>
           </form>
         </div>
@@ -355,4 +414,29 @@ if (isset($_POST['submit'])) {
 
   </main>
 </body>
+
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/jquery.js"></script>
+
+<script type="text/javascript">
+  
+$(document).on("click", ".fa-times", function (e) {
+
+  e.preventDefault();
+
+  var _self = $(this);
+
+  var id_pedido   = _self.data('id');
+  var nome_pedido = _self.data('nome_pedido');
+  var qtd         = _self.data('qtd');
+
+  var qtd_nome = qtd + " x " + nome_pedido;
+
+  $("#id_pedido").val(id_pedido);
+  $("#pedido").val(qtd_nome);
+
+  // $(_self.attr('href')).modal('show');
+});
+
+</script>
+
 </html>
