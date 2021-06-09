@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
     <input name="id" value="<?php echo $id ?>" hidden>
     <br>
     <label for="inputEmail" class="visually-hidden">Desconto</label>
-    <input name="desconto" type="text" class="form-control" placeholder="Desconto" autocomplete="off" required autofocus>
+    <input name="desconto" type="money" class="form-control" autocomplete="off" required autofocus>
     <input name="total" value="<?php echo $total ?>" type="text" class="form-control" hidden>
 
     <br>
@@ -101,4 +101,18 @@ if (isset($_POST['submit'])) {
   <a href="comanda.php?id=<?php echo $id; ?>"><button class="w-100 btn btn-lg btn-outline-dark">Voltar</button></a>
 </main>
 </body>
+
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/jquery.js"></script>
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/maskmoney.js"></script>
+
+<script type="text/javascript">
+  $(function() {
+    $('[type=money]').maskMoney({
+      thousands: '',
+      decimal: ',',
+      allowZero: true
+    });
+  })
+</script>
+
 </html>
