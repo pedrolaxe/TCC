@@ -318,10 +318,6 @@ var options = {
     position: 'top'
   },
 
-  axisY:{
-              valueFormatString: "$# ###,##", //try properties here
-            },
-
   scales: {
         yAxes: [{
             display: true,
