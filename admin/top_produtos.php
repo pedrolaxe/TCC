@@ -318,6 +318,10 @@ var options = {
     position: 'top'
   },
 
+  axisY:{
+              valueFormatString: "$# ###,##", //try properties here
+            },
+
   scales: {
         yAxes: [{
             display: true,
@@ -419,7 +423,7 @@ var options = {
             ticks: {
                 suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
                 // OR //
-                beginAtZero: true,   // minimum value will be 0.
+                beginAtZero: true   // minimum value will be 0.
   
             }
         }]

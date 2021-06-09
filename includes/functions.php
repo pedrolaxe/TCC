@@ -293,6 +293,8 @@ function insert_desconto() {
   $total         = $_POST['total'];
   $descontoCheck = $_POST['descontoCheckBox'];
 
+  $desconto = str_replace(',', '.', $desconto);
+
   if($descontoCheck == "percentual") {
     $desconto = $total*$desconto/100;
   }
