@@ -13,21 +13,25 @@ date_default_timezone_set('America/Sao_Paulo');
 $data = date("Y-m-d H:i:s");
 
 # NUMERO DA comanda QUE SERÃO INCLUIDOS OS PEDIDOS
-$id_comanda   = $_POST['id_comanda'];
-$nome_comanda = $_POST['nome_comanda'];
-$qtd          = $_POST['qtd'];
-$nome_produto = $_POST['nome_produto'];
-$preco        = $_POST['preco'];
-$id_produto   = $_POST['id_produto'];
+$id_comanda       = $_POST['id_comanda'];
+$nome_comanda     = $_POST['nome_comanda'];
+$qtd              = $_POST['qtd'];
+$nome_produto     = $_POST['nome_produto'];
+$preco            = $_POST['preco'];
+$id_produto       = $_POST['id_produto'];
+$id_colaborador   = $_POST['id_colaborador'];
 
 echo $id_comanda."<br>";
 echo $nome_comanda."<br>";
 echo $qtd."<br>";
 echo $nome_produto."<br>";
 echo $preco."<br>";
-echo $id_produto;
+echo $id_produto."<br>";
+echo $id_colaborador;
 
-echo "<br><br>";
+if($qtd == 0) {
+  header('Location: ' . LINK_SITE . 'admin/src/pedido/pedido2.php?id='.$id_comanda.'&pedido=zero');
+} else {
 
 $query = "
 
@@ -46,69 +50,29 @@ $impressora       = true;
 
 $result = $con->query($query);
 
-# WHILE PARA VERIFICAR SE O PRODUTO JÁ EXISTE NA COMANDA
-foreach($result as $row) { 
+if($produto_repetido == false) {
 
-  $comanda_id    = $row['id_comanda'];
-  $produto_id    = $row['id_produto'];
-  $preco         = $row['preco'];
-  $produto_qtd   = $row['quantidade'];
-  $nome_produto  = $row['nome_produto'];
-  $status_pedido = $row['status_pedido'];
+  # CASO O PRODUTO NÃO EXISTA NA COMANDA
+  $query2  = "SELECT * FROM PRODUTO WHERE id_produto = $id_produto";
+  $result_produto = $con->query($query2);
 
-  
+  # IMPRIMIR NOTA DA COZINHA
+  foreach($result_produto as $row) { 
+    $id_produto     = $row['id_produto'];
+    $preco          = $row['preco'];
+    $nome           = $row['nome_produto'];
 
-  // echo $comanda_id."<br>";
-  // echo $produto_id."<br>";
-  // echo $preco."<br>";
-  // echo $produto_qtd."<br>";
-  // echo $preco."<br>";
-  // echo $nome_produto;
+    $valor = $preco;
+  } 
 
-  // echo "<br><br>";
+  $query3  = "INSERT INTO PEDIDO (quantidade, id_comanda, id_produto, valor, data, id_colaborador)";
+  $query3 .= "VALUES ('$qtd', '$id_comanda', '$id_produto', '$valor', '$data', '$id_colaborador')";
+  $result = $con->query($query3);
 
-   # VERIFICAR SE A COMANDA PESQUISADA É IGUAL A COMANDA SELECIONADA PARA ADICIONAR PRODUTOS
-  if($id_comanda == $comanda_id) {
-    // echo "COMANDA YES";
-
-    # VERIFICAR SE O PRODUTO JÁ EXISTA NA COMANDA
-    if($id_produto == $produto_id && $status_pedido != 'cancelado') {
-      echo "Produto YES";
-
-      $qtd += $produto_qtd;
-
-      # UPDATE QUANTIDADE DO PRODUTO
-      $query  = "UPDATE PEDIDO SET quantidade = $qtd WHERE id_produto = $id_produto AND (id_comanda = $id_comanda)";
-      $result = $con->query($query);
-
-      $produto_repetido = true;
-
-    } 
-
-  }
 }
 
-    if($produto_repetido == false) {
-
-      # CASO O PRODUTO NÃO EXISTA NA COMANDA
-      $query2  = "SELECT * FROM PRODUTO WHERE id_produto = $id_produto";
-      $result_produto = $con->query($query2);
-
-      # IMPRIMIR NOTA DA COZINHA
-      foreach($result_produto as $row) { 
-        $id_produto = $row['id_produto'];
-        $preco      = $row['preco'];
-        $nome       = $row['nome_produto'];
-      } 
-
-      $query3  = "INSERT INTO PEDIDO (quantidade, id_comanda, id_produto, data)";
-      $query3 .= "VALUES ('$qtd', '$id_comanda', '$id_produto', '$data')";
-      $result = $con->query($query3);
-
-    }
-
 header('Location: '.LINK_SITE.'admin/src/pedido/pedido2.php?id='.$id_comanda.'&pedido=feito');
-
+}
 // header('Location: '.LINK_SITE.'admin/comandas.php?impressora='.$impressora);
 
 

@@ -204,17 +204,71 @@ function trocar_comanda() {
   }
 }
 
-function fechar_comanda($id, $total) {
+function fechar_comanda($id, $total, $cartao, $dinheiro, $pix) {
   global $con;
 
-  # VERIFICAR SE colaborador É ADMIN PARA DIRECIONAR PARA O CAMINHO CERTO
-  // $userIsAdmin = ID_userisadmin($_SESSION['user_id']);
+  $query  = "SELECT * FROM comanda WHERE id_comanda = $id";
+  $result = $con->query($query);
 
-  // if ($userIsAdmin) {
-  //   include "../../../impressao.php";
-  // } else {
-  //   include "../../impressao.php";
+  foreach($result as $row) {
+
+    $id          = $row['id_comanda'];
+    $nome        = $row['nome'];
+    $status      = $row['status'];
+    $desconto    = $row['desconto'];
+    $hora_inicio = $row['hora_inicio'];
+
+  }
+
+  // $qtd_array      = [];
+  // $nome_array     = [];
+  // $qtdPreco_array = [];
+
+  // $soma = 0;
+
+  // $query2  = "
+
+  //   SELECT * FROM PEDIDO 
+  //   INNER JOIN PRODUTO ON 
+  //   PEDIDO.id_produto = PRODUTO.id_produto 
+  //   INNER JOIN comanda ON 
+  //   PEDIDO.id_comanda = comanda.id_comanda
+
+  //   ";
+
+  // $result2 = $con->query($query);
+
+  // foreach($result2 as $row) {
+
+  //   $id_comanda   = $row['id_comanda'];
+  //   $id_pedido    = $row['id_pedido'];
+  //   $qtd          = $row['quantidade'];
+  //   $nome_produto = $row['nome_produto'];
+  //   $preco        = $row['preco'];
+
+
+  //   if ($id == $id_comanda) {
+
+  //     array_push($qtd_array, $qtd);
+  //     array_push($nome_array, $nome_produto);
+  //     array_push($qtdPreco_array, $qtd * $preco);
+
+  //     $soma += $qtd * $preco;
+  //   }
   // }
+
+  $hora_fim = date("H:i:s");
+
+
+  $query = "UPDATE COMANDA SET status ='fechado', hora_fim = '$hora_fim', dinheiro = '$dinheiro', cartao = '$cartao', pix = '$pix' WHERE id_comanda = $id";
+  $result = $con->query($query);
+
+  header('Location: ' . LINK_SITE . 'admin/comandas.php');
+
+}
+
+function imprimir_nota($id, $total) {
+  global $con;
 
   include "../../../impressao.php";
 
@@ -228,7 +282,6 @@ function fechar_comanda($id, $total) {
     $status   = $row['status'];
     $desconto = $row['desconto'];
     $hora_inicio = $row['hora_inicio'];
-
 
   }
 
@@ -248,7 +301,7 @@ function fechar_comanda($id, $total) {
 
     ";
 
-  $result2 = $con->query($query);
+  $result2 = $con->query($query2);
 
   foreach($result2 as $row) {
 
@@ -271,18 +324,12 @@ function fechar_comanda($id, $total) {
 
   $hora_fim = date("H:i:s");
 
-
-  $query = "UPDATE COMANDA SET status ='fechado', hora_fim = '$hora_fim' WHERE id_comanda = $id";
-  $result = $con->query($query);
-
   try {
     $impressora = imprimir_conta($soma, $qtd_array, $nome_array, $qtdPreco_array, $nome, $desconto);
     cut();
-  } catch (Exception $e) {}
+  } catch (Exception $e) {  }
 
-    header('Location: ' . LINK_SITE . 'admin/comandas.php?impressora='.$impressora);
-
-
+  header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id_comanda . "&impressora=" . $impressora);
 }
 
 function insert_desconto() {
@@ -361,19 +408,19 @@ function cancel_comanda($id, $senha, $obs) {
 function cadastro_colaborador() {
   global $con;
 
-  $login             = anti_injection($_POST['login']);
-  $senha             = anti_injection($_POST['senha']);
-  $confirmacao_senha = anti_injection($_POST['conf_senha']);
-  $email             = anti_injection($_POST['email']);
-  $tipo              = anti_injection($_POST['tipo']);
-  $nome              = anti_injection($_POST['nome']);
-  $cpf               = anti_injection($_POST['cpf']);
-  $rg                = anti_injection($_POST['rg']);
-  $tel               = anti_injection($_POST['telefone']);
+  $login              = anti_injection($_POST['login']);
+  $senha              = anti_injection($_POST['senha']);
+  $confirmacao_senha  = anti_injection($_POST['conf_senha']);
+  $email              = anti_injection($_POST['email']);
+  $tipo               = anti_injection($_POST['tipo']);
+  $nome               = anti_injection($_POST['nome']);
+  $cpf                = anti_injection($_POST['cpf']);
+  $rg                 = anti_injection($_POST['rg']);
+  $tel                = anti_injection($_POST['telefone']);
 
 
   # VERIFICAR SE comanda JÁ EXISTE
-  $query  = "SELECT * FROM colaborador WHERE login = '$login'";
+  $query  = "SELECT * FROM colaborador WHERE login = '$login' AND status_colaborador IS NULL";
 
   $q = $con->query($query);
   if($q->rowCount() > 0) {
@@ -400,8 +447,10 @@ function cadastro_colaborador() {
 function alterar_colaborador($idf, $login, $email, $nome, $cpf, $rg, $tel) {
   global $con;
 
+  $status = "inativo";
+
   # VERIFICAR SE COLABORADOR JÁ EXISTE
-  $query  = "SELECT * FROM colaborador WHERE login = '$login' AND id_colaborador != '$idf'";
+  $query  = "SELECT * FROM colaborador WHERE login = '$login' AND (status_colaborador IS NULL AND id_colaborador != '$idf')";
 
   $q = $con->query($query);
   if($q->rowCount() > 0) {
@@ -426,9 +475,6 @@ function alterar_colaborador($idf, $login, $email, $nome, $cpf, $rg, $tel) {
 function alterar_senha_colaborador($idf, $novaSenha) {
   global $con;
 
-  # VERIFICAR SE COLABORADOR JÁ EXISTE
-  $query  = "SELECT * FROM colaborador WHERE id_colaborador != '$idf'";
-
   $senhacrip = md5($novaSenha);
 
   $query = "UPDATE colaborador SET senha = '$senhacrip' WHERE id_colaborador='$idf' AND tipo='colaborador'";
@@ -442,10 +488,14 @@ function alterar_senha_colaborador($idf, $novaSenha) {
   }
 }
 
-function delete_colaborador($id) {
+function inativar_colaborador($id) {
   global $con;
   if(ID_userisadmin($id)==false) {
-    $query  = "DELETE FROM colaborador WHERE id_colaborador = $id";
+    # $query  = "DELETE FROM colaborador WHERE id_colaborador = $id";
+
+    $status = 'inativo';
+
+    $query = "UPDATE colaborador SET status_colaborador = '$status' WHERE id_colaborador='$id'";
     $result = $con->query($query);
   
     if ($result) {
@@ -529,10 +579,14 @@ function alterar_produto($id, $nome, $preco, $descricao) {
   }
 }
 
-function delete_produto($id) {
+function inativar_produto($id_produto) {
   global $con;
 
-  $query  = "DELETE FROM produto WHERE id_produto = $id";
+  # $query  = "DELETE FROM produto WHERE id_produto = $id";
+
+  $status = 'inativo';
+
+  $query = "UPDATE PRODUTO SET status_produto='$status' WHERE id_produto=$id_produto";
   $result = $con->query($query);
 
   if (!$result) {

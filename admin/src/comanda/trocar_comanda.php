@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
   }
 
   if (isset($_GET['ja_existe']) && $_GET['ja_existe'] == true && !empty($_GET['nome_comanda'])) {
-      echo '<div style="width:15em; margin:0 auto;" class="alert alert-warning" role="alert"><center>A Comanda Já Existe, Tem Certeza Que Deseja Trocar?</center></div>';
+      echo '<div style="width:15em; margin:0 auto;" class="alert alert-warning" role="alert"><center>A comanda já existe, tem certeza que deseja trocar? Se confirmar os produtos serão transferidos!</center></div>';
 
       echo 
 

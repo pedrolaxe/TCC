@@ -68,7 +68,8 @@ button:hover {
 
   	<a href="config_gerais.php"><button class="btn-lg btn-outline">Configurações Gerais</button></a><br><br>
   	<a href="relatorio_vendas.php"><button class="btn-lg btn-outline">Relatório de Vendas</button></a><br><br>
-    <a href="relatorio_comandas.php"><button class="btn-lg btn-outline">Relatório de Comandas</button></a>
+    <a href="relatorio_comandas.php"><button class="btn-lg btn-outline">Relatório de Comandas</button></a><br><br>
+    <a href="faturamento.php"><button class="btn-lg btn-outline">Faturamento</button></a>
   	</div>
 
   	<div class="col-4">
@@ -85,6 +86,7 @@ button:hover {
 
     <a href="src/colaborador/colaboradores.php"><button class="btn-lg btn-outline">Colaboradores</button></a>
     <a href="src/colaborador/add_colaborador.php"><button class="btn-lg btn-outline-success">+</button></a><br><br>
+    <a href="top_colaborador.php"><button class="btn-lg btn-outline">Colaborador do Mês</button></a>
 
     <!-- <button class="btn-lg btn-outline-success">Criar Tipo de Produto</button><br><br> -->
     

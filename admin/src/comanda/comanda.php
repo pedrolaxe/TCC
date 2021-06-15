@@ -7,25 +7,42 @@ autorizacao_super();
 
 $is_admin = ID_userisadmin($_SESSION['user_id']);
 
-if (isset($_GET['id'])) {
-  $id = $_GET['id'];
 
-  $query  = "SELECT * FROM comanda WHERE id_comanda = $id";
-  $result = $con->query($query);
+try {
+  if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
-  foreach($result as $row) {
-    $registro = true;
-    $id       = $row['id_comanda'];
-    $nome     = $row['nome'];
-    $desconto = $row['desconto'];
+    $query  = "SELECT * FROM comanda WHERE id_comanda = $id";
+    $result = $con->query($query);
 
-    // if (strlen($nome) == 1) {
-    //   $nome = str_pad($nome, 2, '0', STR_PAD_LEFT);
-    // }
+    foreach($result as $row) {
+      $registro = true;
+      $id       = $row['id_comanda'];
+      $nome     = $row['nome'];
+      $desconto = $row['desconto'];
 
-    $status = $row['status'];
+      $status = $row['status'];
+    }
   }
-}
+} catch (Exception $e) {}
+
+try {
+  if (isset($_POST['id'])) {
+    $id = $_POST['id'];
+
+    $query  = "SELECT * FROM comanda WHERE id_comanda = $id";
+    $result = $con->query($query);
+
+    foreach($result as $row) {
+      $registro = true;
+      $id       = $row['id_comanda'];
+      $nome     = $row['nome'];
+      $desconto = $row['desconto'];
+
+      $status = $row['status'];
+    }
+  }
+} catch (Exception $e) {}
 
 if (isset($_GET['cancelar_pedido'])) {
   $id_pedido     = $_GET['cancelar_pedido'];
@@ -40,34 +57,6 @@ if (isset($_GET['cancelar_pedido'])) {
 //   cancel_comanda($id);
 // }
 
-if (isset($_POST['submit'])) {
-
-  # FECHAR CONTA
-  if(isset($_POST['total'])) {
-    $id     = $_POST['id'];
-    $total  = $_POST['total'];
-    $nome   = $_POST['nome'];
-
-    fechar_comanda($id, $total);
-
-    # CANCELAR COMANDA
-  } elseif(isset($_POST['observacao'])) {
-    $id    = $_POST['id'];
-    $senha = $_POST['senha'];
-    $obs   = $_POST['observacao'];
-
-    cancel_comanda($id, $senha, $obs);
-
-    # CANCELAR PEDIDO
-  } elseif(isset($_POST['id_pedido'])) {
-    $id        = $_POST['id'];
-    $senha     = $_POST['senha'];
-    $id_pedido = $_POST['id_pedido'];
-
-    cancel_pedido($id, $senha, $id_pedido);
-  }
-
-}
 
 ?>
 
@@ -130,6 +119,85 @@ if (isset($_POST['submit'])) {
         echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>Senha Incorreta</center></div>';
       }
 
+      if (isset($_GET['impressora'])) {
+        if($_GET['impressora'] ==  false) {
+          echo '<div  style="width:15em; margin:0 auto;" class="alert alert-warning" role="alert"><center>A Impressora Não Está Configurada Em Configurações Gerais</center></div>';
+        } else {
+          echo '<div  style="width:15em; margin:0 auto;" class="alert alert-success" role="alert"><center>Impressão Realizada</center></div>';
+        }
+      }
+
+      if (isset($_POST['submit'])) {
+
+  # IMPRIMIR CONTA
+  if(isset($_POST['impressao'])) {
+    $id        = $_POST['id'];
+    $total     = $_POST['total'];
+    $nome      = $_POST['nome'];
+
+    imprimir_nota($id, $total);
+  }
+
+  # FECHAR CONTA
+  elseif(isset($_POST['total'])) {
+    $id       = $_POST['id'];
+    $total    = $_POST['total'];
+    $nome     = $_POST['nome'];
+    $cartao   = $_POST['cartao'];
+    $dinheiro = $_POST['dinheiro'];
+    $pix      = $_POST['pix'];
+
+    $total = str_replace(',', '.', $total);
+    $cartao = str_replace(',', '.', $cartao);
+    $dinheiro = str_replace(',', '.', $dinheiro);
+    $pix = str_replace(',', '.', $pix);
+    $desconto = str_replace(',', '.', $desconto);
+
+    $total = number_format(floatval($total), 2);
+    $cartao = number_format(floatval($cartao), 2);
+    $dinheiro = number_format(floatval($dinheiro), 2);
+    $pix = number_format(floatval($pix), 2);
+    $desconto = number_format(floatval($desconto), 2);
+
+    $total_aux = number_format(($cartao+$dinheiro+$pix), 2);
+
+    // echo "CARTAO: ".$cartao."<br>";
+    // echo "DINHEIRO: ".$dinheiro."<br>";
+    // echo "PIX: ".$pix."<br>";
+    // echo "DESCONTO: ".$desconto."<br>";
+    // echo "TOTAL AUX: ".$total_aux."<br>";
+    // echo "TOTAL: ".($total-$desconto)*1.1;
+
+    $total_desconto_dez = number_format((($total - $desconto)*1.1), 2);
+    $total_desconto = number_format(($total - $desconto), 2);
+
+    if( $total_desconto != $total_aux && $total_desconto_dez != $total_aux ) {
+      echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>Valor Pago Diferente do Total</center></div>';
+    } else {
+      fechar_comanda($id, $total, $cartao, $dinheiro, $pix);
+    }
+
+    # CANCELAR COMANDA
+  } elseif(isset($_POST['observacao'])) {
+    $id    = $_POST['id'];
+    $senha = $_POST['senha'];
+    $obs   = $_POST['observacao'];
+
+    cancel_comanda($id, $senha, $obs);
+
+    # CANCELAR PEDIDO
+  } elseif(isset($_POST['id_pedido'])) {
+    $id        = $_POST['id'];
+    $senha     = $_POST['senha'];
+    $id_pedido = $_POST['id_pedido'];
+
+    cancel_pedido($id, $senha, $id_pedido);
+
+    
+  }
+
+}
+
       ?>
 
 
@@ -164,7 +232,7 @@ if (isset($_POST['submit'])) {
             $id_pedido     = $row['id_pedido'];
             $qtd           = $row['quantidade'];
             $nome_produto  = $row['nome_produto'];
-            $preco         = $row['preco'];
+            $valor         = $row['valor'];
             $status_pedido = $row['status_pedido'];
 
 
@@ -176,10 +244,10 @@ if (isset($_POST['submit'])) {
               } else {
 
                 echo
-                '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, ',', '.') . '
+                '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $valor, 2, ',', '.') . '
                 <i data-id="'. $id_pedido .'" data-qtd="'. $qtd .'" data-nome_pedido="'. $nome_produto .'" data-bs-toggle="modal" data-bs-target="#cancelarPedido" class="fas fa-times" style="padding-left:0.3em"></i></b></li>';
 
-                $total += $qtd * $preco;
+                $total += $qtd * $valor;
               }
             }
           }
@@ -197,7 +265,7 @@ if (isset($_POST['submit'])) {
             $id_pedido     = $row['id_pedido'];
             $qtd           = $row['quantidade'];
             $nome_produto  = $row['nome_produto'];
-            $preco         = $row['preco'];
+            $valor         = $row['valor'];
             $status_pedido = $row['status_pedido'];
 
 
@@ -213,11 +281,13 @@ if (isset($_POST['submit'])) {
           echo '<hr class="style-one">';
           echo '<br>';
 
-          echo
+         
 
-          '
+        if($desconto != 0 && $is_admin) {
 
-      <div class="form-check form-switch" style="float:right;">
+          echo '
+
+          <div class="form-check form-switch" style="float:right; margin-top:10vh">
 
         <h4 style="float:right; font-style: italic; font-weight: bold">
 
@@ -227,33 +297,98 @@ if (isset($_POST['submit'])) {
        
         <br>
 
-        <h5 style="float:right; font-style: italic; font-weight: bold">
-
-        Serviço <b id="">' . number_format($total*0.1, 2, ',', '.') . '</b>
-
-        </h5>
-
-        <br>';
-
-        if($desconto != 0) {
-
-          echo '
 
           <h5 style="float:right; font-style: italic; font-weight: bold">
 
           Desconto <b id="">' . number_format($desconto, 2, ',', '.') . '</b>
 
-          </h5>';
+          </h5>
 
-        }
+          <br>
+
+          <h5 style="float:right; font-style: italic; font-weight: bold">
+
+          Subtotal c/ Desconto <b id="">' . number_format($total-$desconto, 2, ',', '.') . '</b>
+
+          </h5>
+
+          <br><br>
+          ';
+
+        } elseif ($desconto == 0 && $is_admin) { 
 
         echo '
 
-        <br><br><br> 
+        <div class="form-check form-switch" style="float:right; margin-top:20vh">
+
+        <h4 style="float:right; font-style: italic; font-weight: bold">
+
+        Subtotal <b id="">' . number_format($total, 2, ',', '.') . '</b>
+
+        </h4>
+
+        <br><br>
+
+        ';
+      } elseif ($desconto != 0) {
+        echo '
+
+          <div class="form-check form-switch" style="float:right">
+
+        <h4 style="float:right; font-style: italic; font-weight: bold">
+
+        Subtotal <b id="">' . number_format($total, 2, ',', '.') . '</b>
+
+        </h4>
+       
+        <br>
+
+
+          <h5 style="float:right; font-style: italic; font-weight: bold">
+
+          Desconto <b id="">' . number_format($desconto, 2, ',', '.') . '</b>
+
+          </h5>
+
+          <br>
+
+          <h5 style="float:right; font-style: italic; font-weight: bold">
+
+          Subtotal c/ Desconto <b id="">' . number_format($total-$desconto, 2, ',', '.') . '</b>
+
+          </h5>
+
+          <br><br>
+          ';
+      } else {
+        echo '
+
+        <div class="form-check form-switch" style="float:right">
+
+        <h4 style="float:right; font-style: italic; font-weight: bold">
+
+        Subtotal <b id="">' . number_format($total, 2, ',', '.') . '</b>
+
+        </h4>
+
+        <br><br>
+
+        ';
+      }
+
+        echo '
+
+        <h5 style="float:right; font-style: italic; font-weight: bold">
+
+        Serviço <b id="">' . number_format(($total-$desconto)*0.1, 2, ',', '.') . '</b>
+
+        </h5>
+
+        <br>
 
         <h2 style="float:right; font-style: italic; font-weight: bold">
 
-        Total <b id="total">' . number_format($total*1.1-$desconto, 2, ',', '.') . '</b>
+        Total <b id="total">' . number_format(($total-$desconto)*1.1, 2, ',', '.') . '</b>
 
         </h2>
 
@@ -261,30 +396,30 @@ if (isset($_POST['submit'])) {
 
       if($is_admin) {
 
-      echo '<button style="float:left;width: 10.4em" class="btn-lg btn-outline-primary" data-bs-toggle="modal" data-bs-target="#fecharConta">Fechar Conta</button>
+      echo '<button style="width: 10.4em" class="btn-lg btn-outline-dark" data-bs-toggle="modal" data-bs-target="#fecharConta">Fechar Conta</button>
 
-
+      <button style="margin-top:5px; width: 10.4em" class="btn-lg btn-outline-dark" data-bs-toggle="modal" data-bs-target="#imprimirConta">Imprimir Conta</button>
 
       <a href="trocar_comanda.php?id=' . $id . '">
-        <button style="margin-top:5px; width: 10.4em" class="btn-lg btn-outline-success">Trocar Comanda</button>
+        <button style="margin-top:5px; width: 10.4em" class="btn-lg btn-outline-dark">Trocar Comanda</button>
       </a>
-
-      
 
         <a href="desconto.php?id=' . $id . '&total='. $total * 1.1 . '">
         <button style="display:inline; margin-top:5px; width: 10.4em;" type="button" class="btn-lg btn-outline-dark">Desconto</button>
       </a>
 
-      <button style="margin-top:5px;width: 10.4em" class="btn-lg btn-outline-danger" data-bs-toggle="modal" data-bs-target="#cancelarComanda">Cancelar Comanda</button>';
+      <button style="margin-top:5px;width: 10.4em" class="btn-lg btn-outline-dark" data-bs-toggle="modal" data-bs-target="#cancelarComanda">Cancelar Comanda</button>';
 
       } else {
 
-         echo '<button style="float:left;width: 10.4em" class="btn-lg btn-outline-primary" data-bs-toggle="modal" data-bs-target="#fecharConta">Fechar Conta</button>
+         echo '<button style="float:left;width: 10.4em; margin-top: 0vh" class="btn-lg btn-outline-dark" data-bs-toggle="modal" data-bs-target="#fecharConta">Fechar Conta</button>
 
+
+         <button style="margin-top:5px; width: 10.4em" class="btn-lg btn-outline-dark" data-bs-toggle="modal" data-bs-target="#imprimirConta">Imprimir Conta</button>
 
 
       <a href="trocar_comanda.php?id=' . $id . '">
-        <button style="margin-top:5px; width: 10.4em" class="btn-lg btn-outline-success">Trocar Comanda</button>
+        <button style="margin-top:5px; width: 10.4em" class="btn-lg btn-outline-dark">Trocar Comanda</button>
       </a>';
 
       }
@@ -319,7 +454,7 @@ if (isset($_POST['submit'])) {
 
                 <div class="mb-3">
                   <label for="recipient-name" class="col-form-label">Senha do Administrador</label>
-                  <input type="password" name="senha" class="form-control" id="recipient-name" required>
+                  <input type="password" name="senha" class="form-control" id="recipient-name" required autofocus>
                 </div>
                 <div class="mb-3">
                   <label for="message-text" class="col-form-label">Pedido</label>
@@ -348,7 +483,7 @@ if (isset($_POST['submit'])) {
           </div>
           <div class="modal-body">
             Tem certeza disso?
-          </div>
+            <br><br>
           <form action="comanda.php" method="POST">
 
             <?php
@@ -365,6 +500,18 @@ if (isset($_POST['submit'])) {
 
             ?>
 
+              <div class="mb-3" align="center">
+                <label class="col-form-label">Cartão</label>
+                <input type="money" name="cartao" class="form-control" style="width: 30%; text-align: center" autofocus>
+
+                <label class="col-form-label">Dinheiro</label>
+                <input type="money" name="dinheiro" class="form-control" style="width: 30%; text-align: center">
+
+                <label class="col-form-label">Pix</label>
+                <input type="money" name="pix" class="form-control" style="width: 30%; text-align: center">
+              </div>
+              
+            </div>
             <div class="modal-footer">
               <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
               <button class="btn-lg btn-outline-danger" name="submit" type="submit">Sim</button>
@@ -373,6 +520,47 @@ if (isset($_POST['submit'])) {
         </div>
       </div>
     </div>
+
+
+        <!-- CONFIRMAÇÂO PARA IMPRIMIR CONTA -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="imprimirConta" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #DEF2F1;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Imprimir Conta</h5>
+            <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Tem certeza disso?
+          </div>
+          <form action="comanda.php" method="POST">
+
+            <?php
+
+            echo 
+            '
+
+              <input name="id" value="' . $id . '" hidden>
+              <input name="total" value="' . $total . '" hidden>
+              <input name="nome" value="' . $nome . '" hidden>
+              <input name="impressao" value="' . true . '" hidden>
+
+
+            '
+
+            ?>
+
+            <div class="modal-footer">
+              <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
+              <button class="btn-lg btn-outline-danger" name="submit" type="submit">Sim</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
 
 
     <!-- CONFIRMAÇÂO PARA CANCELAR COMANDA -->
@@ -396,7 +584,7 @@ if (isset($_POST['submit'])) {
 
                 <div class="mb-3">
                   <label for="recipient-name" class="col-form-label">Senha do Administrador</label>
-                  <input type="password" name="senha" class="form-control" id="recipient-name" required>
+                  <input type="password" name="senha" class="form-control" id="recipient-name" required autofocus>
                 </div>
                 <div class="mb-3">
                   <label for="message-text" class="col-form-label">Observação</label>
@@ -437,6 +625,23 @@ $(document).on("click", ".fa-times", function (e) {
   // $(_self.attr('href')).modal('show');
 });
 
+// AUTO FOCUS MODAL
+$('.modal').on('shown.bs.modal', function() {
+  $(this).find('[autofocus]').focus();
+});
+
+</script>
+
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/maskmoney.js"></script>
+
+<script type="text/javascript">
+  $(function() {
+    $('[type=money]').maskMoney({
+      thousands: '',
+      decimal: ',',
+      allowZero: true
+    });
+  })
 </script>
 
 </html>

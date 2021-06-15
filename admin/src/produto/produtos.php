@@ -13,9 +13,9 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
-if (isset($_GET['delete_produto'])) {
-  $id = anti_injection($_GET['delete_produto']);
-  delete_produto($id);
+if (isset($_GET['inativar_produto'])) {
+  $id = anti_injection($_GET['inativar_produto']);
+  inativar_produto($id);
 }
 
 if (isset($_GET['alterar_produto'])) {
@@ -118,11 +118,14 @@ if (isset($_POST['submit'])) {
             foreach($result as $row) {
 
               $registro = true;
-              $id            = $row['id_produto'];
+              $id             = $row['id_produto'];
               // $tipo          = $row['tipo'];
-              $nome_produto  = $row['nome_produto'];
-              $preco         = $row['preco'];
-              $descricao     = $row['descricao'];
+              $nome_produto   = $row['nome_produto'];
+              $preco          = $row['preco'];
+              $descricao      = $row['descricao'];
+              $status_produto = $row['status_produto'];
+
+              if ($status_produto != 'inativo') {
 
             ?>
               <tr>
@@ -133,10 +136,10 @@ if (isset($_POST['submit'])) {
 
                 <td style="text-align: right; padding-left: 0"><a href="alterar_produto.php?id_produto=<?php echo $id; ?>"><button class="btn btn-outline-dark"><i class="far fa-edit"></i></button></a></td>
 
-                <td style="text-align: right; padding-left: 0"><a href="produtos.php?delete_produto=<?php echo $id; ?>"><button class="btn btn-outline-dark"><i class="fas fa-trash"></i></button></a></td>
+                <td style="text-align: right; padding-left: 0"><a href="produtos.php?inativar_produto=<?php echo $id; ?>"><button class="btn btn-outline-dark"><i class="fas fa-trash"></i></button></a></td>
               </tr>
 
-            <?php } ?>
+            <?php } } ?>
 
           </tbody>
         </table>
