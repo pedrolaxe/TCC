@@ -189,9 +189,9 @@ if(!$is_admin) {
     $("#phone").mask("(99) 99999-9999");
   });
 
-  $(document).ready(function(){
-    $("#rg").mask("99.999.999-9");
-  });
+  // $(document).ready(function(){
+  //   $("#rg").mask("99.999.999-9");
+  // });
 
 </script>
 

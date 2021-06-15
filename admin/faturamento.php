@@ -88,13 +88,22 @@ if(isset($_POST['submit'])) {
 <div class='container'>
   <br>
 
-  <form action='relatorio_vendas.php' method='post'>
+  <form action='faturamento.php' method='post'>
 
     <div class="row">
 
+
+
     	 <div class="col-5">
-        <h1>Relatório de Vendas</h1><br>
-        <br>
+        <h1>Faturamento</h1><br>
+
+        <br><br>
+
+        <h3 class="cartao"></h3><br>
+        <h3 class="dinheiro"></h3><br>
+        <h3 class="pix"></h3><br>
+        <h3 class="desconto"></h3><br>
+        <h3 class="total"></h3><br>
       </div>
 
       <div class="col-3">
@@ -113,26 +122,9 @@ if(isset($_POST['submit'])) {
 
     <br><br><br>
 
-    <hr>
-
     <br><br>
 
   	<div class="col-12">
-
-      <table class="styled-table" style="width: 100%">
-          <thead>
-            <tr>
-              <th>Comanda</th>
-              <th>Atendente</th>
-              <th>Produto</th>
-              <th>Qtd</th>
-              <th>Preço</th>
-              <th>Total</th>
-              <th>Hora</th>
-              <th>Data</th>
-            </tr>
-          </thead>
-          <tbody>
 
       <?php
 
@@ -140,7 +132,7 @@ if(isset($_POST['submit'])) {
 
       if(isset($_POST['submit'])) {
 
-            $faturamento = 0;
+            $total = 0;
 
             # flag
             $submit_ok = true;
@@ -174,37 +166,10 @@ if(isset($_POST['submit'])) {
               $data_aux = date("Y-m-d", strtotime($data[0]));
 
               if ($data_aux >= $data1 && $data_aux <= $data2 && $status_pedido != 'cancelado') {
-
-                $existe_pedido = true;
-
-                $faturamento += $valor*$qtd;
-
-            ?>
-              <tr>
-                <td><?php echo ucfirst($nome) ?></td>
-                <td><?php echo $nome_colaborador ?></td>
-                <td><?php echo $nome_produto ?></td>
-                <td><?php echo $qtd ?></td>
-                <td><?php echo number_format($valor, 2, ',', '.') ?></td>
-                <td><?php echo number_format($valor*$qtd, 2, ',', '.') ?></td>
-                <td><?php echo substr($data[1], 0, -3) ?></td>
-                <td><?php echo date("d/m/Y", strtotime($data[0])) ?></td>
-              </tr>
-
-            <?php } else {
-              # MELHORAR MENSAGEM
-              // echo "<tr><td></td>";
-              // echo "<td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
-              // echo "</tr>";
-              
-              // break;
-                  }
+                $total = $qtd*$valor;
+             } 
 
             } }
-
-              if (!$existe_pedido) {
-                echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Pedidos Nessa Data</center></div><br>';
-              }
 
 
             }
@@ -212,7 +177,7 @@ if(isset($_POST['submit'])) {
 
             if (!$submit_ok) {
 
-              $faturamento = 0;
+              $total = 0;
 
               $query  = "
 
@@ -257,37 +222,10 @@ if(isset($_POST['submit'])) {
               $data_aux = date("Y-m-d", strtotime($data[0]));
 
               if ($data_aux == date("Y-m-d") && $status_pedido != 'cancelado') {
-
-                $existe_pedido = true;
-
-                $faturamento += $valor*$qtd;
-
-            ?>
-              <tr>
-                <td><?php echo ucfirst($nome) ?></td>
-                <td><?php echo $nome_colaborador ?></td>
-                <td><?php echo $nome_produto ?></td>
-                <td><?php echo $qtd ?></td>
-                <td><?php echo number_format($valor, 2, ',', '.') ?></td>
-                <td><?php echo number_format($valor*$qtd, 2, ',', '.') ?></td>
-                <td><?php echo substr($data[1], 0, -3) ?></td>
-                <td><?php echo date("d/m/Y", strtotime($data[0])) ?></td>
-              </tr>
-
-            <?php } else {
-              # MELHORAR MENSAGEM
-              // echo "<tr><td></td>";
-              // echo "<td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
-              // echo "</tr>";
-              
-              // break;
+                $total = $qtd*$valor;
             }
 
             } }
-
-              if (!$existe_pedido) {
-                echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Pedidos Nessa Data</center></div><br>';
-              }
               
              }
 
@@ -302,47 +240,80 @@ if(isset($_POST['submit'])) {
   	</div>
 
   </div>
+
+  
+
+
 </div>
 </body>
+
+<?php
+
+echo $total;
+
+if (!$submit_ok) {
+
+    $date = date("Y/m/d");
+
+    $query2 = "SELECT SUM(cartao), SUM(dinheiro), SUM(pix), SUM(desconto) FROM COMANDA WHERE data_comanda ='$date' AND status != 'cancelado'";
+      $result2 = $con->query($query2);
+
+      foreach ($result2 as $value) {
+
+      $cartao   = $value[0];
+      $dinheiro = $value[1];
+      $pix      = $value[2];
+      $desconto = $value[3];
+
+      $faturamento = $cartao+$dinheiro+$pix;
+
+      $faturamento -= $desconto;
+    }
+
+  } elseif ($submit_ok) {
+    $query2 = "SELECT SUM(cartao), SUM(dinheiro), SUM(pix), SUM(desconto) FROM COMANDA WHERE data_comanda >= '$data1' AND data_comanda <= '$data2' AND status != 'cancelado'";
+      $result2 = $con->query($query2);
+
+      foreach ($result2 as $value) {
+
+      $cartao   = $value[0];
+      $dinheiro = $value[1];
+      $pix      = $value[2];
+      $desconto = $value[3];
+
+      $faturamento = $cartao+$dinheiro+$pix;
+
+      $faturamento -= $desconto;
+    }
+  }
+
+?>
 
 <script type="text/javascript">
 
   <?php
 
-    $query = "SELECT * FROM COMANDA";
-    $result = $con->query($query);
-
-    foreach($result as $row) { 
-
-      $status = $row['status'];
-    
-      if($status == 'fechado') { 
-
-        $id_comanda = $row['id_comanda'];
-        $desconto   = $row['desconto'];
-
-        $data       = $row['data_comanda']; 
-
-        $data = date("Y-m-d", strtotime($data));
-
-        if ($data == date("Y-m-d")) {
-          $faturamento -= $desconto;
-        }
-
-      }
-
-    }
-
-
-    $faturamento = number_format($faturamento, 2, ',', '.') 
+    $faturamento = number_format($faturamento, 2, ',', '.');
+    $cartao = number_format($cartao, 2, ',', '.'); 
+    $dinheiro = number_format($dinheiro, 2, ',', '.'); 
+    $pix = number_format($pix, 2, ',', '.'); 
+    $desconto = number_format($desconto, 2, ',', '.'); 
 
   ?>
 
-  let faturamento = document.querySelector("h2");
+  let faturamento = document.querySelector(".total");
+  let cartao      = document.querySelector(".cartao");
+  let dinheiro    = document.querySelector(".dinheiro");
+  let pix         = document.querySelector(".pix");
+  let desconto    = document.querySelector(".desconto");
 
   <?php if($faturamento != '0,00') { ?>
 
-    faturamento.textContent += 'Faturamento: R$ <?php echo $faturamento; ?>';
+    faturamento.textContent += 'Total'.padEnd(30, '.')+' R$ <?php echo $faturamento; ?>';
+    cartao.textContent      += 'Cartão'.padEnd(28, '.')+' R$ <?php echo $cartao; ?>';
+    dinheiro.textContent    += 'Dinheiro'.padEnd(27, '.')+' R$ <?php echo $dinheiro; ?>';
+    pix.textContent         += 'Pix'.padEnd(32, '.')+' R$ <?php echo $pix; ?>';
+    desconto.textContent    += 'Desconto'.padEnd(25, '.')+' R$ <?php echo $desconto; ?>';
 
   <?php } ?>
 

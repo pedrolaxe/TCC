@@ -113,7 +113,7 @@ if (isset($_GET['id'])) {
             $id_pedido    = $row['id_pedido'];
             $qtd          = $row['quantidade'];
             $nome_produto = $row['nome_produto'];
-            $preco        = $row['preco'];
+            $valor        = $row['valor'];
             $status_pedido = $row['status_pedido'];
             $data         = explode(' ',trim($row['data'])); 
 
@@ -125,9 +125,9 @@ if (isset($_GET['id'])) {
               } else {
 
                 echo
-                '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $preco, 2, ',', '.') . '</b></li>';
+                '<li style="margin-bottom: 0.8em">' . $qtd . ' x ' . $nome_produto . '<b style="float:right">' . number_format($qtd * $valor, 2, ',', '.') . '</b></li>';
 
-                $total += $qtd * $preco;
+                $total += $qtd * $valor;
               }
             }
           }
@@ -145,7 +145,7 @@ if (isset($_GET['id'])) {
             $id_pedido     = $row['id_pedido'];
             $qtd           = $row['quantidade'];
             $nome_produto  = $row['nome_produto'];
-            $preco         = $row['preco'];
+            $valor         = $row['valor'];
             $status_pedido = $row['status_pedido'];
 
 

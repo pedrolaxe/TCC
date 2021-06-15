@@ -11,10 +11,14 @@ $id = $_GET['id'];
 $query  = "SELECT * FROM comanda WHERE id_comanda = $id";
 $result_comanda = $con->query($query);
 
-foreach($result_comanda as $row) {
+$query2  = "SELECT * FROM colaborador WHERE status_colaborador IS NULL";
+$result_colaborador = $con->query($query2);
 
-  $id_comanda = $row['id_comanda'];
-  $nome_comanda = $row['nome'];
+
+foreach($result_comanda as $row2) {
+
+  $id_comanda = $row2['id_comanda'];
+  $nome_comanda = $row2['nome'];
 }
 
 if (isset($_POST['submit'])) {
@@ -88,6 +92,8 @@ if (isset($_POST['submit_carrinho'])) {
 
         if(isset($_GET['pedido']) && $_GET['pedido'] == "feito") {
           echo '<div style="width:15em; margin:0 auto;" class="alert alert-success" role="alert"><center>O Pedido Foi Inserido</center></div>';
+        } elseif(isset($_GET['pedido']) && $_GET['pedido'] == "zero") {
+          echo '<div style="width:15em; margin:0 auto;" class="alert alert-warning" role="alert"><center>O Pedido Não Pode Ter A Quantidade Zerada</center></div>';
         }
 
       ?>
@@ -101,14 +107,15 @@ if (isset($_POST['submit_carrinho'])) {
         
         <br>       
 
-        <form action="pedido2.php?id=<?php echo $id ?>" method="POST">
-          <div class="input-group mb-4" style="padding: 0vw 4.5vw;">
-            <input name="procurar_produto" value="<?php if(isset($_POST['submit'])) echo $search; ?>" type="text" class="form-control" placeholder="" autocomplete="off">
+        <form  style="padding: 0vw 4.5vw;" action="pedido2.php?id=<?php echo $id ?>" method="POST">
+          <div class="input-group mb-4">
+            <input name="procurar_produto" placeholder="Produto" value="<?php if(isset($_POST['submit'])) echo $search; ?>" type="text" class="form-control" placeholder="" autocomplete="off">
 
             <button name="submit" class="btn btn-outline" type="submit" style="font-weight: bolder;">Procurar</button>
             <button name="submit_tudo" class="btn btn-outline" type="submit" style="margin-left: .2em;font-weight: bolder;">Listar Tudo</button>
 
           </div>
+
         </form>
 
         <br>
@@ -248,13 +255,30 @@ if (isset($_POST['submit_carrinho'])) {
                   <td></td>
               </tbody>
             </table>
-              <br>
+
+            </select>
 
                 <?php 
 
                 if (isset($_POST['submit_carrinho'])) {
 
-                echo '<button class="btn btn-outline-success" type="submit" name="tipo" value="normal" style="font-weight: bolder; float: right; margin-right: 6vw">Confirmar</button>';
+                echo '<label style="width:50%; margin-top:5vh;margin-left:6vw">Atendente</label>';
+
+                echo '<select class="form-select" name="id_colaborador" style="width:50%; margin-top:1vh;margin-left:5.5vw" aria-label="Default select example">';
+
+
+                foreach($result_colaborador as $row) {
+
+                  $id_colaborador = $row['id_colaborador'];
+                  $nome           = $row['nome_colaborador'];
+
+                  echo '<option value="'.$id_colaborador.'">'.$nome.'</option>';
+
+                }
+
+                echo '</select>';
+
+                echo '<button class="btn btn-outline-success" type="submit" name="tipo" value="normal" style="font-weight: bolder; float: right; margin-right: 6vw; margin-top:-5.6vh">Confirmar</button>';
                 echo '</form>';
 
                 }

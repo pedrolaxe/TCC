@@ -5,17 +5,6 @@ include "../includes/functions.php";
 
 autorizacao_super();
 
-# ARMAZENAR USER ID PARA CONTROLE DE ACESSO
-// if (isset($_GET['user_id'])) {
-//   $_SESSION['user_id'] = $_GET['user_id'];
-// } else { }
-
-if (isset($_GET['impressora'])) {
-  if($_GET['impressora'] ==  false) {
-    echo '<div style="margin:0 auto;" class="alert alert-warning" role="alert"><center>A Impressora Não Está Configurada</center></div>';
-  }
-}
-
 if (isset($_POST['submit'])) {
   insert_comanda();
 }
@@ -48,22 +37,14 @@ if (isset($_POST['submit'])) {
       <?php
 
       $query  = "SELECT * FROM comanda WHERE status = 'aberto' ORDER BY ABS(nome)";
+
       $result = $con->query($query);
       // echo var_dump($result);
 
       foreach($result as $row) {
 
-        $id      = $row['id_comanda'];
+        $id    = $row['id_comanda'];
         $nome  = $row['nome'];
-
-
-        # PARA APARECER comanda '09' EM VEZ DE '9'
-        // if (strlen($nome) == 1) {
-        //   $nome = str_pad($nome, 2, '0', STR_PAD_LEFT);
-        // }
-
-        # NAO ESTÁ SENDO USADO AINDA
-        // $status = $row['status'];
 
       ?>
 
@@ -98,12 +79,12 @@ if (isset($_POST['submit'])) {
                   SELECT * FROM PEDIDO 
                   INNER JOIN PRODUTO ON 
                   PEDIDO.id_produto = PRODUTO.id_produto 
-                  INNER JOIN comanda ON 
+                  INNER JOIN COMANDA ON 
                   PEDIDO.id_comanda = comanda.id_comanda
                   
                   ";
 
-                   $result2 = $con->query($query2);
+                  $result2 = $con->query($query2);
 
                   foreach($result2 as $row) {
                     $id_comanda    = $row['id_comanda'];

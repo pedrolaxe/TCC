@@ -13,11 +13,11 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
-if (isset($_GET['delete_colaborador'])) {
-  $id = $_GET['delete_colaborador'];
+if (isset($_GET['inativar_colaborador'])) {
+  $id = $_GET['inativar_colaborador'];
 
   // CRIAR FUNCAO
-  delete_colaborador($id);
+  inativar_colaborador($id);
   echo '<script>alert('.ID_userisadmin($id).')</script>';
 }
 
@@ -104,13 +104,16 @@ if (isset($_GET['edit_colaborador'])) {
 
               $registro = true;
 
-              $id     = $row['id_colaborador'];
-              $tipo   = $row['tipo'];
-              $nome   = $row['nome_colaborador'];
-              $login  = $row['login'];
-              $cpf    = $row['cpf'];
-              $rg     = $row['rg'];
-              $tel    = $row['telefone'];
+              $id                 = $row['id_colaborador'];
+              $tipo               = $row['tipo'];
+              $nome               = $row['nome_colaborador'];
+              $login              = $row['login'];
+              $cpf                = $row['cpf'];
+              $rg                 = $row['rg'];
+              $tel                = $row['telefone'];
+              $status_colaborador = $row['status_colaborador'];
+
+              if ($status_colaborador != 'inativo') {
 
             ?>
               <tr>
@@ -122,10 +125,10 @@ if (isset($_GET['edit_colaborador'])) {
 
                 <td style="text-align: right; padding-left: 0"><a href="edit_colaborador.php?id_colaborador=<?=$id;?>"><button class="btn btn-outline-dark"><i class="far fa-edit"></i></button></a></td>
 
-                <td style="text-align: right; padding-left: 0"><a href="colaboradores.php?delete_colaborador=<?=$id;?>"><button class="btn btn-outline-dark"><i class="fas fa-trash"></i></button></a></td>
+                <td style="text-align: right; padding-left: 0"><a href="colaboradores.php?inativar_colaborador=<?=$id;?>"><button class="btn btn-outline-dark"><i class="fas fa-trash"></i></button></a></td>
               </tr>
 
-            <?php } ?>
+            <?php } } ?>
 
           </tbody>
         </table>
