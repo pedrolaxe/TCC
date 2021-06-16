@@ -109,7 +109,7 @@ if (isset($_POST['submit_carrinho'])) {
 
         <form  style="padding: 0vw 4.5vw;" action="pedido2.php?id=<?php echo $id ?>" method="POST">
           <div class="input-group mb-4">
-            <input name="procurar_produto" placeholder="Produto" value="<?php if(isset($_POST['submit'])) echo $search; ?>" type="text" class="form-control" placeholder="" autocomplete="off">
+            <input name="procurar_produto" placeholder="Procurar Produto" value="<?php if(isset($_POST['submit'])) echo $search; ?>" type="text" class="form-control" placeholder="" autocomplete="off">
 
             <button name="submit" class="btn btn-outline" type="submit" style="font-weight: bolder;">Procurar</button>
             <button name="submit_tudo" class="btn btn-outline" type="submit" style="margin-left: .2em;font-weight: bolder;">Listar Tudo</button>
@@ -135,9 +135,9 @@ if (isset($_POST['submit_carrinho'])) {
                   $search = anti_injection($_POST['procurar_produto']);
 
                   if (isset($_POST['submit'])) {
-                    $query  = "SELECT * FROM produto WHERE nome_produto LIKE '%$search%' ORDER BY nome_produto ASC";
+                    $query  = "SELECT * FROM produto WHERE nome_produto LIKE '%$search%' AND status_produto IS NULL ORDER BY nome_produto ASC";
                   } elseif (isset($_POST['submit_tudo'])) {
-                    $query  = "SELECT * FROM produto ORDER BY nome_produto ASC";
+                    $query  = "SELECT * FROM produto WHERE status_produto IS NULL ORDER BY nome_produto ASC";
                   }
 
                   $result = $con->query($query);

@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
       <button name="submit" class="w-100 btn btn-lg btn-outline-primary" type="submit">Entrar</button>
     </form>
 
-    <a href="forgot_pw.php"><button class="w-100 btn btn-lg btn-outline">Recuperar Senha</button></a>
+    <!-- <a href="forgot_pw.php"><button class="w-100 btn btn-lg btn-outline">Recuperar Senha</button></a> -->
   </main>
 </body>
 

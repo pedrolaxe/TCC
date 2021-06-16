@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Add Mesa</title>
+  <title>Desconto</title>
   <link rel="icon" href="assets/img/logo.jpg">
 
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->

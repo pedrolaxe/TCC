@@ -90,35 +90,38 @@ function trocar_comanda() {
 
     } else {
 
-      # SELECIONAR PEDIDO DA comanda ANTERIOR E ADICIONAR PARA OUTRA comanda
-      $query  = "
-      SELECT * FROM pedido 
-      INNER JOIN produto ON 
-      PEDIDO.id_produto = produto.id_produto 
-      INNER JOIN comanda ON 
-      PEDIDO.id_comanda = comanda.id_comanda";
+      // # SELECIONAR PEDIDO DA comanda ANTERIOR E ADICIONAR PARA OUTRA comanda
+      // $query  = "
+      // SELECT * FROM pedido 
+      // INNER JOIN produto ON 
+      // PEDIDO.id_produto = produto.id_produto 
+      // INNER JOIN comanda ON 
+      // PEDIDO.id_comanda = comanda.id_comanda";
 
-      $result = $con->query($query);
+      // $result = $con->query($query);
 
-      foreach($result as $row) {
+      // foreach($result as $row) {
 
-        $id_comanda      = $row['id_comanda'];
-        $id_produto   = $row['id_produto'];
-        $id_pedido    = $row['id_pedido'];
-        $qtd          = $row['quantidade'];
-        $nome_produto = $row['nome_produto'];
-        $preco        = $row['preco'];
+      //   $id_comanda     = $row['id_comanda'];
+      //   $id_produto     = $row['id_produto'];
+      //   $id_pedido      = $row['id_pedido'];
+      //   $id_colaborador = $row['id_colaborador'];
+      //   $qtd            = $row['quantidade'];
+      //   $nome_produto   = $row['nome_produto'];
+      //   $preco          = $row['preco'];
+      //   $data           = $row['data'];
+      //   $valor          = $row['valor'];
 
-        # echo "id_comanda: ".$id_comanda."<br>"."id_comanda1: ".$id_comanda1;
+      //   # echo "id_comanda: ".$id_comanda."<br>"."id_comanda1: ".$id_comanda1;
 
 
-        # PROCURAR PEDIDO DA comanda2
-        if ($id_comanda2 == $id_comanda) {
+      //   # PROCURAR PEDIDO DA comanda2
+      //   if ($id_comanda2 == $id_comanda) {
 
-          array_push($produtosId2_array, $id_produto);
-          array_push($qtd2_array, $qtd);
-        }
-      }
+      //     array_push($produtosId2_array, $id_produto);
+      //     array_push($qtd2_array, $qtd);
+      //   }
+      // }
 
       $query  = "
 
@@ -134,12 +137,15 @@ function trocar_comanda() {
 
       foreach($result as $row) {
 
-        $id_comanda      = $row['id_comanda'];
-        $id_produto   = $row['id_produto'];
-        $id_pedido    = $row['id_pedido'];
-        $qtd          = $row['quantidade'];
-        $nome_produto = $row['nome_produto'];
-        $preco        = $row['preco'];
+        $id_comanda     = $row['id_comanda'];
+        $id_produto     = $row['id_produto'];
+        $id_pedido      = $row['id_pedido'];
+        $id_colaborador = $row['id_colaborador'];
+        $qtd            = $row['quantidade'];
+        $nome_produto   = $row['nome_produto'];
+        $preco          = $row['preco'];
+        $data           = $row['data'];
+        $valor          = $row['valor'];
 
         # echo "id_comanda: ".$id_comanda."<br>"."id_comanda1: ".$id_comanda1;
 
@@ -152,36 +158,38 @@ function trocar_comanda() {
         }
       }
 
-      if (!$produtosId2_array) {
+      // if (!$produtosId2_array) {
 
         for ($i = 0; $i < sizeof($produtosId1_array); $i++) {
-          $query  = "INSERT INTO pedido (quantidade, id_comanda, id_produto)";
-          $query .= "VALUES ('$qtd1_array[$i]', '$id_comanda2', '$produtosId1_array[$i]')";
+          $query  = "INSERT INTO pedido (quantidade, valor, data, id_comanda, id_produto, id_colaborador)";
+          $query .= "VALUES ('$qtd1_array[$i]', '$valor', '$data', '$id_comanda2', '$produtosId1_array[$i]', '$id_colaborador')";
           $result = $con->query($query);
         }
-      } else {
+      // } 
 
-        for ($i = 0; $i < sizeof($produtosId1_array); $i++) {
+      // else {
 
-          $produto_repetido = false;
+        // for ($i = 0; $i < sizeof($produtosId1_array); $i++) {
 
-          for ($j = 0; $j < sizeof($produtosId2_array); $j++) {
+        //   $produto_repetido = false;
 
-            if ($produtosId1_array[$i] == $produtosId2_array[$j]) {
+        //   for ($j = 0; $j < sizeof($produtosId2_array); $j++) {
 
-              $produto_repetido = true;
-              $qtd = $qtd1_array[$i] + $qtd2_array[$j];
-              $query = "UPDATE PEDIDO SET quantidade = $qtd WHERE id_produto = $produtosId2_array[$j] AND (id_comanda = $id_comanda2)";
-              $result = $con->query($query);
-            } elseif (!$produto_repetido && $j == sizeof($produtosId2_array) - 1) {
+        //     if ($produtosId1_array[$i] == $produtosId2_array[$j]) {
 
-              $query  = "INSERT INTO PEDIDO (quantidade, id_comanda, id_produto)";
-              $query .= "VALUES ('$qtd1_array[$i]', '$id_comanda2', '$produtosId1_array[$i]')";
-              $result = $con->query($query);
-            }
-          }
-        }
-      }
+        //       $produto_repetido = true;
+        //       $qtd = $qtd1_array[$i] + $qtd2_array[$j];
+        //       $query = "UPDATE PEDIDO SET quantidade = $qtd WHERE id_produto = $produtosId2_array[$j] AND (id_comanda = $id_comanda2)";
+        //       $result = $con->query($query);
+        //     } elseif (!$produto_repetido && $j == sizeof($produtosId2_array) - 1) {
+
+        //       $query  = "INSERT INTO PEDIDO (quantidade, id_comanda, id_produto)";
+        //       $query .= "VALUES ('$qtd1_array[$i]', '$id_comanda2', '$produtosId1_array[$i]')";
+        //       $result = $con->query($query);
+        //     }
+        //   }
+        // }
+      // }
 
       delete_comanda($id_comanda1);
 
@@ -342,6 +350,8 @@ function insert_desconto() {
 
   $desconto = str_replace(',', '.', $desconto);
 
+  
+
   if($descontoCheck == "percentual") {
     $desconto = $total*$desconto/100;
   }
@@ -419,7 +429,7 @@ function cadastro_colaborador() {
   $tel                = anti_injection($_POST['telefone']);
 
 
-  # VERIFICAR SE comanda JÁ EXISTE
+  # VERIFICAR SE COLABORADOR JÁ EXISTE
   $query  = "SELECT * FROM colaborador WHERE login = '$login' AND status_colaborador IS NULL";
 
   $q = $con->query($query);
@@ -541,7 +551,7 @@ function insert_produto() {
   $preco = str_replace(',', '.', $preco);
 
   # VERIFICAR SE PRODUTO JÁ EXISTE
-  $query  = "SELECT * FROM PRODUTO WHERE nome_produto = '$nome'";
+  $query  = "SELECT * FROM PRODUTO WHERE nome_produto = '$nome' AND status_produto IS NULL";
 
   $q = $con->query($query);
   if($q->rowCount() > 0) {
@@ -561,8 +571,8 @@ function insert_produto() {
 function alterar_produto($id, $nome, $preco, $descricao) {
   global $con;
 
-  # VERIFICAR SE comanda JÁ EXISTE
-  $query  = "SELECT * FROM PRODUTO WHERE nome_produto = '$nome' AND id_produto != $id";
+  # VERIFICAR SE PRODUTO JÁ EXISTE
+  $query  = "SELECT * FROM PRODUTO WHERE nome_produto = '$nome' AND id_produto != $id AND status_produto IS NULL";
 
   $q = $con->query($query);
   if($q->rowCount() > 0) {

@@ -404,7 +404,7 @@ if (isset($_GET['cancelar_pedido'])) {
         <button style="margin-top:5px; width: 10.4em" class="btn-lg btn-outline-dark">Trocar Comanda</button>
       </a>
 
-        <a href="desconto.php?id=' . $id . '&total='. $total * 1.1 . '">
+        <a href="desconto.php?id=' . $id . '&total='. round($total, 2) . '">
         <button style="display:inline; margin-top:5px; width: 10.4em;" type="button" class="btn-lg btn-outline-dark">Desconto</button>
       </a>
 
@@ -514,7 +514,7 @@ if (isset($_GET['cancelar_pedido'])) {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
-              <button class="btn-lg btn-outline-danger" name="submit" type="submit">Sim</button>
+              <button class="btn-lg btn-outline-success" name="submit" type="submit">Sim</button>
             </div>
           </form>
         </div>
@@ -522,7 +522,7 @@ if (isset($_GET['cancelar_pedido'])) {
     </div>
 
 
-        <!-- CONFIRMAÇÂO PARA IMPRIMIR CONTA -->
+    <!-- CONFIRMAÇÂO PARA IMPRIMIR CONTA -->
 
     <!-- Modal -->
     <div class="modal fade" id="imprimirConta" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
@@ -554,7 +554,7 @@ if (isset($_GET['cancelar_pedido'])) {
 
             <div class="modal-footer">
               <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
-              <button class="btn-lg btn-outline-danger" name="submit" type="submit">Sim</button>
+              <button class="btn-lg btn-outline-success" name="submit" type="submit">Sim</button>
             </div>
           </form>
         </div>

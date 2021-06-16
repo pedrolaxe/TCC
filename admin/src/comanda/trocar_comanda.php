@@ -13,12 +13,15 @@ if (isset($_POST['submit'])) {
   trocar_comanda();
 } 
 
+$query  = "SELECT * FROM comanda WHERE status = 'aberto' AND id_comanda != $id ORDER BY ABS(nome)";
+$result = $con->query($query);
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Add Comanda</title>
+  <title>Trocar Comanda</title>
   <link rel="icon" href="assets/img/logo.jpg">
 
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
@@ -26,6 +29,7 @@ if (isset($_POST['submit'])) {
 
   <!-- CSS -->
   <link href="../../../assets/css/form.css" rel="stylesheet">
+
 </head>
 
 <body class="text-center">
@@ -53,12 +57,13 @@ if (isset($_POST['submit'])) {
 
         <main class="form-signin">
           <form action="trocar_comanda.php?ja_existe=true" method="post">
-            <h1>Trocar de Comanda</h1>
+            <br>
+            <h1>Trocar Comanda</h1>
             <input name="id" value="'.$id.'" hidden>
             <br>
             <label for="inputEmail" class="visually-hidden">Trocar Comanda</label>
             <input name="nome" type="text" value="'.$_GET['nome_comanda'].'" class="form-control" placeholder="Trocar Para" autocomplete="off" required autofocus hidden>
-            <br>
+            <br><br>
             <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name="submit">Tenho Certeza</button>
             <br><br>
           </form>
@@ -75,12 +80,24 @@ if (isset($_POST['submit'])) {
 
       <main class="form-signin">
         <form action="trocar_comanda.php" method="post">
-          <h1>Trocar de Comanda</h1>
+          <br>
+          <h1>Trocar Comanda</h1>
           <input name="id" value="'.$id.'" hidden>
           <br>
           <label for="inputEmail" class="visually-hidden">Trocar Comanda</label>
-          <input name="nome" type="text" class="form-control" placeholder="Trocar Para" autocomplete="off" required autofocus>
-          <br>
+          <input id="troca_input" name="nome" type="text" class="form-control" placeholder="Trocar Para" autocomplete="off" list="troca" required autofocus>
+          <datalist id="troca">
+          <option value="">Trocar Para</option>';
+
+          foreach($result as $row) {
+            $nome  = $row['nome'];
+
+            echo '<option value="'.$nome.'"></option>';
+
+          }
+
+          echo '</datalist>
+          <br><br>
           <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name="submit">Trocar Comanda</button>
           <br><br>
         </form>
@@ -95,4 +112,15 @@ if (isset($_POST['submit'])) {
 ?>
     
 </body>
+<script>
+function getRealValue(ele){
+  var dl=ele.list.options;
+  for (var x=0;x<dl.length;x++){
+    if (dl[x].value==ele.value){
+      ele.value=dl[x].dataset.value;
+      return dl[x].dataset.value;
+    }
+  }
+}
+</script>
 </html>

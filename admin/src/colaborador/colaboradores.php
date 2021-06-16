@@ -13,13 +13,18 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
-if (isset($_GET['inativar_colaborador'])) {
-  $id = $_GET['inativar_colaborador'];
-
-  // CRIAR FUNCAO
+if (isset($_POST['submit'])) {
+  $id = anti_injection($_POST['id']);
   inativar_colaborador($id);
-  echo '<script>alert('.ID_userisadmin($id).')</script>';
 }
+
+// if (isset($_GET['inativar_colaborador'])) {
+//   $id = $_GET['inativar_colaborador'];
+
+//   // CRIAR FUNCAO
+//   inativar_colaborador($id);
+//   echo '<script>alert('.ID_userisadmin($id).')</script>';
+// }
 
 if (isset($_GET['edit_colaborador'])) {
   $id = $_GET['edit_colaborador'];
@@ -125,7 +130,8 @@ if (isset($_GET['edit_colaborador'])) {
 
                 <td style="text-align: right; padding-left: 0"><a href="edit_colaborador.php?id_colaborador=<?=$id;?>"><button class="btn btn-outline-dark"><i class="far fa-edit"></i></button></a></td>
 
-                <td style="text-align: right; padding-left: 0"><a href="colaboradores.php?inativar_colaborador=<?=$id;?>"><button class="btn btn-outline-dark"><i class="fas fa-trash"></i></button></a></td>
+                <td style="text-align: right; padding-left: 0"><button class="btn btn-outline-dark trash" data-id="<?php echo $id; ?>" data-bs-toggle="modal" data-bs-target="#inativarColaborador"><i class="fas fa-trash"></i></button></td>
+
               </tr>
 
             <?php } } ?>
@@ -138,4 +144,47 @@ if (isset($_GET['edit_colaborador'])) {
     <a href="../../painel.php"><button class="w-10 btn btn-lg btn-outline">Voltar</button></a>
   </div>
 </body>
+
+<!-- CONFIRMAÇÂO PARA INATIVAR PRODUTO -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="inativarColaborador" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #DEF2F1;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Inativar Produto</h5>
+            <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Tem certeza disso?
+          </div>
+          <form action="colaboradores.php" method="POST">
+
+            <input id="id_inativar" name="id" hidden>
+
+            <div class="modal-footer">
+              <button type="button" class="btn-lg btn-outline-primary" data-bs-dismiss="modal">Não</button>
+              <button class="btn-lg btn-outline-danger" name="submit" type="submit">Sim</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+<script type="text/javascript" src="<?=LINK_SITE;?>assets/js/jquery.js"></script>
+<script type="text/javascript">
+  
+$(document).on("click", ".trash", function (e) {
+
+  e.preventDefault();
+
+  var _self = $(this);
+  var id    = _self.data('id');
+
+  $("#id_inativar").val(id);
+});
+
+
+</script>
 </html>
