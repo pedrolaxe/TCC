@@ -152,7 +152,7 @@ if(!$is_admin) {
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">CPF</label>
       <input type="text" id="cpf" class="form-control" name="cpf" placeholder="CPF" value="<?=$cpf; ?>" autocomplete="off">
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">RG</label>
-      <input type="text" id="rg" class="form-control" name="rg" placeholder="RG" value="<?=$rg; ?>" autocomplete="off">
+      <input type="text" id="text" class="form-control" name="rg" placeholder="RG" value="<?=$rg; ?>" autocomplete="off">
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Telefone</label>
       <input type="text" id="phone" class="form-control" name="telefone" placeholder="Telefone" value="<?=$tel; ?>" autocomplete="off">
 

@@ -11,47 +11,47 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
-$existe_pedido = false;
+if(!isset($_POST['submit'])) {
+  $data1 = date("Y-m-d");
+  $data2 = date("Y-m-d");
 
-if(isset($_POST['submit'])) {
+  $submit_ok = false;
+}
 
-            $data1 = $_POST['data1'];
-            $data2 = $_POST['data2'];
+if (isset($_POST['submit'])) {
 
+  $submit_ok = true;
 
-            if($data1 > $data2) {
-              echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Primeira Data Não Pode Ser Maior Que A Segunda</center></div>';
-              $existe_pedido = true;
-            }
+  if(isset($_POST['data1']) AND isset($_POST['data2'])) {
 
-            $query  = "
+  $data1 = $_POST['data1'];
+  $data2 = $_POST['data2'];
 
-                  SELECT * FROM PEDIDO 
-                  INNER JOIN PRODUTO ON 
-                  PEDIDO.id_produto = PRODUTO.id_produto 
-                  INNER JOIN COMANDA ON 
-                  PEDIDO.id_comanda = COMANDA.id_comanda 
-                  ORDER BY ABS(id_pedido)
-                  
-            ";
+  if (empty($data1) || empty($data2)) {
+    echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Preencha as Datas</center></div>';
+    $existe_pedido = true;
+  }
 
-
-            $result = $con->query($query);
-          }
+  elseif($data1 > $data2) {
+    echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Primeira Data Não Pode Ser Maior Que A Segunda</center></div>';
+    $existe_pedido = true;
+  }
+}
+}
 
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Relatório de Vendas</title>
+  <title>Faturamento</title>
 
   <!-- META TAGS AND IMPORTS (ICONES, CSS, JS, FONTES...) -->
   <?php include '../includes/head.php' ?>
 
   <!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="<?=LINK_SITE;?>assets/css/index.css" media="screen" />
-  <link href="<?=LINK_SITE;?>assets/css/produtos.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="<?=LINK_SITE;?>assets/css/index.css" media="screen" />
+
 
   <style type="text/css">
     
@@ -66,15 +66,15 @@ if(isset($_POST['submit'])) {
       /*width: auto;*/
     }
 
-     .btn-outline {
-    border: .2em solid black !important;
-  }
+    button {
+  border: 3px solid !important;
+}
 
-  .btn-outline:hover {
-    border: .2em solid white;
-    background-color: black;
-    color: white;
-  }
+button:hover {
+  border: 3px solid grey !important;
+  background-color: black;
+  color: white !important;
+}
 
   </style>
 
@@ -90,172 +90,52 @@ if(isset($_POST['submit'])) {
 
   <form action='faturamento.php' method='post'>
 
-    <div class="row">
+  <div class="row">
 
+    <div class="col-4">
+      <h1>Faturamento</h1>
 
-
-    	 <div class="col-5">
-        <h1>Faturamento</h1><br>
-
-        <br><br>
-
-        <h3 class="cartao"></h3><br>
-        <h3 class="dinheiro"></h3><br>
-        <h3 class="pix"></h3><br>
-        <h3 class="desconto"></h3><br>
-        <h3 class="total"></h3><br>
-      </div>
+    </div>
 
       <div class="col-3">
-        <input name="data1" type="date" value="<?php if(isset($data1)) echo $data1; else echo date("Y-m-d"); ?>" style="height:60px; width: 250px">
-      </div>
+        <input name="data1" type="date" style="height:60px; width: 250px" value="<?php if(isset($data1)) echo $data1; else echo date("Y-m-d"); ?>"></div>
 
-      <div class="col-3"> 
+      <div class="col-3">
         <input name="data2" type="date" value="<?php if(isset($data2)) echo $data2; else echo date("Y-m-d"); ?>" style="height:60px; width: 250px">
       </div>
 
       <div class="col-1">
-        <button class="btn-lg btn-outline" type="submit" name="submit" style="height:60px">Ok</button>
+        <button class="btn-lg btn-outline" type="submit" name="submit" style="height:60px;">Ok</button>
       </div>
 
-  </form>
-
-    <br><br><br>
-
-    <br><br>
-
-  	<div class="col-12">
-
-      <?php
-
-      $submit_ok = false;
-
-      if(isset($_POST['submit'])) {
-
-            $total = 0;
-
-            # flag
-            $submit_ok = true;
-
-            foreach($result as $row) { 
-
-            $status = $row['status'];
-  
-            if($status == 'fechado') { 
-
-              $id_comanda     = $row['id_comanda'];
-              $id_pedido      = $row['id_pedido'];
-              $nome           = $row['nome'];
-              $nome_produto   = $row['nome_produto'];
-              $qtd            = $row['quantidade'];
-              $valor          = $row['valor'];
-              $status_pedido  = $row['status_pedido'];
-              $id_colaborador = $row['id_colaborador'];
-
-              $query2 = "SELECT * FROM COLABORADOR WHERE id_colaborador = '$id_colaborador'";
-
-              $result2 = $con->query($query2);
-
-              foreach($result2 as $row2) { 
-                $nome_colaborador = $row2['nome_colaborador'];
-              }
-
-              // $data[0] é data e $data[1] é hora
-              $data         = explode(' ',trim($row['data'])); 
-
-              $data_aux = date("Y-m-d", strtotime($data[0]));
-
-              if ($data_aux >= $data1 && $data_aux <= $data2 && $status_pedido != 'cancelado') {
-                $total = $qtd*$valor;
-             } 
-
-            } }
+    </form>
 
 
-            }
+    <br><br><br><br>
 
+    <hr style="opacity: 0">
 
-            if (!$submit_ok) {
+    <br>
 
-              $total = 0;
+    <div class="col-0"></div>
 
-              $query  = "
-
-                  SELECT * FROM PEDIDO 
-                  INNER JOIN PRODUTO ON 
-                  PEDIDO.id_produto = PRODUTO.id_produto 
-                  INNER JOIN COMANDA ON 
-                  PEDIDO.id_comanda = COMANDA.id_comanda 
-                  ORDER BY ABS(id_pedido)
-                  
-              ";
-
-              $result = $con->query($query);
-
-              foreach($result as $row) { 
-
-            $status = $row['status'];
-  
-            if($status == 'fechado') { 
-
-              $id_comanda   = $row['id_comanda'];
-              $id_pedido    = $row['id_pedido'];
-              $nome         = $row['nome'];
-              $nome_produto = $row['nome_produto'];
-              $qtd          = $row['quantidade'];
-              $valor        = $row['valor'];
-              $status_pedido = $row['status_pedido'];
-              $id_colaborador = $row['id_colaborador'];
-
-              $query2 = "SELECT * FROM COLABORADOR WHERE id_colaborador = '$id_colaborador'";
-
-              $result2 = $con->query($query2);
-
-              foreach($result2 as $row2) { 
-                $nome_colaborador = $row2['nome_colaborador'];
-              }
-
-
-              // $data[0] é data e $data[1] é hora
-              $data         = explode(' ',trim($row['data'])); 
-
-              $data_aux = date("Y-m-d", strtotime($data[0]));
-
-              if ($data_aux == date("Y-m-d") && $status_pedido != 'cancelado') {
-                $total = $qtd*$valor;
-            }
-
-            } }
-              
-             }
-
-              ?>
-
-          </tbody>
-
-        </table>
-
-        <br><br>
-
-  	</div>
-
+  <div class="col-12">
+    <canvas id="faturamento_produto" width="500" height="170"></canvas>
   </div>
 
+  <div class="col-0"></div>
   
-
-
+  </div>
 </div>
-</body>
+<br><br>
 
 <?php
-
-echo $total;
 
 if (!$submit_ok) {
 
     $date = date("Y/m/d");
 
-    $query2 = "SELECT SUM(cartao), SUM(dinheiro), SUM(pix), SUM(desconto) FROM COMANDA WHERE data_comanda ='$date' AND status != 'cancelado'";
+    $query2 = "SELECT SUM(cartao), SUM(dinheiro), SUM(pix), SUM(desconto) FROM COMANDA WHERE data_comanda = '$date' AND status != 'cancelado' AND status != 'aberto'";
       $result2 = $con->query($query2);
 
       foreach ($result2 as $value) {
@@ -267,11 +147,11 @@ if (!$submit_ok) {
 
       $faturamento = $cartao+$dinheiro+$pix;
 
-      $faturamento -= $desconto;
+      // $faturamento -= $desconto;
     }
 
   } elseif ($submit_ok) {
-    $query2 = "SELECT SUM(cartao), SUM(dinheiro), SUM(pix), SUM(desconto) FROM COMANDA WHERE data_comanda >= '$data1' AND data_comanda <= '$data2' AND status != 'cancelado'";
+    $query2 = "SELECT SUM(cartao), SUM(dinheiro), SUM(pix), SUM(desconto) FROM COMANDA WHERE data_comanda >= '$data1' AND data_comanda <= '$data2' AND status != 'cancelado' AND status != 'aberto'";
       $result2 = $con->query($query2);
 
       foreach ($result2 as $value) {
@@ -283,43 +163,175 @@ if (!$submit_ok) {
 
       $faturamento = $cartao+$dinheiro+$pix;
 
-      $faturamento -= $desconto;
+      // $faturamento -= $desconto;
     }
   }
 
+  $array_max_value = [];
+
+  array_push($array_max_value, $cartao);
+  array_push($array_max_value, $dinheiro);
+  array_push($array_max_value, $pix);
+  array_push($array_max_value, $desconto);
+  array_push($array_max_value, $faturamento);
+
+  $max_value = floatval(max($array_max_value));
+
+  if($faturamento == 0) $faturamento = null;
+
+  // echo gettype($max_value);
+
 ?>
 
-<script type="text/javascript">
 
-  <?php
+</body>
+<script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
-    $faturamento = number_format($faturamento, 2, ',', '.');
-    $cartao = number_format($cartao, 2, ',', '.'); 
-    $dinheiro = number_format($dinheiro, 2, ',', '.'); 
-    $pix = number_format($pix, 2, ',', '.'); 
-    $desconto = number_format($desconto, 2, ',', '.'); 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  ?>
+<script>
 
-  let faturamento = document.querySelector(".total");
-  let cartao      = document.querySelector(".cartao");
-  let dinheiro    = document.querySelector(".dinheiro");
-  let pix         = document.querySelector(".pix");
-  let desconto    = document.querySelector(".desconto");
 
-  <?php if($faturamento != '0,00') { ?>
+var canvas = document.getElementById("faturamento_produto");
+var ctx = canvas.getContext('2d');
 
-    faturamento.textContent += 'Total'.padEnd(30, '.')+' R$ <?php echo $faturamento; ?>';
-    cartao.textContent      += 'Cartão'.padEnd(28, '.')+' R$ <?php echo $cartao; ?>';
-    dinheiro.textContent    += 'Dinheiro'.padEnd(27, '.')+' R$ <?php echo $dinheiro; ?>';
-    pix.textContent         += 'Pix'.padEnd(32, '.')+' R$ <?php echo $pix; ?>';
-    desconto.textContent    += 'Desconto'.padEnd(25, '.')+' R$ <?php echo $desconto; ?>';
+Chart.defaults.global.defaultFontColor = 'black';
+Chart.defaults.global.defaultFontSize = 14;
+Chart.defaults.global.defaultFontStyle = 'Bold';
 
-  <?php } ?>
+var theHelp = Chart.helpers;
 
+var data = {
+  labels: [
+    'Cartão',
+    'Dinheiro',
+    'Pix',
+    'Desconto',
+    'Total'],
+  datasets: [{
+    fill: true,
+    backgroundColor: [
+      'blue',
+      'rgb(54, 162, 235)',
+      'grey',
+      'green',
+      'orange'
+    ],
+    data: ['<?php echo $cartao; ?>', '<?php echo $dinheiro; ?>', '<?php echo $pix; ?>', '<?php echo $desconto; ?>', '<?php echo $faturamento; ?>'],
+    borderColor: ['black', 'black', 'black', 'black', 'black'],
+    borderWidth: [2, 2, 2, 2, 2]
+  }]
+};
+
+var options = {
+  title: {
+    display: false,
+    text: '',
+    position: 'top'
+  },
+
+  scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+              suggestedMin: 0,
+              beginAtZero: true,
+              fontSize: 14,
+              fontFamily: 'Ubuntu',
+
+                
+            },
+            afterDataLimits(scale) {
+              scale.max *= 1.1;
+            },
+        }],
+        xAxes: [{
+            ticks: {
+              fontSize: 30,
+              fontFamily: 'Ubuntu',
+            },
+            gridLines : {
+              drawOnChartArea: false
+            }
+        }]
+    },
+
+  rotation: -0.7 * Math.PI,
+  legend: {
+    display: false,
+    
+    // generateLabels changes from chart to chart,  check the source, 
+    // this one is from the doughut :
+    // https://github.com/chartjs/Chart.js/blob/master/src/controllers/controller.doughnut.js#L42
+    labels: {
+      generateLabels: function(chart) {
+        var data = chart.data;
+        if (data.labels.length && data.datasets.length) {
+          return data.labels.map(function(label, i) {
+            var meta = chart.getDatasetMeta(0);
+            var ds = data.datasets[0];
+            var arc = meta.data[i];
+            var custom = arc && arc.custom || {};
+            var getValueAtIndexOrDefault = theHelp.getValueAtIndexOrDefault;
+            var arcOpts = chart.options.elements.arc;
+            var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+            var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+            var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+              return {
+              // And finally : 
+              // text: ds.data[i] + " " + label,
+              text: label,
+              fillStyle: fill,
+              strokeStyle: stroke,
+              lineWidth: bw,
+              hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+              index: i
+            };
+          });
+        }
+        return [];
+      }
+    }
+  }
+};
+
+// Chart declaration:
+var myPieChart = new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: options
+});
+
+
+Chart.plugins.register({
+  afterDatasetsDraw: function(chartInstance, easing) {
+    // To only draw at the end of animation, check for easing === 1
+    var ctx = chartInstance.chart.ctx;
+    chartInstance.data.datasets.forEach(function(dataset, i) {
+      var meta = chartInstance.getDatasetMeta(i);
+      if (!meta.hidden) {
+        meta.data.forEach(function(element, index) {
+          // Draw the text in black, with the specified font
+          ctx.fillStyle = 'black';
+          var fontSize = 30;
+          var fontStyle = 'bold';
+          var fontFamily = 'Ubuntu';
+          ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+          // Just naively convert to string for now
+          var dataString = dataset.data[index].toString();
+          // Make sure alignment settings are correct
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          var padding = 0;
+          var position = element.tooltipPosition();
+          ctx.fillText(dataString + '', position.x, position.y - (fontSize / 2) - padding);
+        });
+      }
+    });
+  }
+});
 
 
 </script>
-
-
 </html>

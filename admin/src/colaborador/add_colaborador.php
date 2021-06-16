@@ -74,7 +74,7 @@ if(!$is_admin) {
 
       <input type="text" id="" class="form-control" name="nome" placeholder="Nome" autocomplete="off" required>      
       <input type="text" id="cpf" class="form-control" name="cpf" placeholder="CPF" autocomplete="off">
-      <input type="text" id="rg" class="form-control" name="rg" placeholder="RG" autocomplete="off">
+      <input type="text" id="text" class="form-control" name="rg" placeholder="RG" autocomplete="off">
       <input type="text" id="phone" class="form-control" name="telefone" placeholder="Telefone" autocomplete="off">
 
 

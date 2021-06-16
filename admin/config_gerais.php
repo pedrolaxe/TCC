@@ -125,7 +125,7 @@ while ($row = $result->fetch() ) {
         <input class="form-control" value="<?php if (isset($impressora)) echo $impressora; ?>" type="text" name="impressora" autocomplete="off">
 
         <br>
-        <button class="btn btn-lg btn-outline-primary" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
+        <button class="btn btn-lg btn-outline-dark" style="float:right; width:120px; margin-left: 20px !important" type="submit" name="submit">Ok</button>
 
       </form>
 

@@ -86,7 +86,7 @@ button:hover {
 
     <a href="src/colaborador/colaboradores.php"><button class="btn-lg btn-outline">Colaboradores</button></a>
     <a href="src/colaborador/add_colaborador.php"><button class="btn-lg btn-outline-success">+</button></a><br><br>
-    <a href="top_colaborador.php"><button class="btn-lg btn-outline">Colaborador do Mês</button></a>
+    <a href="top_colaborador.php"><button class="btn-lg btn-outline">Top Colaborador</button></a>
 
     <!-- <button class="btn-lg btn-outline-success">Criar Tipo de Produto</button><br><br> -->
     

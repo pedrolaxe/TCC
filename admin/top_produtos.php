@@ -248,29 +248,27 @@ button:hover {
     </form>
 
 
-    <br><br><br><br>
+    <br><br><br>
 
-  	<hr>
+  	<hr style="opacity: 0">
 
   	<br>
 
-    <div class="col-1"></div>
 
-  <div class="col-4">
-    <h2 align="center">Faturamento - Produto</h2>
-    <canvas id="faturamento_produto" width="200" height="200"></canvas>
+
+  <div class="col-6">
+    <h2 align="center">Maior Faturamento</h2><br>
+    <canvas id="faturamento_produto" width="100" height="70"></canvas>
   </div>
 
-  <div class="col-2">
-    <!-- <canvas id="aportes" width="200" height="200"></canvas> -->
+
+
+  <div class="col-6">
+    <h2 align="center">Mais Vendidos</h2><br>
+    <canvas id="qtd_produto" width="100" height="70"></canvas>
   </div>
 
-  <div class="col-4">
-    <h2 align="center">Produtos Mais Vendidos</h2>
-    <canvas id="qtd_produto" width="200" height="200"></canvas>
-  </div>
 
-  <div class="col-1"></div>
   
   </div>
 </div>
@@ -322,12 +320,27 @@ var options = {
         yAxes: [{
             display: true,
             ticks: {
-                suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
-                // OR //
-                beginAtZero: true   // minimum value will be 0.
+              suggestedMin: 0,
+              beginAtZero: true,
+              fontSize: 14,
+              fontFamily: 'Ubuntu',
                 
+            },
+            afterDataLimits(scale) {
+              scale.max *= 1.1;
             }
-        }]
+        }],
+
+
+        xAxes: [{
+            ticks: {
+              fontSize: 16,
+              fontFamily: 'Ubuntu',
+            },
+            gridLines : {
+              drawOnChartArea: false
+            }
+        }],
     },
 
   rotation: -0.7 * Math.PI,
@@ -381,6 +394,7 @@ var ctx = canvas.getContext('2d');
 
 Chart.defaults.global.defaultFontColor = 'black';
 Chart.defaults.global.defaultFontSize = 12;
+Chart.defaults.global.defaultFontStyle = 'Bold';
 var theHelp = Chart.helpers;
 
 var data = {
@@ -409,20 +423,33 @@ var options = {
   title: {
     display: false,
     text: '',
-    position: 'top',
-
+    position: 'top'
   },
 
   scales: {
         yAxes: [{
             display: true,
             ticks: {
-                suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
-                // OR //
-                beginAtZero: true   // minimum value will be 0.
+              suggestedMin: 0,
+              beginAtZero: true,
+              fontSize: 14,
+              fontFamily: 'Ubuntu',
   
+            },
+            afterDataLimits(scale) {
+              scale.max *= 1.1;
             }
-        }]
+        }],
+
+        xAxes: [{
+            ticks: {
+              fontSize: 16,
+              fontFamily: 'Ubuntu',
+            },
+            gridLines : {
+              drawOnChartArea: false
+            }
+        }],
     },
 
   rotation: -0.7 * Math.PI,
@@ -489,9 +516,9 @@ Chart.plugins.register({
         meta.data.forEach(function(element, index) {
           // Draw the text in black, with the specified font
           ctx.fillStyle = 'black';
-          var fontSize = 0;
-          var fontStyle = 'normal';
-          var fontFamily = 'Helvetica Neue';
+          var fontSize = 24;
+          var fontStyle = 'bold';
+          var fontFamily = 'Ubuntu';
           ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
           // Just naively convert to string for now
           var dataString = dataset.data[index].toString();
