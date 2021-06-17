@@ -103,7 +103,7 @@ if(isset($_POST['submit'])) {
       </div>
 
       <div class="col-3">
-        <input id="troca_input" name="nome" type="text" class="form-control" placeholder="Trocar Para" autocomplete="off" list="colaboradores" style="height:60px; width: 250px" required autofocus>
+        <input id="troca_input" name="nome" type="text" class="form-control" placeholder="Colaborador" autocomplete="off" list="colaboradores" style="height:60px; width: 250px" autofocus>
         <datalist id="colaboradores">
 
           <?php
@@ -169,7 +169,7 @@ if(isset($_POST['submit'])) {
             # flag
             $submit_ok = true;
 
-            if(isset($_POST['nome'])) {
+            if(isset($_POST['nome']) && !empty($_POST['nome'])) {
 
             $nome_col_sub = $_POST['nome'];
 
