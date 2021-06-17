@@ -150,7 +150,7 @@ button:hover {
             # flag
             $submit_ok = true;
 
-              $query = "SELECT c.nome_colaborador, SUM(p.quantidade), SUM(p.valor*p.quantidade) FROM PEDIDO p INNER JOIN COLABORADOR c ON p.id_colaborador = c.id_colaborador INNER JOIN COMANDA com ON p.id_comanda = com.id_comanda WHERE DATE(p.data) >= '$data1' AND DATE(p.data) <= '$data2' AND com.status = 'fechado' AND p.status_pedido IS NULL AND c.status_colaborador IS NULL GROUP BY c.id_colaborador";
+              $query = "SELECT c.nome_colaborador, SUM(p.quantidade), SUM(p.valor*p.quantidade) FROM PEDIDO p INNER JOIN COLABORADOR c ON p.id_colaborador = c.id_colaborador INNER JOIN COMANDA com ON p.id_comanda = com.id_comanda WHERE DATE(p.data) >= '$data1' AND DATE(p.data) <= '$data2' AND com.status = 'fechado' AND p.status_pedido IS NULL GROUP BY c.id_colaborador ORDER BY SUM(p.valor*p.quantidade) DESC LIMIT 5";
               $result = $con->query($query);
 
               foreach ($result as $value) {
@@ -172,7 +172,7 @@ button:hover {
 
             if (!$submit_ok) {
 
-              $query = "SELECT c.nome_colaborador, SUM(p.quantidade), SUM(p.valor*p.quantidade) FROM PEDIDO p INNER JOIN COLABORADOR c ON p.id_colaborador = c.id_colaborador INNER JOIN COMANDA com ON p.id_comanda = com.id_comanda WHERE com.status = 'fechado' AND p.status_pedido IS NULL AND c.status_colaborador IS NULL GROUP BY c.id_colaborador";
+              $query = "SELECT c.nome_colaborador, SUM(p.quantidade), SUM(p.valor*p.quantidade) FROM PEDIDO p INNER JOIN COLABORADOR c ON p.id_colaborador = c.id_colaborador INNER JOIN COMANDA com ON p.id_comanda = com.id_comanda WHERE com.status = 'fechado' AND p.status_pedido IS NULL GROUP BY c.id_colaborador ORDER BY SUM(p.valor*p.quantidade) DESC LIMIT 5";
               $result = $con->query($query);
 
               foreach ($result as $value) {
@@ -264,7 +264,7 @@ var options = {
             ticks: {
               suggestedMin: 0,
               beginAtZero: true,
-              fontSize: 14,
+              fontSize: 16,
               fontFamily: 'Ubuntu',
                 
             },
@@ -275,7 +275,7 @@ var options = {
 
         xAxes: [{
             ticks: {
-              fontSize: 20,
+              fontSize: 16,
               fontFamily: 'Ubuntu',
             },
             gridLines : {
@@ -369,7 +369,7 @@ var options = {
             ticks: {
               suggestedMin: 0,
               beginAtZero: true,
-              fontSize: 14,
+              fontSize: 16,
               fontFamily: 'Ubuntu',
   
             },
@@ -380,7 +380,7 @@ var options = {
         }],
         xAxes: [{
             ticks: {
-              fontSize: 20,
+              fontSize: 16,
               fontFamily: 'Ubuntu',
             },
             gridLines : {
@@ -446,7 +446,7 @@ Chart.plugins.register({
         meta.data.forEach(function(element, index) {
           // Draw the text in black, with the specified font
           ctx.fillStyle = 'black';
-          var fontSize = 28;
+          var fontSize = 20;
           var fontStyle = 'bold';
           var fontFamily = 'Ubuntu';
           ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
