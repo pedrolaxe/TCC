@@ -171,8 +171,8 @@ if (isset($_GET['cancelar_pedido'])) {
     $total_desconto_dez = number_format((($total - $desconto)*1.1), 2);
     $total_desconto = number_format(($total - $desconto), 2);
 
-    if( $total_desconto != $total_aux && $total_desconto_dez != $total_aux ) {
-      echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>Valor Pago Diferente do Total</center></div>';
+    if( $total_desconto > $total_aux ) {
+      echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>Valor Pago Menor Que O Total</center></div>';
     } else {
       fechar_comanda($id, $total, $cartao, $dinheiro, $pix);
     }

@@ -11,6 +11,9 @@ if(!$is_admin) {
   header("Location: " . LINK_SITE );
 }
 
+$query_colaborador = "SELECT * FROM COLABORADOR";
+$result_col = $con->query($query_colaborador);
+
 $existe_pedido = false;
 
 if(isset($_POST['submit'])) {
@@ -31,6 +34,8 @@ if(isset($_POST['submit'])) {
                   PEDIDO.id_produto = PRODUTO.id_produto 
                   INNER JOIN COMANDA ON 
                   PEDIDO.id_comanda = COMANDA.id_comanda 
+                  INNER JOIN COLABORADOR ON 
+                  PEDIDO.id_colaborador = COLABORADOR.id_colaborador
                   ORDER BY ABS(id_pedido)
                   
             ";
@@ -92,9 +97,28 @@ if(isset($_POST['submit'])) {
 
     <div class="row">
 
-    	 <div class="col-5">
-        <h1>Relatório de Vendas</h1><br>
+    	 <div class="col-2">
+        <h1>Vendas</h1><br>
         <br>
+      </div>
+
+      <div class="col-3">
+        <input id="troca_input" name="nome" type="text" class="form-control" placeholder="Trocar Para" autocomplete="off" list="colaboradores" style="height:60px; width: 250px" required autofocus>
+        <datalist id="colaboradores">
+
+          <?php
+
+          foreach($result_col as $row) {
+            $id_col   = $row['id_colaborador'];
+            $nome_col = $row['nome_colaborador'];
+
+            echo '<option value="'.$nome_col.'"></option>';
+
+          }
+
+          ?>
+
+        </datalist>
       </div>
 
       <div class="col-3">
@@ -145,6 +169,63 @@ if(isset($_POST['submit'])) {
             # flag
             $submit_ok = true;
 
+            if(isset($_POST['nome'])) {
+
+            $nome_col_sub = $_POST['nome'];
+
+            foreach($result as $row) { 
+
+            $status = $row['status'];
+            $nome_col_aux = $row['nome_colaborador'];
+  
+            if($status == 'fechado' && $nome_col_aux == $nome_col_sub) { 
+
+              $id_comanda     = $row['id_comanda'];
+              $id_pedido      = $row['id_pedido'];
+              $nome           = $row['nome'];
+              $nome_produto   = $row['nome_produto'];
+              $qtd            = $row['quantidade'];
+              $valor          = $row['valor'];
+              $status_pedido  = $row['status_pedido'];
+              $id_colaborador = $row['id_colaborador'];
+
+              $query2 = "SELECT * FROM COLABORADOR WHERE id_colaborador = '$id_colaborador'";
+
+              $result2 = $con->query($query2);
+
+              foreach($result2 as $row2) { 
+                $nome_colaborador = $row2['nome_colaborador'];
+              }
+
+              // $data[0] é data e $data[1] é hora
+              $data         = explode(' ',trim($row['data'])); 
+
+              $data_aux = date("Y-m-d", strtotime($data[0]));
+
+              if ($data_aux >= $data1 && $data_aux <= $data2 && $status_pedido != 'cancelado') {
+
+                $existe_pedido = true;
+
+                $faturamento += $valor*$qtd;
+
+            ?>
+              <tr>
+                <td><?php echo ucfirst($nome) ?></td>
+                <td><?php echo $nome_colaborador ?></td>
+                <td><?php echo $nome_produto ?></td>
+                <td><?php echo $qtd ?></td>
+                <td><?php echo number_format($valor, 2, ',', '.') ?></td>
+                <td><?php echo number_format($valor*$qtd, 2, ',', '.') ?></td>
+                <td><?php echo substr($data[1], 0, -3) ?></td>
+                <td><?php echo date("d/m/Y", strtotime($data[0])) ?></td>
+              </tr>
+
+            <?php }
+
+            } }
+
+            } else {
+
             foreach($result as $row) { 
 
             $status = $row['status'];
@@ -191,16 +272,11 @@ if(isset($_POST['submit'])) {
                 <td><?php echo date("d/m/Y", strtotime($data[0])) ?></td>
               </tr>
 
-            <?php } else {
-              # MELHORAR MENSAGEM
-              // echo "<tr><td></td>";
-              // echo "<td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
-              // echo "</tr>";
-              
-              // break;
-                  }
+            <?php }
 
             } }
+
+            }
 
               if (!$existe_pedido) {
                 echo '<div style="margin:0" class="alert alert-primary" role="alert"><center>Não Existem Pedidos Nessa Data</center></div><br>';
@@ -274,14 +350,7 @@ if(isset($_POST['submit'])) {
                 <td><?php echo date("d/m/Y", strtotime($data[0])) ?></td>
               </tr>
 
-            <?php } else {
-              # MELHORAR MENSAGEM
-              // echo "<tr><td></td>";
-              // echo "<td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
-              // echo "</tr>";
-              
-              // break;
-            }
+            <?php } 
 
             } }
 
