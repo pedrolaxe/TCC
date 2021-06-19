@@ -62,10 +62,6 @@ if(isset($_POST['submit'])) {
       <label for="inputEmail" class="visually-hidden">Telefone</label>
       <input type="text" id="phone" class="form-control" name="telefone" autocomplete="off" placeholder="Telefone">
 
-
-
-
-
       <input type="text" id="" class="form-control" name="tipo" placeholder="Email" value="administrador" hidden>
 
       <br>
@@ -88,10 +84,6 @@ if(isset($_POST['submit'])) {
   $(document).ready(function(){
     $("#phone").mask("(99) 99999-9999");
   });
-
-  // $(document).ready(function(){
-  //   $("#rg").mask("99.999.999-9");
-  // });
 
 </script>
 

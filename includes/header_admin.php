@@ -8,22 +8,6 @@ if(basename($_SERVER['PHP_SELF']) == 'comandas.php') {
     <button class="btn-lg btn-outline-dark" type="submit" name="submit">Ok</button>
   </form>
   ';
-  # <b style="margin-left: 30px">'.$_SESSION['login_usuario'].' logado</b>
-// } elseif (basename($_SERVER['PHP_SELF']) == 'config_gerais.php' || isset($_POST['empresa'])) {
-
-//   $query  = "SELECT * FROM config";
-//   $result = $con->query($query);
-
-//     foreach($result as $row) {
-
-//       $nome = $row['nome_empresa'];
-//     }
-
-//     if(isset($_POST['empresa'])) {
-//       $nome = $_POST['empresa'];
-//     }
-
-//   $extra = "<strong>$nome</strong>";
 } elseif(basename($_SERVER['PHP_SELF']) == 'painel.php') {
 
  $query = "SELECT * FROM config WHERE id_config = 1";
@@ -52,13 +36,11 @@ echo '
   <nav class="my-2 my-md-0 me-md-3">
   	<a class="p-2 text-dark" href="'.LINK_SITE.'admin/comandas.php"><i class="fas fa-2x fa-home i-menu"></i></a>';
 
-
     if ( $_SESSION['tipo_usuario'] == 'administrador' ) {
 
       echo '<a class="p-2 text-dark" style="margin-left:15px" href="'.LINK_SITE.'admin/painel.php"><i class="fas fa-2x fa-cogs i-menu"></i></a>';
 
     }
-
 
     echo '
     <a class="p-2 text-dark" style="margin-left:15px" href="'.LINK_SITE.'"><i class="fas fa-2x fa-sign-out-alt i-menu"></i></a>

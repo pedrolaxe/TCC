@@ -453,7 +453,7 @@ if (isset($_GET['cancelar_pedido'])) {
                 <input type="text" name="id_pedido" class="form-control" id="id_pedido" hidden>
 
                 <div class="mb-3">
-                  <label for="recipient-name" class="col-form-label">Senha do Administrador</label>
+                  <label for="recipient-name" class="col-form-label">Senha do Gerente</label>
                   <input type="password" name="senha" class="form-control" id="recipient-name" required autofocus>
                 </div>
                 <div class="mb-3">
@@ -583,7 +583,7 @@ if (isset($_GET['cancelar_pedido'])) {
                 ?>
 
                 <div class="mb-3">
-                  <label for="recipient-name" class="col-form-label">Senha do Administrador</label>
+                  <label for="recipient-name" class="col-form-label">Senha do Gerente</label>
                   <input type="password" name="senha" class="form-control" id="recipient-name" required autofocus>
                 </div>
                 <div class="mb-3">

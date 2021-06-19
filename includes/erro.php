@@ -8,7 +8,6 @@
 .container {
   height: 200px;
   position: relative;
-  /*border: 3px solid green;*/
 }
 
 .vertical-center {
@@ -30,7 +29,7 @@ h1 { font-size: 64px }
 <div class='container'>
 <div class="vertical-center">
 
-<h2 class="my-0 fw-bold"><i>Aconteceu Algo de Errado, Contate o Administrador!</i></h2>
+<h2 class="my-0 fw-bold"><i>Aconteceu Algo de Errado, Contate o Gerente!</i></h2>
 <br><br>
 <a class="btn-lg btn-primary" href="../index.php">Voltar</a>
 </div>
