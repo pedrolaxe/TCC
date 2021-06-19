@@ -66,7 +66,7 @@ if(isset($_POST['submit'])) {
 
 
 
-      <input type="text" id="" class="form-control" name="tipo" placeholder="Email" value="administrador" hidden>
+      <input type="text" id="" class="form-control" name="tipo" placeholder="Email" value="gerente" hidden>
 
       <br>
 
