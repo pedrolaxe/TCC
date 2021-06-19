@@ -152,7 +152,7 @@ if (isset($_GET['edit_colaborador'])) {
       <div class="modal-dialog">
         <div class="modal-content" style="background-color: #DEF2F1;">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Inativar Produto</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Inativar Colaborador</h5>
             <button type="button" class="btn-lg-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
