@@ -238,12 +238,6 @@ function imprimir_nota($id, $total)
 
   header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id . "&impressora=" . $impressora);
 
-  header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id=' . $id_comanda . "&impressora=" . $impressora);
-
-
-  header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id . "&impressora=" . $impressora);
-
-
 }
 
 function insert_desconto()
