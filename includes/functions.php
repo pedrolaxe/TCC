@@ -235,7 +235,11 @@ function imprimir_nota($id, $total)
   } catch (Exception $e) {
   }
 
+
+  header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id . "&impressora=" . $impressora);
+
   header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id=' . $id_comanda . "&impressora=" . $impressora);
+
 }
 
 function insert_desconto()
@@ -348,6 +352,10 @@ function cadastro_colaborador()
     $result = $con->query($query);
 
     echo '<div style="width:15em; margin:0 auto;" class="alert alert-success">Usuário Criado Com Sucesso</div>';
+
+    if($tipo == 'administrador') {
+      header('Location: index.php');
+    }
     // if($result) {
     //   header("Location: " . LINK_SITE . "admin/src/colaborador/colaboradores.php");
     // }

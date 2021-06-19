@@ -36,7 +36,7 @@ if(isset($_POST['submit'])) {
   <main class="form-signin">
     <form action="cadastro.php" method="POST">
 
-      <h1>Cadastro</h1>
+      <h1>Cadastro Gerente</h1>
 
       <label for="inputEmail" class="visually-hidden">Login</label>
       <input type="text" id="inputEmail" class="form-control" name="login" placeholder="Login" autocomplete="off" required autofocus>
