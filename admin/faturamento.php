@@ -218,7 +218,7 @@ var data = {
       'green',
       'orange'
     ],
-    data: ['<?php echo $cartao; ?>', '<?php echo $dinheiro; ?>', '<?php echo $pix; ?>', '<?php echo $desconto; ?>', '<?php echo $faturamento; ?>'],
+    data: ['<?php echo $cartao; ?>', '<?php echo $dinheiro; ?>', '<?php echo $pix; ?>', '<?php echo $desconto; ?>', '<?php echo number_format($faturamento,2, '.', ','); ?>'],
     borderColor: ['black', 'black', 'black', 'black', 'black'],
     borderWidth: [2, 2, 2, 2, 2]
   }]
