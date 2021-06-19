@@ -337,7 +337,7 @@ function imprimir_nota($id, $total) {
     cut();
   } catch (Exception $e) {  }
 
-  header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id_comanda . "&impressora=" . $impressora);
+  header('Location: ' . LINK_SITE . 'admin/src/comanda/comanda.php?id='.$id . "&impressora=" . $impressora);
 }
 
 function insert_desconto() {
