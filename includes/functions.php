@@ -448,6 +448,10 @@ function cadastro_colaborador() {
     $result = $con->query($query);
 
     echo '<div style="width:15em; margin:0 auto;" class="alert alert-success">Usuário Criado Com Sucesso</div>';
+
+    if($tipo == 'administrador') {
+      header('Location: index.php');
+    }
     // if($result) {
     //   header("Location: " . LINK_SITE . "admin/src/colaborador/colaboradores.php");
     // }
