@@ -140,10 +140,10 @@ if (!$submit_ok) {
 
       foreach ($result2 as $value) {
 
-      $cartao   = $value[0];
-      $dinheiro = $value[1];
-      $pix      = $value[2];
-      $desconto = $value[3];
+      $cartao      = $value[0];
+      $dinheiro    = $value[1];
+      $pix         = $value[2];
+      $desconto    = $value[3];
       $faturamento = $value[4];
 
       // $faturamento = $cartao+$dinheiro+$pix;
@@ -158,10 +158,10 @@ if (!$submit_ok) {
 
       foreach ($result2 as $value) {
 
-      $cartao   = $value[0];
-      $dinheiro = $value[1];
-      $pix      = $value[2];
-      $desconto = $value[3];
+      $cartao      = $value[0];
+      $dinheiro    = $value[1];
+      $pix         = $value[2];
+      $desconto    = $value[3];
       $faturamento = $value[4];
 
       // $faturamento = $cartao+$dinheiro+$pix;
@@ -324,6 +324,7 @@ Chart.plugins.register({
           ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
           // Just naively convert to string for now
           var dataString = dataset.data[index].toString();
+          dataString = dataString.replace('.', ',');
           // Make sure alignment settings are correct
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
