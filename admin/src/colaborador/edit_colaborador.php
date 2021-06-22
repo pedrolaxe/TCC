@@ -55,6 +55,10 @@ if(!$is_admin) {
 
       <?php
 
+      if (isset($_GET['cpfValido']) && $_GET['cpfValido'] == 'false') {
+        echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>Insira um CPF válido</center></div>';
+      }
+
       if(@$_GET['error']==1){
         echo '
         <div class="alert alert-primary" role="alert">
@@ -150,7 +154,7 @@ if(!$is_admin) {
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Nome</label>
       <input type="text" id="" class="form-control" name="nome" placeholder="Nome" value="<?=$nome; ?>" autocomplete="off" required> 
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">CPF</label>
-      <input type="text" id="cpf" class="form-control" name="cpf" placeholder="CPF" value="<?=$cpf; ?>" autocomplete="off">
+      <input type="text" id="cpf" class="form-control" name="cpf" placeholder="CPF" value="<?=$cpf; ?>" autocomplete="off" required>
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">RG</label>
       <input type="text" id="text" class="form-control" name="rg" placeholder="RG" value="<?=$rg; ?>" autocomplete="off">
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Telefone</label>
