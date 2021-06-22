@@ -4,7 +4,7 @@ body {
 
 .form-signin {
   width: 100%;
-  max-width: 25vw;
+  max-width: 30vw;
   padding: 15px;
   padding-top: 5vh;
   margin: auto;
@@ -26,21 +26,25 @@ body {
   z-index: 2;
 }
 
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
+/*.form-signin input[type="email"] {
+  margin-bottom: 0px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
 .form-signin input[type="password"] {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}*/
+
+.form-signin input {
+  margin-bottom: 5px;
 }
 
 h1 {
   font-size: 64px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 input {

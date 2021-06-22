@@ -47,6 +47,14 @@ isset($_GET['tel'])?   $tel   = $_GET['tel']   : $tel   = '';
     color: white;
   }
 
+  .form-signin input {
+    margin-bottom: 5px;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+
   </style>
 
 </head>
@@ -78,7 +86,7 @@ isset($_GET['tel'])?   $tel   = $_GET['tel']   : $tel   = '';
 
       ?>
 
-      <h1>Cadastro de Colaborador</h1>
+      <h1 style="font-size: 46px; text-align: center; margin-top: -10px">Cadastro de Colaborador</h1>
 
       <label for="inputEmail" class="visually-hidden">Login</label>
       <input type="text" id="inputEmail" class="form-control" name="login" placeholder="Login" autocomplete="off" value="<?php echo $login ?>" required autofocus>
@@ -88,9 +96,6 @@ isset($_GET['tel'])?   $tel   = $_GET['tel']   : $tel   = '';
       <input type="password" id="inputPassword" class="form-control" name="conf_senha" placeholder="Confirmação de Senha" required>
       <label for="inputEmail" class="visually-hidden">Email</label>
       <input type="email" id="inputEmail" class="form-control" name="email" autocomplete="off" placeholder="Email" value="<?php echo $email ?>" required>
-
-      <br>
-
       <input type="text" id="" class="form-control" name="nome" value="<?php echo $nome ?>" placeholder="Nome" autocomplete="off" required>      
       <input type="text" id="cpf" class="form-control" name="cpf" value="<?php echo $cpf ?>" placeholder="CPF" autocomplete="off" required>
       <input type="text" id="text" class="form-control" name="rg" value="<?php echo $rg ?>" placeholder="RG" autocomplete="off">
@@ -101,11 +106,9 @@ isset($_GET['tel'])?   $tel   = $_GET['tel']   : $tel   = '';
 
       <input type="text" class="form-control" name="tipo" value="colaborador" hidden>
 
-      <br>
 
       <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name="submit">Criar</button>
     </form>
-    <br>
     <a href="../../painel.php"><button class="w-100 btn btn-lg btn-outline">Voltar</button></a>
     <br><br>
   </main>

@@ -6,7 +6,7 @@ include 'includes/functions.php';
 $query = "SELECT * FROM colaborador WHERE tipo='administrador'";
 $q = $con->prepare($query);
 $q->execute();
-if ($q->rowCount() > 0) {
+if ($q->rowCount() == 0) {
   header("Location: " . LINK_SITE . "index.php");
 }
 # CADASTRO DO ADMIN
@@ -37,9 +37,18 @@ isset($_GET['tel'])?   $tel   = $_GET['tel']   : $tel   = '';
   <!-- CSS -->
   <link href="assets/css/signin.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="assets/css/main.css" media="screen" />
+
+<style type="text/css">
+  
+input {
+  height: 50px !important;
+}
+
+</style>
+
 </head>
 
-<body class="text-center">
+<body>
   <main class="form-signin">
     <form action="cadastro.php" method="POST">
 
@@ -55,37 +64,28 @@ isset($_GET['tel'])?   $tel   = $_GET['tel']   : $tel   = '';
 
       ?>
 
-      <h1>Cadastro Gerente</h1>
+      <h1 style="font-size: 46px; text-align: center; margin-top: -30px">Cadastro Gerente</h1>
 
-      <label for="inputEmail" class="visually-hidden">Login</label>
       <input type="text" id="inputEmail" class="form-control" name="login" value="<?php echo $login ?>" placeholder="Login" autocomplete="off" required autofocus>
 
-      <label for="inputPassword" class="visually-hidden">Senha</label>
       <input type="password" id="inputPassword" class="form-control" name="senha" placeholder="Senha" required>
+      <input type="password" id="inputPassword2" class="form-control" name="conf_senha" placeholder="Confirmação de Senha" required>
 
-      <label for="inputPassword" class="visually-hidden">Confirmação Senha</label>
-      <input type="password" id="inputPassword" class="form-control" name="conf_senha" placeholder="Confirmação de Senha" required>
-
-      <label for="inputEmail" class="visually-hidden">Email</label>
       <input type="email" id="inputEmail" class="form-control" name="email" value="<?php echo $email ?>" autocomplete="off" placeholder="Email" required>
 
-      <label for="inputEmail" class="visually-hidden">Nome</label>
       <input type="text" id="inputNome" class="form-control" name="nome" value="<?php echo $nome ?>" autocomplete="off" placeholder="Nome" required>
 
-      <label for="inputEmail" class="visually-hidden">CPF</label>
       <input type="text" id="cpf" class="form-control" name="cpf" value="<?php echo $cpf ?>" autocomplete="off" placeholder="CPF">
 
-      <label for="inputEmail" class="visually-hidden">RG</label>
       <input type="text" id="rg" class="form-control" name="rg" value="<?php echo $rg ?>" autocomplete="off" placeholder="RG">
 
-      <label for="inputEmail" class="visually-hidden">Telefone</label>
       <input type="text" id="phone" class="form-control" name="telefone" value="<?php echo $tel?>" autocomplete="off" placeholder="Telefone">
 
       <input type="text" id="" class="form-control" name="tipo" value="administrador" hidden>
 
       <br>
 
-      <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name="submit">Entrar</button>
+      <button class="w-100 btn btn-lg btn-outline-dark" type="submit" name="submit">Entrar</button>
     </form>
   </main>
 </body>

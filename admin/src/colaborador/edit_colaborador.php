@@ -40,6 +40,14 @@ if(!$is_admin) {
     color: white;
   }
 
+  .form-signin input {
+    margin-bottom: 15px;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+
   </style>
 
 
@@ -138,8 +146,8 @@ if(!$is_admin) {
         
       ?>
 
-      <h1>Editar Colaborador</h1>
-      <br>
+      <h1 style="font-size: 46px; text-align: center; margin-top: -10px">Editar Colaborador</h1>
+      
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Login</label>
       <input type="text" id="inputEmail" class="form-control" name="login" placeholder="Login" value="<?=$login; ?>" required autofocus>
 <!--       <label for="inputPassword" class="">Senha</label>
@@ -148,8 +156,6 @@ if(!$is_admin) {
       <input type="password" id="inputPassword" class="form-control" name="conf_senha" placeholder="Confirmação de Senha" required> -->
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Email</label>
       <input type="email" id="inputEmail" class="form-control" name="email" value="<?=$email; ?>" placeholder="Email" required>
-
-      <br>
 
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Nome</label>
       <input type="text" id="" class="form-control" name="nome" placeholder="Nome" value="<?=$nome; ?>" autocomplete="off" required> 
@@ -160,8 +166,6 @@ if(!$is_admin) {
       <label for="inputEmail" style="float:left;margin-bottom: 0.2em;margin-left: 0.2em" class="">Telefone</label>
       <input type="text" id="phone" class="form-control" name="telefone" placeholder="Telefone" value="<?=$tel; ?>" autocomplete="off">
 
-      <br>
-
       <input type="hidden" name="tipo" value="colaborador">
       <input type="hidden" name="id_user" value="<?=$id_colaborador; ?>">
 
@@ -169,10 +173,10 @@ if(!$is_admin) {
 
       <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name="submit">Salvar</button>
     </form>
-    <br>
+
 
     <a href="<?= LINK_SITE; ?>admin/src/colaborador/alterar_senha_colaborador.php?id_colaborador=<?php echo $_GET['id_colaborador'] ?>"><button class="w-100 btn btn-lg btn-outline">Alterar Senha</button></a>
-    <br><br>
+
 
     <a href="<?= LINK_SITE; ?>admin/src/colaborador/colaboradores.php"><button class="w-100 btn btn-lg btn-outline">Voltar</button></a>
     <br><br>

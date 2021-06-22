@@ -70,6 +70,14 @@ if(!$is_admin) {
     background-color: black;
     color: white;
   }
+
+  .form-signin input {
+    margin-bottom: 20px;
+  }
+
+  button {
+    margin-top: 20px;
+  }
   </style>
 </head>
 
@@ -92,11 +100,11 @@ if(!$is_admin) {
   <main class="form-signin">
     <form action='add_produto.php' method='post'>
       <!-- <img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-      <h1>Novo Produto</h1>
+      <h1 style="font-size: 46px; text-align: center; margin-top: -10px">Novo Produto</h1>
       <br>
       <label for="Nome" class="visually-hidden">Nome</label>
       <input name="nome_produto" type="text" class="form-control" placeholder="Nome" autocomplete="off" required autofocus>
-      <br>
+      
       <!-- <label for="Tipo" class="visually-hidden">Tipo</label>
       <select name="tipo" placeholder="Tipo" class="form-control minimal" required>
 
@@ -111,16 +119,16 @@ if(!$is_admin) {
       <br> -->
       <label for="Preço" class="visually-hidden">Preço</label>
       <input name="preco" type="money" class="form-control" placeholder="Preço" autocomplete="off" required>
-      <br>
+     
 
 
       <label for="Descrição" class="visually-hidden">Descrição</label>
       <textarea name="descricao" class="form-control" placeholder="Descrição" id="" style="height: 100px"></textarea>
       <!-- <input name="descricao" type="text" class="form-control" placeholder="Descrição" autocomplete="off"> -->
 
-      <br>
+      
       <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Criar Produto</button>
-      <br><br>
+      
     </form>
     <a href="../../painel.php"><button class="w-100 btn btn-lg btn-outline">Voltar</button></a>
   </main>
