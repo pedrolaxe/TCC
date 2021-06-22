@@ -9,12 +9,21 @@ $_SESSION['auth'] = false;
 $_SESSION['auth_super'] = false;
 
 # SELECIONANDO COLABORADORES PARA SABER SE EXISTE ALGUM ADMINISTRADOR
-$query  = "SELECT * FROM COLABORADOR WHERE tipo='administrador'";
+$query  = "SELECT * FROM COLABORADOR WHERE tipo = 'administrador'";
 
 $q = $con->query($query);
 if($q->rowCount() == 0){
   header("Location: " . LINK_SITE . "cadastro.php");
 }
+
+
+
+// $q = $con->prepare($query);
+// $q->execute();
+// if($q->rowCount() > 0){
+//  header("Location: " . LINK_SITE . "cadastro.php");
+// }
+
 
 # TENTATIVA DE LOGIN PARA A PAGINA DO ADMIN OU FUNCIONARIO
 if (isset($_POST['submit'])) {
@@ -45,13 +54,14 @@ if (isset($_POST['submit'])) {
     # VERIFICANDO SE LOGIN E SENHA ESTÃO IGUAIS AS DO DB
     if ($login !== $db_login || $senha !== $db_senha) {
       echo '
+
       <div class="alert alert-warning" role="alert">
         Usuário ou senha Incorreto!
       </div>';
 
       # DANDO PERMISSÃO E REDIRECIONANDO O USUÁRIO
     } else {
-      $_SESSION['user_id']         = $user_id;
+      $_SESSION['user_id']      = $user_id;
       $_SESSION['login']        = $db_login;
       $_SESSION['auth_super']   = true;
       $_SESSION['tipo_usuario'] = $tipo;

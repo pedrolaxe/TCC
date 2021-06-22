@@ -303,7 +303,7 @@ var data = {
       'green',
       'orange'
     ],
-    data: ['<?php echo $produtoTop[0]; ?>', '<?php echo $produtoTop[1] ?>', '<?php echo $produtoTop[2]; ?>', '<?php echo $produtoTop[3]; ?>', '<?php echo $produtoTop[4]; ?>'],
+    data: ['<?php echo number_format($produtoTop[0], 2); ?>', '<?php echo number_format($produtoTop[1], 2); ?>', '<?php echo number_format($produtoTop[2], 2); ?>', '<?php echo number_format($produtoTop[3], 2); ?>', '<?php echo number_format($produtoTop[4], 2); ?>'],
     borderColor: ['black', 'black', 'black', 'black', 'black'],
     borderWidth: [2, 2, 2, 2, 2]
   }]
@@ -516,12 +516,13 @@ Chart.plugins.register({
         meta.data.forEach(function(element, index) {
           // Draw the text in black, with the specified font
           ctx.fillStyle = 'black';
-          var fontSize = 24;
+          var fontSize = 20;
           var fontStyle = 'bold';
           var fontFamily = 'Ubuntu';
           ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
           // Just naively convert to string for now
           var dataString = dataset.data[index].toString();
+          dataString = dataString.replace('.', ',');
           // Make sure alignment settings are correct
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';

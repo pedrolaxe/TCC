@@ -135,33 +135,37 @@ if (!$submit_ok) {
 
     $date = date("Y/m/d");
 
-    $query2 = "SELECT SUM(cartao), SUM(dinheiro), SUM(pix), SUM(desconto) FROM COMANDA WHERE data_comanda = '$date' AND status != 'cancelado' AND status != 'aberto'";
+    $query2 = "SELECT SUM(cartao), SUM(dinheiro), SUM(pix), SUM(desconto), SUM(cartao+dinheiro+pix) FROM COMANDA WHERE data_comanda = '$date' AND status != 'cancelado' AND status != 'aberto'";
       $result2 = $con->query($query2);
 
       foreach ($result2 as $value) {
 
-      $cartao   = $value[0];
-      $dinheiro = $value[1];
-      $pix      = $value[2];
-      $desconto = $value[3];
+      $cartao      = $value[0];
+      $dinheiro    = $value[1];
+      $pix         = $value[2];
+      $desconto    = $value[3];
+      $faturamento = $value[4];
 
-      $faturamento = $cartao+$dinheiro+$pix;
+      // $faturamento = $cartao+$dinheiro+$pix;
+      
 
       // $faturamento -= $desconto;
     }
 
   } elseif ($submit_ok) {
-    $query2 = "SELECT SUM(cartao), SUM(dinheiro), SUM(pix), SUM(desconto) FROM COMANDA WHERE data_comanda >= '$data1' AND data_comanda <= '$data2' AND status != 'cancelado' AND status != 'aberto'";
+    $query2 = "SELECT SUM(cartao), SUM(dinheiro), SUM(pix), SUM(desconto), SUM(cartao+dinheiro+pix) FROM COMANDA WHERE data_comanda >= '$data1' AND data_comanda <= '$data2' AND status != 'cancelado' AND status != 'aberto'";
       $result2 = $con->query($query2);
 
       foreach ($result2 as $value) {
 
-      $cartao   = $value[0];
-      $dinheiro = $value[1];
-      $pix      = $value[2];
-      $desconto = $value[3];
+      $cartao      = $value[0];
+      $dinheiro    = $value[1];
+      $pix         = $value[2];
+      $desconto    = $value[3];
+      $faturamento = $value[4];
 
-      $faturamento = $cartao+$dinheiro+$pix;
+      // $faturamento = $cartao+$dinheiro+$pix;
+      
 
       // $faturamento -= $desconto;
     }
@@ -218,7 +222,7 @@ var data = {
       'green',
       'orange'
     ],
-    data: ['<?php echo $cartao; ?>', '<?php echo $dinheiro; ?>', '<?php echo $pix; ?>', '<?php echo $desconto; ?>', '<?php echo number_format($faturamento,2, '.', ','); ?>'],
+    data: ['<?php echo $cartao; ?>', '<?php echo $dinheiro; ?>', '<?php echo $pix; ?>', '<?php echo $desconto; ?>', '<?php echo $faturamento; ?>'],
     borderColor: ['black', 'black', 'black', 'black', 'black'],
     borderWidth: [2, 2, 2, 2, 2]
   }]
@@ -320,6 +324,7 @@ Chart.plugins.register({
           ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
           // Just naively convert to string for now
           var dataString = dataset.data[index].toString();
+          dataString = dataString.replace('.', ',');
           // Make sure alignment settings are correct
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';

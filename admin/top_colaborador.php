@@ -452,6 +452,7 @@ Chart.plugins.register({
           ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
           // Just naively convert to string for now
           var dataString = dataset.data[index].toString();
+          dataString = dataString.replace('.', ',');
           // Make sure alignment settings are correct
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
