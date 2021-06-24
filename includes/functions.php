@@ -330,33 +330,45 @@ function cadastro_colaborador()
   $rg                 = anti_injection($_POST['rg']);
   $tel                = anti_injection($_POST['telefone']);
 
+  $CPF_valido = validaCPF($cpf);
 
-  # VERIFICAR SE COLABORADOR JÁ EXISTE
-  $query  = "SELECT * FROM colaborador WHERE login = '$login' AND status_colaborador IS NULL";
-
-  $q = $con->query($query);
-  if ($q->rowCount() > 0) {
-    echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert"><center>O Usuário Já Existe!</center></div>';
-  } elseif ($senha != $confirmacao_senha) {
-
-    # MELHORAR MENSAGEM
-    echo '<div style="width:15em; margin:0 auto;" class="alert alert-danger" role="alert">Senhas Diferentes!</div>';
+  if(!$CPF_valido && $tipo != 'administrador') {
+    header("Location: " . LINK_SITE . "admin/src/colaborador/add_colaborador.php?login=" . $login . "&email=" . $email . "&nome=" . $nome . "&cpf=" . $cpf . "&rg=" . $rg . "&tel=" . $tel . "&cpfValido=false");
+  } elseif (!$CPF_valido && $tipo == 'administrador') {
+    header("Location: " . LINK_SITE . "cadastro.php?login=" . $login . "&email=" . $email . "&nome=" . $nome . "&cpf=" . $cpf . "&rg=" . $rg . "&tel=" . $tel . "&cpfValido=false");
   } else {
 
-    $senha = md5($senha);
+    # VERIFICAR SE COLABORADOR JÁ EXISTE
+    $query  = "SELECT * FROM colaborador WHERE login = '$login' AND status_colaborador IS NULL";
 
-    $query  = "INSERT INTO colaborador (login, senha, email, tipo, codigo, codexp, nome_colaborador, cpf, rg, telefone) ";
-    $query .= "VALUES ('$login', '$senha', '$email', '$tipo', '', false, '$nome', '$cpf', '$rg', '$tel')";
-    $result = $con->query($query);
+    $q = $con->query($query);
+    if ($q->rowCount() > 0) {
+      header("Location: " . LINK_SITE . "admin/src/colaborador/add_colaborador.php?login=" . $login . "&email=" . $email . "&nome=" . $nome . "&cpf=" . $cpf . "&rg=" . $rg . "&tel=" . $tel . "&usuario=true");
+    } elseif ($senha != $confirmacao_senha) {
 
-    echo '<div style="width:15em; margin:0 auto;" class="alert alert-success">Usuário Criado Com Sucesso</div>';
+      # MELHORAR MENSAGEM
+      if($tipo != 'administrador') {
+        header("Location: " . LINK_SITE . "admin/src/colaborador/add_colaborador.php?login=" . $login . "&email=" . $email . "&nome=" . $nome . "&cpf=" . $cpf . "&rg=" . $rg . "&tel=" . $tel . "&senhaDif=false");
+      } else {
+        header("Location: " . LINK_SITE . "cadastro.php?login=" . $login . "&email=" . $email . "&nome=" . $nome . "&cpf=" . $cpf . "&rg=" . $rg . "&tel=" . $tel . "&senhaDif=false");
+      }
+    } else {
 
-    if($tipo == 'administrador') {
-      header('Location: index.php');
+      $senha = md5($senha);
+
+      $query  = "INSERT INTO colaborador (login, senha, email, tipo, codigo, codexp, nome_colaborador, cpf, rg, telefone) ";
+      $query .= "VALUES ('$login', '$senha', '$email', '$tipo', '', false, '$nome', '$cpf', '$rg', '$tel')";
+      $result = $con->query($query);
+
+      echo '<div style="width:15em; margin:0 auto;" class="alert alert-success">Usuário Criado Com Sucesso</div>';
+
+      if($tipo == 'administrador') {
+        header('Location: index.php');
+      }
+      // if($result) {
+      //   header("Location: " . LINK_SITE . "admin/src/colaborador/colaboradores.php");
+      // }
     }
-    // if($result) {
-    //   header("Location: " . LINK_SITE . "admin/src/colaborador/colaboradores.php");
-    // }
   }
 }
 
@@ -364,24 +376,31 @@ function alterar_colaborador($idf, $login, $email, $nome, $cpf, $rg, $tel)
 {
   global $con;
 
-  $status = "inativo";
+  $CPF_valido = validaCPF($cpf);
 
-  # VERIFICAR SE COLABORADOR JÁ EXISTE
-  $query  = "SELECT * FROM colaborador WHERE login = '$login' AND (status_colaborador IS NULL AND id_colaborador != '$idf')";
-
-  $q = $con->query($query);
-  if ($q->rowCount() > 0) {
-    header('Location: ' . LINK_SITE . 'admin/src/colaborador/edit_colaborador.php?id_colaborador=' . $idf . '&usuario_existe=true');
+  if(!$CPF_valido && $tipo != 'administrador') {
+    header("Location: " . LINK_SITE . "admin/src/colaborador/edit_colaborador.php?id_colaborador=".$idf."&cpfValido=false");
   } else {
 
-    // $senhacrip = md5($senha);
+    $status = "inativo";
 
-    $query = "UPDATE colaborador SET login='$login', email='$email', nome_colaborador='$nome', cpf='$cpf', rg='$rg', telefone='$tel' WHERE id_colaborador='$idf' AND tipo='colaborador'";
-    $result = $con->query($query);
-    if (!$result) {
-      echo '<script>alert("falhou")</script>';
+    # VERIFICAR SE COLABORADOR JÁ EXISTE
+    $query  = "SELECT * FROM colaborador WHERE login = '$login' AND (status_colaborador IS NULL AND id_colaborador != '$idf')";
+
+    $q = $con->query($query);
+    if ($q->rowCount() > 0) {
+      header('Location: ' . LINK_SITE . 'admin/src/colaborador/edit_colaborador.php?id_colaborador=' . $idf . '&usuario_existe=true');
     } else {
-      echo '<div style="width:15em; margin:0 auto;" class="alert alert-success">Usuário Alterado Com Sucesso</div>';
+
+      // $senhacrip = md5($senha);
+
+      $query = "UPDATE colaborador SET login='$login', email='$email', nome_colaborador='$nome', cpf='$cpf', rg='$rg', telefone='$tel' WHERE id_colaborador='$idf' AND tipo='colaborador'";
+      $result = $con->query($query);
+      if (!$result) {
+        echo '<script>alert("falhou")</script>';
+      } else {
+        echo '<div style="width:15em; margin:0 auto;" class="alert alert-success">Usuário Alterado Com Sucesso</div>';
+      }
     }
   }
 }
@@ -498,16 +517,17 @@ function inativar_produto($id_produto)
 {
   global $con;
 
-  # $query  = "DELETE FROM produto WHERE id_produto = $id";
+  try {
+    $query  = "DELETE FROM produto WHERE id_produto = $id_produto";
+    $result = $con->query($query);
+  } catch (Exception $e) {
+  }
+
 
   $status = 'inativo';
 
   $query = "UPDATE PRODUTO SET status_produto='$status' WHERE id_produto=$id_produto";
   $result = $con->query($query);
-
-  if (!$result) {
-    header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
-  }
 
   header('Location: ' . LINK_SITE . 'admin/src/produto/produtos.php');
 }
@@ -597,4 +617,33 @@ function Verify_code($codigo)
       return false;
     }
   }
+}
+
+function validaCPF($cpf) {
+
+    // Extrai somente os números
+    $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
+
+    // Verifica se foi informado todos os digitos corretamente
+    if (strlen($cpf) != 11) {
+        return false;
+    }
+
+    // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+    if (preg_match('/(\d)\1{10}/', $cpf)) {
+        return false;
+    }
+
+    // Faz o calculo para validar o CPF
+    for ($t = 9; $t < 11; $t++) {
+        for ($d = 0, $c = 0; $c < $t; $c++) {
+            $d += $cpf[$c] * (($t + 1) - $c);
+        }
+        $d = ((10 * $d) % 11) % 10;
+        if ($cpf[$c] != $d) {
+            return false;
+        }
+    }
+    return true;
+
 }

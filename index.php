@@ -16,11 +16,14 @@ if($q->rowCount() == 0){
   header("Location: " . LINK_SITE . "cadastro.php");
 }
 
+
+
 // $q = $con->prepare($query);
 // $q->execute();
 // if($q->rowCount() > 0){
 //  header("Location: " . LINK_SITE . "cadastro.php");
 // }
+
 
 # TENTATIVA DE LOGIN PARA A PAGINA DO ADMIN OU FUNCIONARIO
 if (isset($_POST['submit'])) {
@@ -51,7 +54,8 @@ if (isset($_POST['submit'])) {
     # VERIFICANDO SE LOGIN E SENHA ESTÃO IGUAIS AS DO DB
     if ($login !== $db_login || $senha !== $db_senha) {
       echo '
-      <div class="alert alert-danger" role="alert">
+
+      <div class="alert alert-warning" role="alert">
         Usuário ou senha Incorreto!
       </div>';
 

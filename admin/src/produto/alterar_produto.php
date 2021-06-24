@@ -89,6 +89,14 @@ select.minimal:focus {
     color: white;
   }
 
+  .form-signin input {
+    margin-bottom: 20px;
+  }
+
+  button {
+    margin-top: 20px;
+  }
+
 
 </style>
 </head>
@@ -119,37 +127,20 @@ select.minimal:focus {
 
     ?>
 
-    <h1>Editar Produto</h1>
+    <h1 style="font-size: 46px; text-align: center; margin-top: -10px">Editar Produto</h1>
     <br>
     <input name="id" type="text" class="form-control" placeholder="Nome" autocomplete="off" value="<?php echo $id ?>" hidden>
     <label for="Nome" class="visually-hidden">Nome</label>
     <input name="nome_produto" type="text" class="form-control" placeholder="Nome" autocomplete="off" value="<?php echo $nome ?>" required autofocus>
-    <br>
-    <!-- <label for="Tipo" class="visually-hidden">Tipo</label>
-    <select name="tipo" placeholder="Tipo" class="form-control minimal" value="<?php echo $tipo ?>" required>
-      
-      <option value="" disabled selected>Tipo</option>
-      <option value="bar">Bar</option>
-      <option value="porcao">Porções</option>
-      <option value="refeicao">Refeição</option>
-      <option value="lanche">Lanche</option>
-      <option value="caldo">Caldos</option>
-      <option value="desconto">Desconto</option>
 
-    </select>
-    <br> -->
     <label for="Preço" class="visually-hidden">Preço</label>
     <input name="preco" type="money" class="form-control" placeholder="Preço" autocomplete="off" value="<?php echo $preco ?>" required>
-    <br>
 
     <label for="Descrição" class="visually-hidden">Descrição</label>
     <textarea name="descricao" class="form-control" placeholder="Descrição" id="" style="height: 100px"><?php echo $descricao; ?></textarea>
     <!-- <input name="descricao" type="text" class="form-control" placeholder="Descrição" autocomplete="off"> -->
 
-    <br>
-
     <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name='submit'>Alterar Produto</button>
-    <br><br>
   </form>
     <a href="<?= LINK_SITE; ?>admin/src/produto/produtos.php"><button class="w-100 btn btn-lg btn-outline">Voltar</button></a>
 </main>
